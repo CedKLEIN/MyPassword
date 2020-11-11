@@ -13,10 +13,10 @@ public:
     Log(Log const&)=delete;
     Log& operator=(Log const&)=delete;
 
-    void LOG_DEBUG(const std::string&)final;
-    void LOG_INFO(const std::string&)final;
-    void LOG_WARNING(const std::string&)final;
-    void LOG_CRITICAL(const std::string&)final;
+    void LOG_DEBUG(const std::string&)override final;
+    void LOG_INFO(const std::string&)override final;
+    void LOG_WARNING(const std::string&)override final;
+    void LOG_CRITICAL(const std::string&)override final;
 
     void writeLog(const std::string&,const std::string&);
 

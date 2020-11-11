@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Account.h"
-#include "windowdisplayaccount.h"
+
+#include "AccountWindow.h"
 
 #include <QStringList>
 #include <QStringListModel>
@@ -15,26 +16,24 @@
 #include <QWidget>
 
 class IEncryption;
-class WindowNewAccount;
+class NewAccountWindow;
 class IDatabase;
-class Error;
 class ILog;
 class IGenerateFile;
 
-class WindowListAccount final : public QWidget, public IListener
+class MainWindow final : public QWidget, public IListener
 {
     Q_OBJECT
 public:
-    WindowListAccount(FacAccount&,
-                      WindowNewAccount&,
+    MainWindow(FacAccount&,
+                      FacWindowDisplayAccount& iFacWindowDisplayAccount,
+                      NewAccountWindow&,
                       IEncryption&,
                       IDatabase&,
-                      Error&,
                       ILog&,
                       IGenerateFile&);
-    ~WindowListAccount();
-    WindowListAccount(WindowListAccount const&)=delete;
-    WindowListAccount& operator=(WindowListAccount const&)=delete;
+    MainWindow(MainWindow const&)=delete;
+    MainWindow& operator=(MainWindow const&)=delete;
     void onEventClose() override;
     void closeEvent(QCloseEvent *) override;
 
@@ -47,11 +46,10 @@ public slots:
 
 private:
     FacAccount& _facAccount;
-    std::vector<WindowDisplayAccount*> _windowDisplayAccount;
-    WindowNewAccount& _windowNewAccount;
+    FacWindowDisplayAccount& _facWindowDisplayAccount;
+    NewAccountWindow& _windowNewAccount;
     IEncryption& _encryption;
     IDatabase& _db;
-    Error& _error;
     ILog& _log;
     IGenerateFile& _generateFile;
 

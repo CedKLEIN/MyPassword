@@ -9,7 +9,6 @@ class Account final
 friend class FacAccount;
 
 public:
-
     QString getName() const;
     QString getLogin() const;
     QString getPassword() const;

@@ -5,10 +5,10 @@ CONFIG += c++14
 
 HEADERS += \
     Account.h \
+    AccountWindow.h \
     Database.h \
     DateTime.h \
     Encryption.h \
-    Error.h \
     GenerateFile.h \
     Interface/IDatabase.h \
     Interface/IEncryption.h \
@@ -16,21 +16,27 @@ HEADERS += \
     Interface/IListener.h \
     Interface/ILog.h \
     Log.h \
-    windowdisplayaccount.h \
-    windowlistaccount.h \
-    windownewaccount.h
+    MainWindow.h \
+    NewAccountWindow.h \
+    Utility.h
 
 SOURCES += \
     Account.cpp \
+    AccountWindow.cpp \
     Database.cpp \
     DateTime.cpp \
     Encryption.cpp \
     GenerateFile.cpp \
     Log.cpp \
-    main.cpp \
-    windowdisplayaccount.cpp \
-    windowlistaccount.cpp \
-    windownewaccount.cpp
+    MainWindow.cpp \
+    NewAccountWindow.cpp \
+    main.cpp
 
 RESOURCES += \
     Ressources.qrc
+
+DISTFILES += \
+    Icon/add.png \
+    Icon/delete.png \
+    Icon/paper.png \
+    Icon/save.png

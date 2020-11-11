@@ -1,6 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file alias="add">Icon/add.png</file>
+        <file alias="delete">Icon/delete.png</file>
         <file alias="paper">Icon/paper.png</file>
+        <file alias="save">Icon/save.png</file>
+        <file alias="arrow-down">Icon/arrow-down.png</file>
+        <file alias="arrow-right">Icon/arrow-right.png</file>
+        <file alias="save-dark2">Icon/save_dark2.png</file>
+        <file alias="view">Icon/view.png</file>
+        <file alias="hide">Icon/hide.png</file>
     </qresource>
 </RCC>

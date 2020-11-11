@@ -5,18 +5,16 @@
 #include <fstream>
 
 class FacAccount;
-class Error;
 
 class GenerateFile final: public IGenerateFile
 {
 public:
-    GenerateFile(FacAccount&, Error&);
+    GenerateFile(FacAccount&);
     GenerateFile(GenerateFile const&)=delete;
     GenerateFile& operator=(GenerateFile const&)=delete;
 
-    int generate(const std::string&)final;
+    int generate(const std::string&)override final;
 private:
     FacAccount& _facAccount;
-    Error& _error;
     std::ofstream _file;
 };

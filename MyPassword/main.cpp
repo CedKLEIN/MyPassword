@@ -1,9 +1,8 @@
-#include "windowlistaccount.h"
-#include "windownewaccount.h"
+#include "MainWindow.h"
+#include "NewAccountWindow.h"
 #include "Database.h"
 #include "Encryption.h"
 #include "Account.h"
-#include "Error.h"
 #include "Log.h"
 #include "GenerateFile.h"
 
@@ -11,9 +10,10 @@
 
 /*
  * To do:
- * Unit test
  * Better display
- * Create Fac for displayWindow ?
+ * set tooltip for each icon
+ * Check english only
+ * Make shoter all name ex: password = pwd ...
  */
 
 int main(int argc, char *argv[])
@@ -21,18 +21,23 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     Log log;
-    Error error;
     Encryption encryption;
     FacAccount facAccount;
-    GenerateFile generateFile(facAccount,error);
-    Database db(facAccount,error);
-    WindowNewAccount windowNewAccount(encryption,db,error,log);
+    GenerateFile generateFile{facAccount};
+    Database db{facAccount};
+    FacWindowDisplayAccount facWindowDisplayAccount;
+    NewAccountWindow windowNewAccount{encryption,db,log};
 
-    WindowListAccount windowListAccount(facAccount,windowNewAccount,encryption,db,error,log,generateFile);
+    MainWindow windowListAccount{
+                facAccount,
+                facWindowDisplayAccount,
+                windowNewAccount,
+                encryption,
+                db,
+                log,
+                generateFile};
+
     windowListAccount.show();
 
-    int result = app.exec();
-
-    return result;
-
+    return app.exec();
 }

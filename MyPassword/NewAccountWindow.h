@@ -15,16 +15,15 @@
 
 class IEncryption;
 class IDatabase;
-class Error;
 class ILog;
 
-class WindowNewAccount final : public QWidget
+class NewAccountWindow final : public QWidget
 {
     Q_OBJECT
 public:
-    WindowNewAccount(IEncryption&, IDatabase&, Error&, ILog&);
-    WindowNewAccount(WindowNewAccount const&)=delete;
-    WindowNewAccount& operator=(WindowNewAccount const&)=delete;
+    NewAccountWindow(IEncryption&, IDatabase&,ILog&);
+    NewAccountWindow(NewAccountWindow const&)=delete;
+    NewAccountWindow& operator=(NewAccountWindow const&)=delete;
     void cleanWindow();
 
     void addListener(IListener* iListener){
@@ -38,23 +37,36 @@ public:
     }
 
 public slots:
+    void viewPassword();
     void validateForm();
 
 private:
     IEncryption& _encryption;
     IDatabase& _db;
-    Error& _error;
     ILog& _log;
 
     std::vector<IListener*> _listeners;
-    QFormLayout _layoutForm;
     QVBoxLayout _layoutMainV;
     QHBoxLayout _layoutButton;
 
-    QLineEdit _name;
-    QLineEdit _login;
-    QLineEdit _password;
-    QLineEdit _details;
+    QLabel _nameLabel;
+    QLineEdit _nameLineEdit;
+    QHBoxLayout _nameLayout;
+
+    QLabel _loginLabel;
+    QLineEdit _loginLineEdit;
+    QHBoxLayout _loginLayout;
+
+    QLabel _passwordLabel;
+    QLineEdit _passwordLineEdit;
+    QPushButton _passwordViewButt;
+    QHBoxLayout _passwordLayout;
+    bool isPassordView{false};
+
+    QLabel _detailsLabel;
+    QLineEdit _detailsLineEdit;
+    QHBoxLayout _detailsLayout;
+
     QPushButton _validateButton;
     QPushButton _cancelButton;
     QLabel _labelTitle;

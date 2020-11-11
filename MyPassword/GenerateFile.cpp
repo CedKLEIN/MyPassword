@@ -1,12 +1,10 @@
 #include "GenerateFile.h"
 
 #include "Account.h"
-#include "Error.h"
+#include "Utility.h"
 
-GenerateFile::GenerateFile(FacAccount& iFacAccount,Error& iError):
-    _facAccount(iFacAccount),
-    _error(iError)
-{}
+GenerateFile::GenerateFile(FacAccount& iFacAccount):
+    _facAccount(iFacAccount){}
 
 int GenerateFile::generate(const std::string& iPathFile){
     _file.open(iPathFile);
@@ -19,7 +17,7 @@ int GenerateFile::generate(const std::string& iPathFile){
             _file << std::endl;
         }
         _file.close();
-        return Error::ERROR::no_error;
+        return Utility::ERROR::no_error;
     }
-    return Error::ERROR::file_not_generated;
+    return Utility::ERROR::file_not_generated;
 }
