@@ -2,32 +2,33 @@
 
 #include<QDebug>
 
-void Log::LOG_DEBUG(const std::string& iMsg){
+#include <fstream>
+
+void Log::LOG_DEBUG(const std::string& iMsg) const{
     writeLog("DEBUG",iMsg);
 }
 
-void Log::LOG_INFO(const std::string& iMsg){
+void Log::LOG_INFO(const std::string& iMsg) const{
     writeLog("INFO",iMsg);
 }
 
-void Log::LOG_WARNING(const std::string& iMsg){
+void Log::LOG_WARNING(const std::string& iMsg) const{
     writeLog("WARNING",iMsg);
 }
 
-void Log::LOG_CRITICAL(const std::string& iMsg){
+void Log::LOG_CRITICAL(const std::string& iMsg) const{
     writeLog("CRITICAL",iMsg);
 }
 
-void Log::writeLog(const std::string& iLogType,const std::string& iMsg){
-    _file.open("./Log.txt",std::ios::app);
+void Log::writeLog(const std::string& iLogType,const std::string& iMsg) const{
+    std::ofstream file("./Log.txt",std::ios::app);
 
-    if(_file.is_open()){
-        _file << "[" << _dateTime.getDateTime() << "]";
-        _file << " " << iLogType << " ";
-        _file << iMsg << std::endl;
+    if(file.is_open()){
+        file << "[" << _dateTime.getDateTime() << "]";
+        file << " " << iLogType << " ";
+        file << iMsg << std::endl;
+        file.close();
     }else{
         qDebug() << "Impossible to open the file";
     }
-
-    _file.close();
 }

@@ -5,6 +5,7 @@
 #include "Account.h"
 #include "Log.h"
 #include "GenerateFile.h"
+#include "PasswordSecurity.h"
 
 #include <QApplication>
 
@@ -23,21 +24,23 @@ int main(int argc, char *argv[])
     Log log;
     Encryption encryption;
     FacAccount facAccount;
+    PasswordSecurity passwordSecurity;
     GenerateFile generateFile{facAccount};
     Database db{facAccount};
-    FacWindowDisplayAccount facWindowDisplayAccount;
-    NewAccountWindow windowNewAccount{encryption,db,log};
+    FacDisplayAccountWindow facWindowDisplay;
+    NewAccountWindow newAccount{encryption,passwordSecurity,db,log};
 
-    MainWindow windowListAccount{
+    MainWindow mainWindow{
                 facAccount,
-                facWindowDisplayAccount,
-                windowNewAccount,
+                facWindowDisplay,
+                newAccount,
                 encryption,
+                passwordSecurity,
                 db,
                 log,
                 generateFile};
 
-    windowListAccount.show();
+    mainWindow.show();
 
     return app.exec();
 }

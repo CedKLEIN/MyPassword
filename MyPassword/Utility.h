@@ -106,6 +106,7 @@ public:
         db_unique_key_already_exist,
         db_failed_to_close,
         db_failed_to_remove,
+        db_failed_to_modify,
         db_failed_to_get_data,
         password_empty,
         password_confimation_not_the_same,
@@ -129,6 +130,9 @@ public:
             break;
         case db_failed_to_remove:
             errorMsg="Database failed to remove.";
+            break;
+        case db_failed_to_modify:
+            errorMsg="Database failed to modify.";
             break;
         case db_failed_to_get_data:
             errorMsg="Couldn't get data from database.";

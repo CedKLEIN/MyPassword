@@ -5,13 +5,15 @@
 #include <QCryptographicHash>
 
 Account::Account(const QString& iName,
-                const QString& iLogin,
-                const QString& iPassword,
-                const QString& iDetails)
+                 const QString& iLogin,
+                 const QString& iPassword,
+                 const QString& iDetails,
+                 const int iSecurityLvl)
     : _name(iName),
       _login(iLogin),
       _password(iPassword),
-      _details(iDetails){}
+      _details(iDetails),
+      _severityLvl(iSecurityLvl){}
 
 QString Account::getName() const{
     return _name;
@@ -27,4 +29,8 @@ QString Account::getPassword() const{
 
 QString Account::getDetails() const{
     return _details;
+}
+
+int Account::getSeverityLvl() const{
+    return _severityLvl;
 }

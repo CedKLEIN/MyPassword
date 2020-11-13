@@ -3,6 +3,7 @@
 #include "AccountWindow.h"
 #include "NewAccountWindow.h"
 #include "Interface/IEncryption.h"
+#include "PasswordSecurity.h"
 #include "Interface/IDatabase.h"
 #include "Utility.h"
 #include "Interface/ILog.h"
@@ -17,16 +18,18 @@
 #include <QScrollBar>
 
 MainWindow::MainWindow(FacAccount& iFacAccount,
-                                     FacWindowDisplayAccount& iFacWindowDisplayAccount,
-                                     NewAccountWindow& iWindowNewAccount,
-                                     IEncryption& iEncryption,
-                                     IDatabase& iDb,
-                                     ILog& iLog,
-                                     IGenerateFile& iGenerateFile):
+                       FacDisplayAccountWindow& iFacWindowDisplayAccount,
+                       NewAccountWindow& iWindowNewAccount,
+                       IEncryption& iEncryption,
+                       PasswordSecurity& iPasswordSecurity,
+                       IDatabase& iDb,
+                       ILog& iLog,
+                       IGenerateFile& iGenerateFile):
     _facAccount(iFacAccount),
     _facWindowDisplayAccount(iFacWindowDisplayAccount),
     _windowNewAccount(iWindowNewAccount),
     _encryption(iEncryption),
+    _passwordSecurity(iPasswordSecurity),
     _db(iDb),
     _log(iLog),
     _generateFile(iGenerateFile)
@@ -78,12 +81,13 @@ void MainWindow::onEventClose(){
 void MainWindow::filterChanged(const QString& iText){
     _accountsDataFilter.clear();
 
+    bool opti{false};
+
     QString textLower{iText.toLower()};
     for(const auto& account: _accountsData){
 
         QString accountLower{account.toLower()};
         bool match{true};
-        bool opti{false};
 
         if(accountLower.size()>=textLower.size()){
             for(int j{0};j<textLower.size();++j){
@@ -97,7 +101,7 @@ void MainWindow::filterChanged(const QString& iText){
                 opti = true;
             }
             if(!match && opti)
-                return;
+                break;
         }
     }
     _listAccountsModel.setStringList(_accountsDataFilter);
@@ -137,10 +141,11 @@ void MainWindow::displayWindowAccount(const QModelIndex& itemSlected)
         return;
     }
     _facWindowDisplayAccount.create(account->getName(),
-                                             _facAccount,
-                                             _encryption,
-                                             _db,
-                                             _log);
+                                    _facAccount,
+                                    _encryption,
+                                    _passwordSecurity,
+                                    _db,
+                                    _log);
 
     window = _facWindowDisplayAccount.getAccount(account->getName());
     window->addListener(this);
@@ -151,7 +156,7 @@ void MainWindow::displayWindowAccount(const QModelIndex& itemSlected)
 
 void MainWindow::generateFile(){
     QString pathFile = QFileDialog::getSaveFileName(this,
-        tr("Save password file"), "./", tr("Text Files (*.txt)"));
+                                                    tr("Save password file"), "./", tr("Text Files (*.txt)"));
 
     int error{_generateFile.generate(pathFile.toStdString())};
 

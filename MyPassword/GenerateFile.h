@@ -2,8 +2,6 @@
 
 #include "Interface/IGenerateFile.h"
 
-#include <fstream>
-
 class FacAccount;
 
 class GenerateFile final: public IGenerateFile
@@ -13,8 +11,7 @@ public:
     GenerateFile(GenerateFile const&)=delete;
     GenerateFile& operator=(GenerateFile const&)=delete;
 
-    int generate(const std::string&)override final;
+    int generate(const std::string&)const override final;
 private:
     FacAccount& _facAccount;
-    std::ofstream _file;
 };

@@ -11,6 +11,7 @@ HEADERS += \
     Encryption.h \
     GenerateFile.h \
     Interface/IDatabase.h \
+    Interface/IDateTime.h \
     Interface/IEncryption.h \
     Interface/IGenerateFile.h \
     Interface/IListener.h \
@@ -18,6 +19,7 @@ HEADERS += \
     Log.h \
     MainWindow.h \
     NewAccountWindow.h \
+    PasswordSecurity.h \
     Utility.h
 
 SOURCES += \
@@ -30,13 +32,8 @@ SOURCES += \
     Log.cpp \
     MainWindow.cpp \
     NewAccountWindow.cpp \
+    PasswordSecurity.cpp \
     main.cpp
 
 RESOURCES += \
     Ressources.qrc
-
-DISTFILES += \
-    Icon/add.png \
-    Icon/delete.png \
-    Icon/paper.png \
-    Icon/save.png

@@ -14,6 +14,7 @@
 #include <memory>
 
 class IEncryption;
+class PasswordSecurity;
 class IDatabase;
 class ILog;
 
@@ -21,7 +22,7 @@ class NewAccountWindow final : public QWidget
 {
     Q_OBJECT
 public:
-    NewAccountWindow(IEncryption&, IDatabase&,ILog&);
+    NewAccountWindow(IEncryption&,PasswordSecurity&,IDatabase&,ILog&);
     NewAccountWindow(NewAccountWindow const&)=delete;
     NewAccountWindow& operator=(NewAccountWindow const&)=delete;
     void cleanWindow();
@@ -37,11 +38,13 @@ public:
     }
 
 public slots:
+    void checkPasswordSecurity(const QString&);
     void viewPassword();
     void validateForm();
 
 private:
     IEncryption& _encryption;
+    PasswordSecurity& _passwordSecurity;
     IDatabase& _db;
     ILog& _log;
 
@@ -60,8 +63,10 @@ private:
     QLabel _passwordLabel;
     QLineEdit _passwordLineEdit;
     QPushButton _passwordViewButt;
+    QPushButton _passwordSecurityButt;
     QHBoxLayout _passwordLayout;
     bool isPassordView{false};
+    int _pwdSecurityLvl{0};
 
     QLabel _detailsLabel;
     QLineEdit _detailsLineEdit;

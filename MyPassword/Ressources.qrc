@@ -9,5 +9,10 @@
         <file alias="save-dark2">Icon/save_dark2.png</file>
         <file alias="view">Icon/view.png</file>
         <file alias="hide">Icon/hide.png</file>
+        <file alias="high">Icon/high.png</file>
+        <file alias="low">Icon/low.png</file>
+        <file alias="medium">Icon/medium.png</file>
+        <file alias="very_high">Icon/very_high.png</file>
+        <file alias="very_low">Icon/very_low.png</file>
     </qresource>
 </RCC>

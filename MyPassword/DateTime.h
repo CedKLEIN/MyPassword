@@ -1,16 +1,17 @@
 #pragma once
 
-#include <ctime>
+#include "Interface/IDateTime.h"
+
 #include <string>
 
-class DateTime
+class DateTime final : public IDateTime
 {
 public:
     DateTime()=default;
     DateTime(DateTime const&)=delete;
     DateTime& operator=(DateTime const&)=delete;
 
-    std::string getDateTime()const;
-    std::string getDate()const;
-    std::string getTime()const;
+    std::string getDateTime()const override final;
+    std::string getDate()const override final;
+    std::string getTime()const override final;
 };

@@ -14,15 +14,16 @@
 #include <memory>
 
 class IEncryption;
+class PasswordSecurity;
 class IDatabase;
 class ILog;
-class FacWindowDisplayAccount;
+class FacDisplayAccountWindow;
 
 class AccountWindow : public QWidget
 {
     Q_OBJECT
 
-friend FacWindowDisplayAccount;
+    friend FacDisplayAccountWindow;
 
 public:
     void addListener(IListener* iListener){
@@ -38,6 +39,7 @@ public:
     QString getAccountName() const;
 
 public slots:
+    void checkPasswordSecurity(const QString&);
     void itemChangedLogin(const QString&);
     void itemChangedDetails(const QString&);
     bool saveModifLogin();
@@ -53,14 +55,16 @@ public slots:
 
 private:
     AccountWindow(const QString&,
-                         FacAccount&,
-                         IEncryption&,
-                         IDatabase&,
-                         ILog&);
+                  FacAccount&,
+                  IEncryption&,
+                  PasswordSecurity&,
+                  IDatabase&,
+                  ILog&);
 
     QString _accountName;
     FacAccount& _facAccount;
     IEncryption& _encryption;
+    PasswordSecurity& _passwordSecurity;
     IDatabase& _db;
     ILog& _log;
 
@@ -93,24 +97,27 @@ private:
     QLineEdit _pwdLineEdit;
     QPushButton _pwdButt;
     QPushButton _pwdViewButt;
+    QPushButton _pwdSecurityButt;
     QHBoxLayout _pwdLayout;
     bool isPasswordChangeVisible{false};
     bool isPassordView{false};
+    int _pwdSecurityLvl{0};
 
     QVBoxLayout _mainLayout;
 };
 
-class FacWindowDisplayAccount{
+class FacDisplayAccountWindow{
 public:
-    ~FacWindowDisplayAccount(){
+    ~FacDisplayAccountWindow(){
         clear();
     }
     void create(const QString& iName,
                 FacAccount& iFacAccount,
                 IEncryption& iEncryption,
+                PasswordSecurity& iPasswordSecurity,
                 IDatabase& iDatabase,
                 ILog& iLog){
-        _windowsDisplay.emplace_back(new AccountWindow(iName,iFacAccount,iEncryption,iDatabase,iLog));
+        _windowsDisplay.emplace_back(new AccountWindow(iName,iFacAccount,iEncryption,iPasswordSecurity,iDatabase,iLog));
     }
 
     AccountWindow* getAccount(const QString& iName)const{

@@ -1,6 +1,7 @@
 #include "AccountWindow.h"
 
 #include "Interface/IEncryption.h"
+#include "PasswordSecurity.h"
 #include "Interface/IDatabase.h"
 #include "Utility.h"
 #include "Interface/ILog.h"
@@ -11,11 +12,13 @@
 AccountWindow::AccountWindow(const QString& iAccountName,
                              FacAccount &iFacAccount,
                              IEncryption& iEncryption,
+                             PasswordSecurity& iPasswordSecurity,
                              IDatabase& iDb,
                              ILog& iLog) :
     _accountName(iAccountName),
     _facAccount(iFacAccount),
     _encryption(iEncryption),
+    _passwordSecurity(iPasswordSecurity),
     _db(iDb),
     _log(iLog)
 {
@@ -76,6 +79,8 @@ AccountWindow::AccountWindow(const QString& iAccountName,
     _pwdActivateButt.setIcon(QIcon(":/arrow-right"));
     _pwdActivateButt.setIconSize(ICON_SIZE);
     _pwdActivateButt.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_YELLOW));
+    _pwdSecurityButt.setIconSize(ICON_SIZE);
+    _pwdSecurityButt.hide();
     _pwdLineEdit.setPlaceholderText("Password");
     _pwdLineEdit.setEchoMode(QLineEdit::Password);
     _pwdLineEdit.setVisible(isTestVisible);
@@ -88,6 +93,7 @@ AccountWindow::AccountWindow(const QString& iAccountName,
     _pwdViewButt.setVisible(isTestVisible);
     _pwdLayout.addWidget(&_pwdLineEdit);
     _pwdLayout.addWidget(&_pwdViewButt);
+    _pwdLayout.addWidget(&_pwdSecurityButt);
 
     _deleteButt.setText(" Delete account");
     _deleteButt.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_RED));
@@ -111,7 +117,8 @@ AccountWindow::AccountWindow(const QString& iAccountName,
     _mainLayout.addWidget(&_deleteButt);
 
     setLayout(&_mainLayout);
-    qDebug() << height();
+
+    QObject::connect(&_pwdLineEdit,&QLineEdit::textChanged,this,&AccountWindow::checkPasswordSecurity);
     QObject::connect(&_pwdViewButt,&QPushButton::clicked,this,&AccountWindow::viewPassword);
     QObject::connect(&_testViewButt,&QPushButton::clicked,this,&AccountWindow::viewTestPwd);
     QObject::connect(&_loginLineEdit,&QLineEdit::textChanged,this,&AccountWindow::itemChangedLogin);
@@ -123,6 +130,42 @@ AccountWindow::AccountWindow(const QString& iAccountName,
     QObject::connect(&_saveDetailsButt,&QPushButton::clicked,this,&AccountWindow::saveModifDetails);
     QObject::connect(&_pwdActivateButt,&QPushButton::clicked,this,&AccountWindow::enableChangePassword);
     QObject::connect(&_pwdButt,&QPushButton::clicked,this,&AccountWindow::saveModifPassword);
+}
+
+void AccountWindow::checkPasswordSecurity(const QString& iPwd){
+    if(iPwd.isEmpty()){
+        _pwdSecurityButt.hide();
+        return;
+    }
+
+    _pwdSecurityLvl = _passwordSecurity.getSecurityLevel(iPwd);
+
+    switch(_pwdSecurityLvl){
+    case PasswordSecurity::VERY_LOW:
+        _pwdSecurityButt.setIcon(QIcon(":/low"));
+        _pwdSecurityButt.setToolTip(tr("Your password is not safe at all!"));
+        break;
+    case PasswordSecurity::LOW:
+        _pwdSecurityButt.setIcon(QIcon(":/medium"));
+        _pwdSecurityButt.setToolTip(tr("Your password can be cracked easily!"));
+        break;
+    case PasswordSecurity::MEDIUM:
+        _pwdSecurityButt.setIcon(QIcon(":/medium"));
+        _pwdSecurityButt.setToolTip(tr("Your password is at the minimum safety!"));
+        break;
+    case PasswordSecurity::HIGH:
+        _pwdSecurityButt.setIcon(QIcon(":/high"));
+        _pwdSecurityButt.setToolTip(tr("Your password is safe!"));
+        break;
+    case PasswordSecurity::VERY_HIGH:
+        _pwdSecurityButt.setIcon(QIcon(":/very_high"));
+        _pwdSecurityButt.setToolTip(tr("More than 50 years is necessary to cracked your password!"));
+        break;
+    default:
+        _pwdSecurityButt.hide();
+        return;
+    }
+    _pwdSecurityButt.show();
 }
 
 void AccountWindow::itemChangedLogin(const QString&){
@@ -189,7 +232,8 @@ bool AccountWindow::saveModifPassword(){
                          <<_facAccount.get(_accountName)->getName()
                          <<_facAccount.get(_accountName)->getLogin()
                          <<_encryption.encrypt(_pwdLineEdit.text())
-                         <<_facAccount.get(_accountName)->getDetails())};
+                         <<_facAccount.get(_accountName)->getDetails()
+                         << QString::number(_pwdSecurityLvl))};
 
     if(error != Utility::ERROR::no_error){
         QMessageBox::warning(this,tr("Warning"),

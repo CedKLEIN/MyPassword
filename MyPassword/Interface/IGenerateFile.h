@@ -3,5 +3,5 @@
 #include <string>
 
 struct IGenerateFile{
-    virtual int generate(const std::string&)=0;
+    virtual int generate(const std::string&)const=0;
 };

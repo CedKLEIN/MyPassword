@@ -13,16 +13,19 @@ public:
     QString getLogin() const;
     QString getPassword() const;
     QString getDetails() const;
+    int getSeverityLvl() const;
 
 private:
-    Account(const QString& iName,
-            const QString& iLogin,
-            const QString& iPassword,
-            const QString& iDetails);
+    Account(const QString&,
+            const QString&,
+            const QString&,
+            const QString&,
+            const int);
     QString _name;
     QString _login;
     QString _password;
     QString _details;
+    int _severityLvl;
 };
 
 class FacAccount{
@@ -34,8 +37,9 @@ public:
     void create(const QString& iName,
                 const QString& iLogin,
                 const QString& iPassword,
-                const QString& iDetails){
-        _vectAccount.emplace_back(new Account(iName,iLogin,iPassword,iDetails));
+                const QString& iDetails,
+                const int iSeverityLvl){
+        _vectAccount.emplace_back(new Account(iName,iLogin,iPassword,iDetails,iSeverityLvl));
     }
 
     std::shared_ptr<Account> get(const QString& iName){

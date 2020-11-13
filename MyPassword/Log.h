@@ -3,9 +3,6 @@
 #include "Interface/ILog.h"
 #include "DateTime.h"
 
-#include <iostream>
-#include <fstream>
-
 class Log final: public ILog
 {
 public:
@@ -13,14 +10,13 @@ public:
     Log(Log const&)=delete;
     Log& operator=(Log const&)=delete;
 
-    void LOG_DEBUG(const std::string&)override final;
-    void LOG_INFO(const std::string&)override final;
-    void LOG_WARNING(const std::string&)override final;
-    void LOG_CRITICAL(const std::string&)override final;
+    void LOG_DEBUG(const std::string&)const override final;
+    void LOG_INFO(const std::string&)const override final;
+    void LOG_WARNING(const std::string&)const override final;
+    void LOG_CRITICAL(const std::string&)const override final;
 
-    void writeLog(const std::string&,const std::string&);
+    void writeLog(const std::string&,const std::string&)const;
 
 private:
     DateTime _dateTime;
-    std::ofstream _file;
 };

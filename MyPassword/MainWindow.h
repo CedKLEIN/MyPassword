@@ -16,6 +16,7 @@
 #include <QWidget>
 
 class IEncryption;
+class PasswordSecurity;
 class NewAccountWindow;
 class IDatabase;
 class ILog;
@@ -26,12 +27,13 @@ class MainWindow final : public QWidget, public IListener
     Q_OBJECT
 public:
     MainWindow(FacAccount&,
-                      FacWindowDisplayAccount& iFacWindowDisplayAccount,
-                      NewAccountWindow&,
-                      IEncryption&,
-                      IDatabase&,
-                      ILog&,
-                      IGenerateFile&);
+               FacDisplayAccountWindow& iFacWindowDisplayAccount,
+               NewAccountWindow&,
+               IEncryption&,
+               PasswordSecurity&,
+               IDatabase&,
+               ILog&,
+               IGenerateFile&);
     MainWindow(MainWindow const&)=delete;
     MainWindow& operator=(MainWindow const&)=delete;
     void onEventClose() override;
@@ -46,9 +48,10 @@ public slots:
 
 private:
     FacAccount& _facAccount;
-    FacWindowDisplayAccount& _facWindowDisplayAccount;
+    FacDisplayAccountWindow& _facWindowDisplayAccount;
     NewAccountWindow& _windowNewAccount;
     IEncryption& _encryption;
+    PasswordSecurity& _passwordSecurity;
     IDatabase& _db;
     ILog& _log;
     IGenerateFile& _generateFile;

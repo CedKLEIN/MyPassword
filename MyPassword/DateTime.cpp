@@ -1,5 +1,7 @@
 #include "DateTime.h"
 
+#include <ctime>
+
 std::string DateTime::getDateTime()const{
     return getDate()+" "+getTime();
 }

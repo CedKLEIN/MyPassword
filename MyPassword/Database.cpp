@@ -13,10 +13,11 @@ Database::Database(FacAccount& iFacAccount):
 {
     dbOpen();
     QSqlQuery query("CREATE TABLE ACCOUNT(\
-               NAME             VARCHAR(50) PRIMARY KEY NOT NULL,\
-               LOGIN            VARCHAR(50),\
-               PASSWORD         VARCHAR(50),\
-               DETAILS          VARCHAR(50));", _db);
+                    NAME             VARCHAR(50) PRIMARY KEY NOT NULL,\
+                    LOGIN            VARCHAR(50),\
+                    PASSWORD         VARCHAR(50),\
+                    DETAILS          VARCHAR(500),\
+                    SECURITY_LVL     VARCHAR(1));", _db);
     dbClose();
 }
 
@@ -53,14 +54,15 @@ int Database::create(const QStringList& iData){
     if(dbOpen())
     {
         QString queryStr("INSERT INTO ACCOUNT \
-                        ( NAME, LOGIN, PASSWORD, DETAILS) \
-                        VALUES \
-                        ('" + iData[0] +"', \
-                        '" + iData[1] +"', \
-                        '" + iData[2] +"',\
-                        '" + iData[3] +"');");
+                         ( NAME, LOGIN, PASSWORD, DETAILS, SECURITY_LVL) \
+                         VALUES \
+                         ('" + iData[0] +"', \
+                          '" + iData[1] +"', \
+                          '" + iData[2] +"',\
+                          '" + iData[3] +"',\
+                          '" + iData[4] +"');");
 
-        QSqlQuery query(queryStr, _db);
+                QSqlQuery query(queryStr, _db);
 
         if(!dbClose())
             return Utility::ERROR::db_failed_to_close;
@@ -83,10 +85,11 @@ int Database::retrieve()
             return Utility::ERROR::db_failed_to_get_data;
 
         while(query.next()) {
-           _facAccount.create(query.value(0).toString(),
-                                              query.value(1).toString(),
-                                              query.value(2).toString(),
-                                              query.value(3).toString());
+            _facAccount.create(query.value(0).toString(),
+                               query.value(1).toString(),
+                               query.value(2).toString(),
+                               query.value(3).toString(),
+                               query.value(4).toInt());
 
         }
 
@@ -121,17 +124,19 @@ int Database::modify(const QStringList& iData)
     if(dbOpen())
     {
         QString queryStr("UPDATE ACCOUNT SET \
-        LOGIN='"+ iData[1] +"',\
-        PASSWORD='"+ iData[2] +"',\
-        DETAILS='"+ iData[3] +"'\
-        WHERE NAME='"+ iData[0] +"';");
+                         LOGIN='"+ iData[1] +"',\
+                         PASSWORD='"+ iData[2] +"',\
+                         DETAILS='"+ iData[3] +"',\
+                         SECURITY_LVL='"+ iData[4] +"'\
+                         WHERE NAME='"+ iData[0] +"';");
+
         QSqlQuery query(queryStr, _db);
 
         if(!dbClose())
             return Utility::ERROR::db_failed_to_close;
 
         if (query.lastError().isValid())
-            return Utility::ERROR::db_failed_to_remove;
+            return Utility::ERROR::db_failed_to_modify;
 
         return  Utility::ERROR::no_error;
     }
