@@ -9,6 +9,7 @@
 #include <QListView>
 #include <QList>
 #include <QAbstractItemView>
+#include <QStandardItemModel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -16,7 +17,8 @@
 #include <QWidget>
 
 class IEncryption;
-class PasswordSecurity;
+class IPasswordSecurity;
+class SecurityLevelWindow;
 class NewAccountWindow;
 class IDatabase;
 class ILog;
@@ -30,7 +32,8 @@ public:
                FacDisplayAccountWindow& iFacWindowDisplayAccount,
                NewAccountWindow&,
                IEncryption&,
-               PasswordSecurity&,
+               IPasswordSecurity&,
+               SecurityLevelWindow&,
                IDatabase&,
                ILog&,
                IGenerateFile&);
@@ -42,6 +45,7 @@ public:
 public slots:
     void filterChanged(const QString&);
     void retrieveAccounts();
+    void setModelFromDataList(const QStringList &);
     void openWindowNewAccount();
     void displayWindowAccount(const QModelIndex&);
     void generateFile();
@@ -51,7 +55,8 @@ private:
     FacDisplayAccountWindow& _facWindowDisplayAccount;
     NewAccountWindow& _windowNewAccount;
     IEncryption& _encryption;
-    PasswordSecurity& _passwordSecurity;
+    IPasswordSecurity& _passwordSecurity;
+    SecurityLevelWindow& _securityLevelWindow;
     IDatabase& _db;
     ILog& _log;
     IGenerateFile& _generateFile;
@@ -59,7 +64,7 @@ private:
     QHBoxLayout _layoutH;
     QLineEdit _filter;
     QListView _listAccountsView;
-    QStringListModel _listAccountsModel;
+    QStandardItemModel _listAccountsModel;
     QStringList _accountsData;
     QStringList _accountsDataFilter;
     QVBoxLayout _layoutV;

@@ -1,20 +1,23 @@
 #include "NewAccountWindow.h"
 #include "Interface/IDatabase.h"
 #include "Interface/IEncryption.h"
+#include "Interface/IPasswordSecurity.h"
 #include "Interface/ILog.h"
 #include "Utility.h"
-#include "PasswordSecurity.h"
+#include "SecurityLevelWindow.h"
 
 #include <QFrame>
 #include <QDebug>
 #include <QMessageBox>
 
 NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
-                                   PasswordSecurity& iPasswordSecurity,
+                                   IPasswordSecurity& iPasswordSecurity,
+                                   SecurityLevelWindow& iSecurityLevelWindow,
                                    IDatabase& iDb,
                                    ILog& iLog):
     _encryption(iEncryption),
     _passwordSecurity(iPasswordSecurity),
+    _securityLevelWindow(iSecurityLevelWindow),
     _db(iDb),
     _log(iLog)
 {
@@ -78,6 +81,7 @@ NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
     _layoutMainV.addLayout(&_layoutButton);
     setLayout(&_layoutMainV);
 
+    QObject::connect(&_passwordSecurityButt,&QPushButton::clicked,this,&NewAccountWindow::showSecurityLvlWindow);
     QObject::connect(&_passwordViewButt,&QPushButton::clicked,this,&NewAccountWindow::viewPassword);
     QObject::connect(&_passwordLineEdit,&QLineEdit::textChanged,this,&NewAccountWindow::checkPasswordSecurity);
     QObject::connect(&_cancelButton,&QPushButton::clicked,this,&NewAccountWindow::close);
@@ -93,6 +97,10 @@ void NewAccountWindow::cleanWindow(){
     _detailsLineEdit.clear();
 }
 
+void NewAccountWindow::showSecurityLvlWindow(){
+    _securityLevelWindow.show();
+}
+
 void NewAccountWindow::checkPasswordSecurity(const QString& iPwd){
     if(iPwd.isEmpty()){
         _passwordSecurityButt.hide();
@@ -101,25 +109,22 @@ void NewAccountWindow::checkPasswordSecurity(const QString& iPwd){
 
     _pwdSecurityLvl = _passwordSecurity.getSecurityLevel(iPwd);
 
+    _passwordSecurityButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(_pwdSecurityLvl)));
+
     switch(_pwdSecurityLvl){
-    case PasswordSecurity::VERY_LOW:
-        _passwordSecurityButt.setIcon(QIcon(":/low"));
+    case IPasswordSecurity::VERY_LOW:
         _passwordSecurityButt.setToolTip(tr("Your password is not safe at all!"));
         break;
-    case PasswordSecurity::LOW:
-        _passwordSecurityButt.setIcon(QIcon(":/medium"));
+    case IPasswordSecurity::LOW:
         _passwordSecurityButt.setToolTip(tr("Your password can be cracked easily!"));
         break;
-    case PasswordSecurity::MEDIUM:
-        _passwordSecurityButt.setIcon(QIcon(":/medium"));
+    case IPasswordSecurity::MEDIUM:
         _passwordSecurityButt.setToolTip(tr("Your password is at the minimum safety!"));
         break;
-    case PasswordSecurity::HIGH:
-        _passwordSecurityButt.setIcon(QIcon(":/high"));
+    case IPasswordSecurity::HIGH:
         _passwordSecurityButt.setToolTip(tr("Your password is safe!"));
         break;
-    case PasswordSecurity::VERY_HIGH:
-        _passwordSecurityButt.setIcon(QIcon(":/very_high"));
+    case IPasswordSecurity::VERY_HIGH:
         _passwordSecurityButt.setToolTip(tr("More than 50 years is necessary to cracked your password!"));
         break;
     default:

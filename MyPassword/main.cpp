@@ -6,6 +6,7 @@
 #include "Log.h"
 #include "GenerateFile.h"
 #include "PasswordSecurity.h"
+#include "SecurityLevelWindow.h"
 
 #include <QApplication>
 
@@ -15,6 +16,9 @@
  * set tooltip for each icon
  * Check english only
  * Make shoter all name ex: password = pwd ...
+ * Display level security
+ * Settings
+ * Check number caractere per lineEdit
  */
 
 int main(int argc, char *argv[])
@@ -25,17 +29,18 @@ int main(int argc, char *argv[])
     Encryption encryption;
     FacAccount facAccount;
     PasswordSecurity passwordSecurity;
+    SecurityLevelWindow securityLevelWindow{passwordSecurity};
     GenerateFile generateFile{facAccount};
     Database db{facAccount};
     FacDisplayAccountWindow facWindowDisplay;
-    NewAccountWindow newAccount{encryption,passwordSecurity,db,log};
+    NewAccountWindow newAccount{encryption,passwordSecurity,securityLevelWindow,db,log};
 
-    MainWindow mainWindow{
-                facAccount,
+    MainWindow mainWindow{facAccount,
                 facWindowDisplay,
                 newAccount,
                 encryption,
                 passwordSecurity,
+                securityLevelWindow,
                 db,
                 log,
                 generateFile};

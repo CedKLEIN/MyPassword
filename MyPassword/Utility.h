@@ -17,6 +17,8 @@ static const QString COLOR_DARK_2{"#333333"};
 static const QString COLOR_LIGHT{"#E0E0E0"};
 static const QString ITALIC{"italic"};
 static const QString BOLD{"bold"};
+static const QString LEFT{"left"};
+static const QString RIGHT{"right"};
 static const size_t TEXT_STANDARD_SIZE{18};
 static const QSize ICON_SIZE{18,18};
 static const uint SIZE_WINDOW_HORIZONTAL{500};
@@ -80,6 +82,10 @@ public:
 
     static QString SET_BORDER_COLOR(const QString& iColor){
         return "border-color: "+iColor+";\n";
+    }
+
+    static QString SET_TEXT_ALIGN(const QString& iAligh){
+        return "text-align: "+iAligh+";\n";
     }
 
     static QString SET_TEXT_SIZE(size_t iSize, const QString& iStyle=""){

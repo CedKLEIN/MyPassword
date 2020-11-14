@@ -56,16 +56,18 @@ int Database::create(const QStringList& iData){
         QString queryStr("INSERT INTO ACCOUNT \
                          ( NAME, LOGIN, PASSWORD, DETAILS, SECURITY_LVL) \
                          VALUES \
-                         ('" + iData[0] +"', \
-                          '" + iData[1] +"', \
-                          '" + iData[2] +"',\
-                          '" + iData[3] +"',\
+                         ('" + iData[0].toLocal8Bit() +"',\
+                          '" + iData[1].toLocal8Bit() +"',\
+                          '" + iData[2].toLocal8Bit() +"',\
+                          '" + iData[3].toLocal8Bit() +"',\
                           '" + iData[4] +"');");
 
                 QSqlQuery query(queryStr, _db);
 
         if(!dbClose())
             return Utility::ERROR::db_failed_to_close;
+
+        qDebug() << query.lastError().text();
 
         if (query.lastError().isValid())
             return Utility::ERROR::db_unique_key_already_exist;
@@ -124,9 +126,9 @@ int Database::modify(const QStringList& iData)
     if(dbOpen())
     {
         QString queryStr("UPDATE ACCOUNT SET \
-                         LOGIN='"+ iData[1] +"',\
-                         PASSWORD='"+ iData[2] +"',\
-                         DETAILS='"+ iData[3] +"',\
+                         LOGIN='"+ iData[1].toLocal8Bit() +"',\
+                         PASSWORD='"+ iData[2].toLocal8Bit() +"',\
+                         DETAILS='"+ iData[3].toLocal8Bit() +"',\
                          SECURITY_LVL='"+ iData[4] +"'\
                          WHERE NAME='"+ iData[0] +"';");
 

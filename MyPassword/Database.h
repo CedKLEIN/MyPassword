@@ -22,8 +22,8 @@ public:
     int modify(const QStringList&) override final;
 
 private:
-    bool dbOpen();
-    bool dbClose();
+    bool dbOpen() override final;
+    bool dbClose() override final;
     FacAccount& _facAccount;
     QSqlDatabase _db;
 };

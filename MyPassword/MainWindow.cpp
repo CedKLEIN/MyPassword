@@ -2,8 +2,9 @@
 
 #include "AccountWindow.h"
 #include "NewAccountWindow.h"
+#include "SecurityLevelWindow.h"
 #include "Interface/IEncryption.h"
-#include "PasswordSecurity.h"
+#include "Interface/IPasswordSecurity.h"
 #include "Interface/IDatabase.h"
 #include "Utility.h"
 #include "Interface/ILog.h"
@@ -21,7 +22,8 @@ MainWindow::MainWindow(FacAccount& iFacAccount,
                        FacDisplayAccountWindow& iFacWindowDisplayAccount,
                        NewAccountWindow& iWindowNewAccount,
                        IEncryption& iEncryption,
-                       PasswordSecurity& iPasswordSecurity,
+                       IPasswordSecurity& iPasswordSecurity,
+                       SecurityLevelWindow& iSecurityLevelWindow,
                        IDatabase& iDb,
                        ILog& iLog,
                        IGenerateFile& iGenerateFile):
@@ -30,6 +32,7 @@ MainWindow::MainWindow(FacAccount& iFacAccount,
     _windowNewAccount(iWindowNewAccount),
     _encryption(iEncryption),
     _passwordSecurity(iPasswordSecurity),
+    _securityLevelWindow(iSecurityLevelWindow),
     _db(iDb),
     _log(iLog),
     _generateFile(iGenerateFile)
@@ -104,7 +107,7 @@ void MainWindow::filterChanged(const QString& iText){
                 break;
         }
     }
-    _listAccountsModel.setStringList(_accountsDataFilter);
+    setModelFromDataList(_accountsDataFilter);
 }
 
 void MainWindow::retrieveAccounts(){
@@ -124,7 +127,16 @@ void MainWindow::retrieveAccounts(){
     }
 
     _accountsData.sort(Qt::CaseInsensitive);
-    _listAccountsModel.setStringList(_accountsData);
+
+    setModelFromDataList(_accountsData);
+}
+
+void MainWindow::setModelFromDataList(const QStringList& iDataList){
+    _listAccountsModel.clear();
+    for(const auto& account: iDataList){
+        QStandardItem *item = new QStandardItem(QIcon(_passwordSecurity.getIconSeverityLvl(_facAccount.get(account)->getSeverityLvl())),account);
+        _listAccountsModel.appendRow(item);
+    }
 }
 
 void MainWindow::openWindowNewAccount(){
@@ -144,6 +156,7 @@ void MainWindow::displayWindowAccount(const QModelIndex& itemSlected)
                                     _facAccount,
                                     _encryption,
                                     _passwordSecurity,
+                                    _securityLevelWindow,
                                     _db,
                                     _log);
 

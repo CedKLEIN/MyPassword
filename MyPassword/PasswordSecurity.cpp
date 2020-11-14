@@ -118,6 +118,23 @@ int PasswordSecurity::getSecurityLevel(const QString& iPwd)const{
     return NONE;
 }
 
+QString PasswordSecurity::getIconSeverityLvl(const int iSeverityLvl)const{
+    switch(iSeverityLvl){
+    case PasswordSecurity::VERY_LOW:
+        return ":/very_low";
+    case PasswordSecurity::LOW:
+        return ":/low";
+    case PasswordSecurity::MEDIUM:
+        return ":/medium";
+    case PasswordSecurity::HIGH:
+        return ":/high";
+    case PasswordSecurity::VERY_HIGH:
+        return ":/very_high";
+    default:
+        return "";
+    }
+}
+
 bool PasswordSecurity::hasAll(const QString& iPwd)const{
     return hasOneNumbers(iPwd)
             && hasOneLetterLower(iPwd)

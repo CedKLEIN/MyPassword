@@ -14,7 +14,8 @@
 #include <memory>
 
 class IEncryption;
-class PasswordSecurity;
+class IPasswordSecurity;
+class SecurityLevelWindow;
 class IDatabase;
 class ILog;
 class FacDisplayAccountWindow;
@@ -39,6 +40,7 @@ public:
     QString getAccountName() const;
 
 public slots:
+    void showSecurityLvlWindow();
     void checkPasswordSecurity(const QString&);
     void itemChangedLogin(const QString&);
     void itemChangedDetails(const QString&);
@@ -57,14 +59,16 @@ private:
     AccountWindow(const QString&,
                   FacAccount&,
                   IEncryption&,
-                  PasswordSecurity&,
+                  IPasswordSecurity&,
+                  SecurityLevelWindow&,
                   IDatabase&,
                   ILog&);
 
     QString _accountName;
     FacAccount& _facAccount;
     IEncryption& _encryption;
-    PasswordSecurity& _passwordSecurity;
+    IPasswordSecurity& _passwordSecurity;
+    SecurityLevelWindow& _securityLevelWindow;
     IDatabase& _db;
     ILog& _log;
 
@@ -114,10 +118,16 @@ public:
     void create(const QString& iName,
                 FacAccount& iFacAccount,
                 IEncryption& iEncryption,
-                PasswordSecurity& iPasswordSecurity,
+                IPasswordSecurity& iPasswordSecurity,
+                SecurityLevelWindow& iSecurityLevelWindow,
                 IDatabase& iDatabase,
                 ILog& iLog){
-        _windowsDisplay.emplace_back(new AccountWindow(iName,iFacAccount,iEncryption,iPasswordSecurity,iDatabase,iLog));
+        _windowsDisplay.emplace_back(new AccountWindow(iName,
+                                                       iFacAccount,
+                                                       iEncryption,
+                                                       iPasswordSecurity,
+                                                       iSecurityLevelWindow,
+                                                       iDatabase,iLog));
     }
 
     AccountWindow* getAccount(const QString& iName)const{

@@ -1,18 +1,19 @@
 #pragma once
 
+#include "Interface/IPasswordSecurity.h"
+
 #include <QString>
 
-class PasswordSecurity
+class PasswordSecurity final : public IPasswordSecurity
 {
 public:
-    enum SecurityLvl{NONE,VERY_LOW,LOW,MEDIUM,HIGH,VERY_HIGH};
-
     PasswordSecurity()=default;
     PasswordSecurity(PasswordSecurity const&)=delete;
     PasswordSecurity& operator=(PasswordSecurity const&)=delete;
     virtual ~PasswordSecurity()=default;
 
-    int getSecurityLevel(const QString&)const;
+    int getSecurityLevel(const QString&)const override final;
+    QString getIconSeverityLvl(const int)const override final;
 
 private:
     bool hasAll(const QString&)const;

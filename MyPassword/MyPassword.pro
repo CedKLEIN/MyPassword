@@ -16,10 +16,12 @@ HEADERS += \
     Interface/IGenerateFile.h \
     Interface/IListener.h \
     Interface/ILog.h \
+    Interface/IPasswordSecurity.h \
     Log.h \
     MainWindow.h \
     NewAccountWindow.h \
     PasswordSecurity.h \
+    SecurityLevelWindow.h \
     Utility.h
 
 SOURCES += \
@@ -33,6 +35,7 @@ SOURCES += \
     MainWindow.cpp \
     NewAccountWindow.cpp \
     PasswordSecurity.cpp \
+    SecurityLevelWindow.cpp \
     main.cpp
 
 RESOURCES += \
