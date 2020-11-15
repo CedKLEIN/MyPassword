@@ -19,9 +19,13 @@ static const QString ITALIC{"italic"};
 static const QString BOLD{"bold"};
 static const QString LEFT{"left"};
 static const QString RIGHT{"right"};
-static const size_t TEXT_STANDARD_SIZE{18};
+static const int TEXT_NAME_LENGTH{50};
+static const int TEXT_LOGIN_LENGTH{50};
+static const int TEXT_PASSWORD_LENGTH{50};
+static const int TEXT_DETAILS_LENGTH{200};
+static const int TEXT_STANDARD_SIZE{18};
 static const QSize ICON_SIZE{18,18};
-static const uint SIZE_WINDOW_HORIZONTAL{1000};
+static const uint SIZE_WINDOW_HORIZONTAL{1200};
 static const uint SIZE_WINDOW_VERTICAL{500};
 
 class Utility{
@@ -46,6 +50,13 @@ public:
     static QString GET_STYLE_QLINEEDIT(){
         return "QLineEdit{"+SET_HEIGHT(30)+
                 SET_BORDER_SIZE(0)+
+                SET_BACKGROUND_COLOR(COLOR_DARK_2)+
+                SET_TEXT_COLOR(COLOR_LIGHT)+
+                SET_TEXT_SIZE(TEXT_STANDARD_SIZE)+"}";
+    }
+
+    static QString GET_STYLE_QTEXTEDIT(){
+        return "QTextEdit{"+SET_BORDER_SIZE(0)+
                 SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                 SET_TEXT_COLOR(COLOR_LIGHT)+
                 SET_TEXT_SIZE(TEXT_STANDARD_SIZE)+"}";
@@ -77,8 +88,32 @@ public:
         return "height: "+QString::number(iSize)+"px;\n";
     }
 
+    static QString SET_WIDTH(size_t iSize){
+        return "width: "+QString::number(iSize)+"px;\n";
+    }
+
     static QString SET_BORDER_SIZE(size_t iSize){
         return "border: "+QString::number(iSize)+"px;\n";
+    }
+
+    static QString SET_MARGIN_SIZE(size_t iTop,
+                                   size_t iRight,
+                                   size_t iLeft,
+                                   size_t iBottom){
+        return "margin: "+QString::number(iTop)+"px \
+                                                "+QString::number(iRight)+"px \
+                                                "+QString::number(iLeft)+"px \
+                                                "+QString::number(iBottom)+"px;\n";
+    }
+
+    static QString SET_PADDING_SIZE(size_t iTop,
+                                   size_t iRight,
+                                   size_t iLeft,
+                                   size_t iBottom){
+        return "padding: "+QString::number(iTop)+"px \
+                                                "+QString::number(iRight)+"px \
+                                                "+QString::number(iLeft)+"px \
+                                                "+QString::number(iBottom)+"px;\n";
     }
 
     static QString SET_BORDER_COLOR(const QString& iColor){

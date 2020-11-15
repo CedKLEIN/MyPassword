@@ -38,6 +38,8 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
                                  Utility::SET_TEXT_COLOR(COLOR_BLUE_LIGHT)+
                                  Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
     _loginButt.setIconSize(ICON_SIZE);
+    _loginButt.setToolTip("Save change");
+    _loginLineEdit.setMaxLength(TEXT_LOGIN_LENGTH);
     _loginLayout.addWidget(&_loginLabel);
     _loginLayout.addWidget(&_loginLineEdit);
     _loginLayout.addWidget(&_loginButt);
@@ -47,6 +49,7 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
                                    Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
     _detailsButt.setIconSize(ICON_SIZE);
     _detailsButt.setToolTip("Save change");
+    _detailsLineEdit.setMaxLength(TEXT_DETAILS_LENGTH);
     _detailsLayout.addWidget(&_detailsLabel);
     _detailsLayout.addWidget(&_detailsLineEdit);
     _detailsLayout.addWidget(&_detailsButt);
@@ -54,6 +57,7 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _testLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
     _testLineEdit.setEchoMode(QLineEdit::Password);
     _testLineEdit.setPlaceholderText("Test here...");
+    _testLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
     _testButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                             Utility::SET_HEIGHT(35));
     _testViewButt.setIcon(QIcon(":/hide"));
@@ -66,6 +70,7 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _pwdSecurityButt.hide();
     _pwdLineEdit.setPlaceholderText("Password");
     _pwdLineEdit.setEchoMode(QLineEdit::Password);
+    _pwdLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
     _pwdButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                            Utility::SET_HEIGHT(35));
     _pwdViewButt.setIcon(QIcon(":/hide"));
@@ -73,6 +78,8 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _pwdLayout.addWidget(&_pwdLineEdit);
     _pwdLayout.addWidget(&_pwdViewButt);
     _pwdLayout.addWidget(&_pwdSecurityButt);
+
+    _mainLayout.setAlignment(Qt::AlignTop);
 
     _mainLayout.addSpacing(20);
     _mainLayout.addWidget(&_nameLabel);

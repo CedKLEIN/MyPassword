@@ -5,7 +5,9 @@ CONFIG += c++14
 
 HEADERS += \
     Account.h \
+    AccountTab.h \
     AccountWindow.h \
+    CreateAccountTab.h \
     Database.h \
     DateTime.h \
     Encryption.h \
@@ -19,21 +21,21 @@ HEADERS += \
     Interface/IPasswordSecurity.h \
     Log.h \
     MainWindow.h \
-    NewAccountWindow.h \
     PasswordSecurity.h \
     SecurityLevelWindow.h \
     Utility.h
 
 SOURCES += \
     Account.cpp \
+    AccountTab.cpp \
     AccountWindow.cpp \
+    CreateAccountTab.cpp \
     Database.cpp \
     DateTime.cpp \
     Encryption.cpp \
     GenerateFile.cpp \
     Log.cpp \
     MainWindow.cpp \
-    NewAccountWindow.cpp \
     PasswordSecurity.cpp \
     SecurityLevelWindow.cpp \
     main.cpp

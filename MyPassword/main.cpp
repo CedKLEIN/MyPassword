@@ -1,5 +1,6 @@
 #include "MainWindow.h"
-#include "NewAccountWindow.h"
+#include "AccountTab.h"
+#include "CreateAccountTab.h"
 #include "Database.h"
 #include "AccountWindow.h"
 #include "Encryption.h"
@@ -30,32 +31,32 @@ int main(int argc, char *argv[])
     Encryption encryption;
     FacAccount facAccount;
     PasswordSecurity passwordSecurity;
-    SecurityLevelWindow securityLevelWindow{passwordSecurity};
     GenerateFile generateFile{facAccount};
     Database db{facAccount};
+
+    SecurityLevelWindow securityLevelWindow{passwordSecurity};
     AccountWindow accountWindow{facAccount,
                 encryption,
                 passwordSecurity,
                 securityLevelWindow,
                 db,
                 log};
-    NewAccountWindow newAccount{encryption,
+    CreateAccountTab createAccountTab{encryption,
                 passwordSecurity,
                 securityLevelWindow,
                 db,
                 log};
 
-    MainWindow mainWindow{facAccount,
+    AccountTab accountTab{facAccount,
                 accountWindow,
-                newAccount,
-                encryption,
+                createAccountTab,
                 passwordSecurity,
-                securityLevelWindow,
                 db,
                 log,
                 generateFile};
 
-    mainWindow.show();
+    MainWindow _mainWindow{accountTab,createAccountTab};
+    _mainWindow.show();
 
     return app.exec();
 }

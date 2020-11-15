@@ -15,5 +15,9 @@
         <file alias="very_high">Icon/very_high.png</file>
         <file alias="very_low">Icon/very_low.png</file>
         <file alias="security">Icon/security.png</file>
+        <file alias="house">Icon/house.png</file>
+        <file alias="add_grey">Icon/add_grey.png</file>
+        <file alias="house_grey">Icon/house_grey.png</file>
+        <file alias="checked">Icon/checked.png</file>
     </qresource>
 </RCC>

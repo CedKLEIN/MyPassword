@@ -1,4 +1,4 @@
-#include "NewAccountWindow.h"
+#include "CreateAccountTab.h"
 #include "Interface/IDatabase.h"
 #include "Interface/IEncryption.h"
 #include "Interface/IPasswordSecurity.h"
@@ -9,7 +9,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
-NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
+CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
                                    IPasswordSecurity& iPasswordSecurity,
                                    SecurityLevelWindow& iSecurityLevelWindow,
                                    IDatabase& iDb,
@@ -20,9 +20,10 @@ NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
     _db(iDb),
     _log(iLog)
 {
-    setFixedWidth(SIZE_WINDOW_HORIZONTAL/2);
+    setFixedWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
                   Utility::GET_STYLE_QLINEEDIT()+
+                  Utility::GET_STYLE_QTEXTEDIT()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
                   Utility::GET_STYLE_QLABEL());
 
@@ -31,23 +32,22 @@ NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
     _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
-    _validateButt.setText("Submit");
-    _validateButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
-                                  Utility::SET_HEIGHT(50));
-    _cancelButt.setText("Cancel");
-    _cancelButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
-                                Utility::SET_HEIGHT(50));
-
-    _nameLabel.setText("Name:");
+    _nameErrorLabel.setVisible(false);
+    _nameErrorLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_RED));
+    _nameLineEdit.setMaxLength(TEXT_NAME_LENGTH);
+    _nameLengthLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREY));
     _nameLayout.addWidget(&_nameLabel);
     _nameLayout.addWidget(&_nameLineEdit);
+    _nameLayout.addWidget(&_nameLengthLabel);
 
-    _loginLabel.setText("Login:");
+    _loginLineEdit.setMaxLength(TEXT_LOGIN_LENGTH);
+    _loginLengthLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREY));
     _loginLayout.addWidget(&_loginLabel);
     _loginLayout.addWidget(&_loginLineEdit);
+    _loginLayout.addWidget(&_loginLengthLabel);
 
-    _passwordLabel.setText("Password:");
     _passwordLineEdit.setEchoMode(QLineEdit::Password);
+    _passwordLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
     _passwordViewButt.setIcon(QIcon(":/hide"));
     _passwordViewButt.setIconSize(ICON_SIZE);
     _passwordSecurityButt.setIconSize(ICON_SIZE);
@@ -56,18 +56,34 @@ NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
     _passwordLayout.addWidget(&_passwordLineEdit);
     _passwordLayout.addWidget(&_passwordViewButt);
     _passwordLayout.addWidget(&_passwordSecurityButt);
+    _passwordLayout.addWidget(&_passwordLengthLabel);
 
-    _detailsLabel.setText("Details:");
-    _detailsLayout.addWidget(&_detailsLabel);
-    _detailsLayout.addWidget(&_detailsLineEdit);
+    _detailsLabelLayout.setAlignment(Qt::AlignTop);
+    _detailsLabelLayout.addWidget(&_detailsLabel);
+    _detailsLengthLabelLayout.setAlignment(Qt::AlignTop);
+    _detailsLengthLabelLayout.addWidget(&_detailsLengthLabel);
+    _detailsLayout.addLayout(&_detailsLabelLayout);
+    _detailsLayout.addWidget(&_detailsTextEdit);
+    _detailsLayout.addLayout(&_detailsLengthLabelLayout);
 
-    _layoutButton.addWidget(&_validateButt);
-    _layoutButton.addWidget(&_cancelButt);
+    _validateButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+                                Utility::SET_HEIGHT(50));
+    _validationLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREEN)+
+                                   Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC));
+    _validationLabel.setVisible(false);
+    _validationIcon.setVisible(false);
+    _validationIcon.setIcon(QIcon(":/checked"));
+    _validationIcon.setIconSize(ICON_SIZE);
+    _validationLayout.setAlignment(Qt::AlignLeft);
+    _validationLayout.addWidget(&_validationIcon);
+    _validationLayout.addWidget(&_validationLabel);
 
+    _mainLayout.setAlignment(Qt::AlignTop);
     _mainLayout.addSpacing(20);
     _mainLayout.addWidget(&_titleLabel);
     _mainLayout.addSpacing(20);
     _mainLayout.addLayout(&_nameLayout);
+    _mainLayout.addWidget(&_nameErrorLabel);
     _mainLayout.addSpacing(10);
     _mainLayout.addLayout(&_loginLayout);
     _mainLayout.addSpacing(10);
@@ -75,26 +91,61 @@ NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
     _mainLayout.addSpacing(10);
     _mainLayout.addLayout(&_detailsLayout);
     _mainLayout.addSpacing(20);
-    _mainLayout.addLayout(&_layoutButton);
+    _mainLayout.addWidget(&_validateButt);
+    _mainLayout.addLayout(&_validationLayout);
+    _mainLayout.addSpacing(200);
+
     setLayout(&_mainLayout);
 
+    QObject::connect(&_nameLineEdit,&QLineEdit::textChanged,this,&CreateAccountTab::textChangedName);
+    QObject::connect(&_loginLineEdit,&QLineEdit::textChanged,this,&CreateAccountTab::textChangedLogin);
+    QObject::connect(&_passwordLineEdit,&QLineEdit::textChanged,this,&CreateAccountTab::textChangedPassword);
+    QObject::connect(&_detailsTextEdit,&QTextEdit::textChanged,this,&CreateAccountTab::textChangedDetails);
     QObject::connect(&_passwordSecurityButt,&QPushButton::clicked,&_securityLevelWindow,&SecurityLevelWindow::show);
-    QObject::connect(&_passwordViewButt,&QPushButton::clicked,this,&NewAccountWindow::viewPassword);
-    QObject::connect(&_passwordLineEdit,&QLineEdit::textChanged,this,&NewAccountWindow::checkPasswordSecurity);
-    QObject::connect(&_cancelButt,&QPushButton::clicked,this,&NewAccountWindow::close);
-    QObject::connect(&_validateButt,&QPushButton::clicked,this,&NewAccountWindow::validateForm);
+    QObject::connect(&_passwordViewButt,&QPushButton::clicked,this,&CreateAccountTab::viewPassword);
+    QObject::connect(&_passwordLineEdit,&QLineEdit::textChanged,this,&CreateAccountTab::checkPasswordSecurity);
+    QObject::connect(&_validateButt,&QPushButton::clicked,this,&CreateAccountTab::validateForm);
 }
 
-void NewAccountWindow::clearWindow(){
+void CreateAccountTab::textChangedName(const QString&){
+    _nameErrorLabel.setVisible(false);
+    _nameLineEdit.setStyleSheet("");
+    _nameLengthLabel.setText(QString::number(_nameLineEdit.text().length())+"/"+
+                             QString::number(TEXT_LOGIN_LENGTH));
+}
+
+void CreateAccountTab::textChangedLogin(const QString&){
+    _loginLineEdit.setStyleSheet("");
+    _loginLengthLabel.setText(QString::number(_loginLineEdit.text().length())+"/"+
+                              QString::number(TEXT_LOGIN_LENGTH));
+}
+
+void CreateAccountTab::textChangedPassword(const QString&){
+    _passwordLineEdit.setStyleSheet("");
+    _passwordLengthLabel.setText(QString::number(_passwordLineEdit.text().length())+"/"+
+                                 QString::number(TEXT_LOGIN_LENGTH));
+}
+
+void CreateAccountTab::textChangedDetails(){
+    while(_detailsTextEdit.toPlainText().length()>TEXT_DETAILS_LENGTH){
+        _detailsTextEdit.textCursor().deletePreviousChar();
+    }
+    _detailsTextEdit.setStyleSheet("");
+    _detailsLengthLabel.setText(QString::number(_detailsTextEdit.toPlainText().length())+"/"+
+                                QString::number(TEXT_DETAILS_LENGTH));
+}
+
+
+void CreateAccountTab::clearWindow(){
     _nameLineEdit.clear();
     _loginLineEdit.clear();
     _passwordLineEdit.clear();
-    _detailsLineEdit.clear();
+    _detailsTextEdit.clear();
     _nameLineEdit.setStyleSheet(Utility::SET_BORDER_SIZE(0)+
                                 Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
 }
 
-void NewAccountWindow::checkPasswordSecurity(const QString& iPwd){
+void CreateAccountTab::checkPasswordSecurity(const QString& iPwd){
     if(iPwd.isEmpty()){
         _passwordSecurityButt.hide();
         return;
@@ -127,7 +178,7 @@ void NewAccountWindow::checkPasswordSecurity(const QString& iPwd){
     _passwordSecurityButt.show();
 }
 
-void NewAccountWindow::viewPassword(){
+void CreateAccountTab::viewPassword(){
     if(isPassordView){
         isPassordView = false;
         _passwordLineEdit.setEchoMode(QLineEdit::Password);
@@ -140,9 +191,10 @@ void NewAccountWindow::viewPassword(){
     }
 }
 
-void NewAccountWindow::validateForm() {
+void CreateAccountTab::validateForm() {
     if (_nameLineEdit.text().isEmpty()){
-        _nameLineEdit.setStyleSheet(Utility::SET_BORDER_SIZE(0)+
+        _nameErrorLabel.setVisible(true);
+        _nameLineEdit.setStyleSheet(Utility::SET_BORDER_SIZE(1)+
                                     Utility::SET_BACKGROUND_COLOR(COLOR_RED));
         return;
     }
@@ -151,7 +203,7 @@ void NewAccountWindow::validateForm() {
                          <<_nameLineEdit.text()
                          <<_loginLineEdit.text()
                          <<_encryption.encrypt(_passwordLineEdit.text())
-                         <<_detailsLineEdit.text()
+                         <<_detailsTextEdit.toPlainText()
                          << QString::number(_pwdSecurityLvl))};
 
     if(error != Utility::ERROR::no_error){
@@ -162,7 +214,16 @@ void NewAccountWindow::validateForm() {
 
     _log.LOG_INFO("Account created : "+_nameLineEdit.text().toStdString());
 
-    fireEventClose();
-    close();
+    fireEventUpdate();
+    clearWindow();
+    _validationLabel.setVisible(true);
+    _validationIcon.setVisible(true);
+}
+
+void CreateAccountTab::onTabSelected(){
+    _validationLabel.setVisible(false);
+    _validationIcon.setVisible(false);
+    _nameErrorLabel.setVisible(false);
+    _nameLineEdit.setStyleSheet("");
 }
 

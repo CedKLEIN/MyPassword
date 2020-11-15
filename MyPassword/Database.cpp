@@ -19,7 +19,7 @@ Database::Database(FacAccount& iFacAccount):
                     NAME             VARCHAR(50) PRIMARY KEY NOT NULL,\
                     LOGIN            VARCHAR(50),\
                     PASSWORD         VARCHAR(50),\
-                    DETAILS          VARCHAR(500),\
+                    DETAILS          VARCHAR(200),\
                     SECURITY_LVL     VARCHAR(1));", _db);
     dbClose();
 }
