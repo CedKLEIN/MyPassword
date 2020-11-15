@@ -15,8 +15,8 @@ public:
     void LOG_WARNING(const std::string&)const override final;
     void LOG_CRITICAL(const std::string&)const override final;
 
+private:
     void writeLog(const std::string&,const std::string&)const;
 
-private:
     DateTime _dateTime;
 };

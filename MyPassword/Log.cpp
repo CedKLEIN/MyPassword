@@ -21,7 +21,7 @@ void Log::LOG_CRITICAL(const std::string& iMsg) const{
 }
 
 void Log::writeLog(const std::string& iLogType,const std::string& iMsg) const{
-    std::ofstream file("./Log.txt",std::ios::app);
+    std::ofstream file{"./Log.txt",std::ios::app};
 
     if(file.is_open()){
         file << "[" << _dateTime.getDateTime() << "]";

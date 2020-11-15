@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "NewAccountWindow.h"
 #include "Database.h"
+#include "AccountWindow.h"
 #include "Encryption.h"
 #include "Account.h"
 #include "Log.h"
@@ -16,9 +17,9 @@
  * set tooltip for each icon
  * Check english only
  * Make shoter all name ex: password = pwd ...
- * Display level security
  * Settings
  * Check number caractere per lineEdit
+ * Clear items
  */
 
 int main(int argc, char *argv[])
@@ -32,11 +33,20 @@ int main(int argc, char *argv[])
     SecurityLevelWindow securityLevelWindow{passwordSecurity};
     GenerateFile generateFile{facAccount};
     Database db{facAccount};
-    FacDisplayAccountWindow facWindowDisplay;
-    NewAccountWindow newAccount{encryption,passwordSecurity,securityLevelWindow,db,log};
+    AccountWindow accountWindow{facAccount,
+                encryption,
+                passwordSecurity,
+                securityLevelWindow,
+                db,
+                log};
+    NewAccountWindow newAccount{encryption,
+                passwordSecurity,
+                securityLevelWindow,
+                db,
+                log};
 
     MainWindow mainWindow{facAccount,
-                facWindowDisplay,
+                accountWindow,
                 newAccount,
                 encryption,
                 passwordSecurity,

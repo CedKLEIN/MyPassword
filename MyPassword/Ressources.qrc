@@ -14,5 +14,6 @@
         <file alias="medium">Icon/medium.png</file>
         <file alias="very_high">Icon/very_high.png</file>
         <file alias="very_low">Icon/very_low.png</file>
+        <file alias="security">Icon/security.png</file>
     </qresource>
 </RCC>

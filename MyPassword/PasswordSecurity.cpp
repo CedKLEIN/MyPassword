@@ -1,7 +1,6 @@
 #include "PasswordSecurity.h"
 
 #include <QRegExp>
-#include <QDebug>
 
 int PasswordSecurity::getSecurityLevel(const QString& iPwd)const{
         if(iPwd.size()<9)

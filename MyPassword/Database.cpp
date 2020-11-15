@@ -11,6 +11,9 @@
 Database::Database(FacAccount& iFacAccount):
     _facAccount(iFacAccount)
 {
+    _db = QSqlDatabase::addDatabase("QSQLITE");
+    _db.setDatabaseName(QDir::currentPath()+"/database.db");
+
     dbOpen();
     QSqlQuery query("CREATE TABLE ACCOUNT(\
                     NAME             VARCHAR(50) PRIMARY KEY NOT NULL,\
@@ -21,33 +24,22 @@ Database::Database(FacAccount& iFacAccount):
     dbClose();
 }
 
+Database::~Database(){
+    _db.removeDatabase(QSqlDatabase::defaultConnection);
+}
+
 bool Database::dbOpen()
 {
-    _db = QSqlDatabase::addDatabase("QSQLITE");
-    _db.setDatabaseName(QDir::currentPath()+"/database.db");
-
-    if (!_db.open())
-    {
-        qDebug() << "Failed to open the database";
-        return false;
-    }
-    else
-    {
-        qDebug() << "Database connected...";
-        return true;
-    }
+    _db.open();
+    return _db.isOpen();
 }
 
 bool Database::dbClose()
 {
-    _db.close();
-    _db.removeDatabase(QSqlDatabase::defaultConnection);
+    if(_db.isOpen())
+        _db.close();
 
-    if (_db.isOpen()) {
-        qDebug() << "Database didn't manage to close";
-        return false;
-    }
-    return true;
+    return !_db.isOpen();
 }
 
 int Database::create(const QStringList& iData){
@@ -66,8 +58,6 @@ int Database::create(const QStringList& iData){
 
         if(!dbClose())
             return Utility::ERROR::db_failed_to_close;
-
-        qDebug() << query.lastError().text();
 
         if (query.lastError().isValid())
             return Utility::ERROR::db_unique_key_already_exist;
@@ -126,13 +116,13 @@ int Database::modify(const QStringList& iData)
     if(dbOpen())
     {
         QString queryStr("UPDATE ACCOUNT SET \
-                         LOGIN='"+ iData[1].toLocal8Bit() +"',\
-                         PASSWORD='"+ iData[2].toLocal8Bit() +"',\
-                         DETAILS='"+ iData[3].toLocal8Bit() +"',\
+                         LOGIN='"+ iData[1] +"',\
+                         PASSWORD='"+ iData[2] +"',\
+                         DETAILS='"+ iData[3] +"',\
                          SECURITY_LVL='"+ iData[4] +"'\
-                         WHERE NAME='"+ iData[0] +"';");
+                WHERE NAME='"+ iData[0] +"';");
 
-        QSqlQuery query(queryStr, _db);
+                QSqlQuery query(queryStr, _db);
 
         if(!dbClose())
             return Utility::ERROR::db_failed_to_close;

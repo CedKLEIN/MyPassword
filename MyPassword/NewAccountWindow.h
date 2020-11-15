@@ -2,16 +2,11 @@
 
 #include "Interface/IListener.h"
 
-#include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QFormLayout>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QCheckBox>
-
-#include <memory>
 
 class IEncryption;
 class IPasswordSecurity;
@@ -26,25 +21,24 @@ public:
     NewAccountWindow(IEncryption&,IPasswordSecurity&,SecurityLevelWindow&,IDatabase&,ILog&);
     NewAccountWindow(NewAccountWindow const&)=delete;
     NewAccountWindow& operator=(NewAccountWindow const&)=delete;
-    void cleanWindow();
+    void clearWindow();
 
     void addListener(IListener* iListener){
         _listeners.push_back(iListener);
     }
 
+private slots:
+    void checkPasswordSecurity(const QString&);
+    void viewPassword();
+    void validateForm();
+
+private:
     void fireEventClose(){
         for(const auto& listener : _listeners){
             listener->onEventClose();
         }
     }
 
-public slots:
-    void showSecurityLvlWindow();
-    void checkPasswordSecurity(const QString&);
-    void viewPassword();
-    void validateForm();
-
-private:
     IEncryption& _encryption;
     IPasswordSecurity& _passwordSecurity;
     SecurityLevelWindow& _securityLevelWindow;
@@ -52,7 +46,6 @@ private:
     ILog& _log;
 
     std::vector<IListener*> _listeners;
-    QVBoxLayout _layoutMainV;
     QHBoxLayout _layoutButton;
 
     QLabel _nameLabel;
@@ -75,7 +68,8 @@ private:
     QLineEdit _detailsLineEdit;
     QHBoxLayout _detailsLayout;
 
-    QPushButton _validateButton;
-    QPushButton _cancelButton;
-    QLabel _labelTitle;
+    QPushButton _validateButt;
+    QPushButton _cancelButt;
+    QLabel _titleLabel;
+    QVBoxLayout _mainLayout;
 };

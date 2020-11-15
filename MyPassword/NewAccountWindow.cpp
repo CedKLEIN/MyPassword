@@ -6,7 +6,6 @@
 #include "Utility.h"
 #include "SecurityLevelWindow.h"
 
-#include <QFrame>
 #include <QDebug>
 #include <QMessageBox>
 
@@ -21,24 +20,22 @@ NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
     _db(iDb),
     _log(iLog)
 {
-    setFixedWidth(SIZE_WINDOW_HORIZONTAL);
-    move(0,SIZE_WINDOW_HORIZONTAL+50);
-    setWindowTitle(" ");
+    setFixedWidth(SIZE_WINDOW_HORIZONTAL/2);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
                   Utility::GET_STYLE_QLINEEDIT()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
                   Utility::GET_STYLE_QLABEL());
 
-    _labelTitle.setText("NEW ACCOUNT");
-    _labelTitle.setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
-    _labelTitle.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
+    _titleLabel.setText("NEW ACCOUNT");
+    _titleLabel.setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
+    _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
-    _validateButton.setText("Submit");
-    _validateButton.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+    _validateButt.setText("Submit");
+    _validateButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                   Utility::SET_HEIGHT(50));
-    _cancelButton.setText("Cancel");
-    _cancelButton.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+    _cancelButt.setText("Cancel");
+    _cancelButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                 Utility::SET_HEIGHT(50));
 
     _nameLabel.setText("Name:");
@@ -64,41 +61,37 @@ NewAccountWindow::NewAccountWindow(IEncryption& iEncryption,
     _detailsLayout.addWidget(&_detailsLabel);
     _detailsLayout.addWidget(&_detailsLineEdit);
 
-    _layoutButton.addWidget(&_validateButton);
-    _layoutButton.addWidget(&_cancelButton);
+    _layoutButton.addWidget(&_validateButt);
+    _layoutButton.addWidget(&_cancelButt);
 
-    _layoutMainV.addSpacing(20);
-    _layoutMainV.addWidget(&_labelTitle);
-    _layoutMainV.addSpacing(20);
-    _layoutMainV.addLayout(&_nameLayout);
-    _layoutMainV.addSpacing(10);
-    _layoutMainV.addLayout(&_loginLayout);
-    _layoutMainV.addSpacing(10);
-    _layoutMainV.addLayout(&_passwordLayout);
-    _layoutMainV.addSpacing(10);
-    _layoutMainV.addLayout(&_detailsLayout);
-    _layoutMainV.addSpacing(20);
-    _layoutMainV.addLayout(&_layoutButton);
-    setLayout(&_layoutMainV);
+    _mainLayout.addSpacing(20);
+    _mainLayout.addWidget(&_titleLabel);
+    _mainLayout.addSpacing(20);
+    _mainLayout.addLayout(&_nameLayout);
+    _mainLayout.addSpacing(10);
+    _mainLayout.addLayout(&_loginLayout);
+    _mainLayout.addSpacing(10);
+    _mainLayout.addLayout(&_passwordLayout);
+    _mainLayout.addSpacing(10);
+    _mainLayout.addLayout(&_detailsLayout);
+    _mainLayout.addSpacing(20);
+    _mainLayout.addLayout(&_layoutButton);
+    setLayout(&_mainLayout);
 
-    QObject::connect(&_passwordSecurityButt,&QPushButton::clicked,this,&NewAccountWindow::showSecurityLvlWindow);
+    QObject::connect(&_passwordSecurityButt,&QPushButton::clicked,&_securityLevelWindow,&SecurityLevelWindow::show);
     QObject::connect(&_passwordViewButt,&QPushButton::clicked,this,&NewAccountWindow::viewPassword);
     QObject::connect(&_passwordLineEdit,&QLineEdit::textChanged,this,&NewAccountWindow::checkPasswordSecurity);
-    QObject::connect(&_cancelButton,&QPushButton::clicked,this,&NewAccountWindow::close);
-    QObject::connect(&_validateButton,&QPushButton::clicked,this,&NewAccountWindow::validateForm);
+    QObject::connect(&_cancelButt,&QPushButton::clicked,this,&NewAccountWindow::close);
+    QObject::connect(&_validateButt,&QPushButton::clicked,this,&NewAccountWindow::validateForm);
 }
 
-void NewAccountWindow::cleanWindow(){
+void NewAccountWindow::clearWindow(){
     _nameLineEdit.clear();
-    _nameLineEdit.setStyleSheet(Utility::SET_BORDER_SIZE(0)+
-                                Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
     _loginLineEdit.clear();
     _passwordLineEdit.clear();
     _detailsLineEdit.clear();
-}
-
-void NewAccountWindow::showSecurityLvlWindow(){
-    _securityLevelWindow.show();
+    _nameLineEdit.setStyleSheet(Utility::SET_BORDER_SIZE(0)+
+                                Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
 }
 
 void NewAccountWindow::checkPasswordSecurity(const QString& iPwd){

@@ -10,7 +10,6 @@ public:
     PasswordSecurity()=default;
     PasswordSecurity(PasswordSecurity const&)=delete;
     PasswordSecurity& operator=(PasswordSecurity const&)=delete;
-    virtual ~PasswordSecurity()=default;
 
     int getSecurityLevel(const QString&)const override final;
     QString getIconSeverityLvl(const int)const override final;

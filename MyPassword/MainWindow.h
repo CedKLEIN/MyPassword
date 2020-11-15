@@ -2,20 +2,17 @@
 
 #include "Account.h"
 
-#include "AccountWindow.h"
+#include "Interface/IListener.h"
 
 #include <QStringList>
-#include <QStringListModel>
 #include <QListView>
-#include <QList>
-#include <QAbstractItemView>
+#include <QLineEdit>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
-#include <QSqlDatabase>
-#include <QWidget>
 
+class AccountWindow;
 class IEncryption;
 class IPasswordSecurity;
 class SecurityLevelWindow;
@@ -29,7 +26,7 @@ class MainWindow final : public QWidget, public IListener
     Q_OBJECT
 public:
     MainWindow(FacAccount&,
-               FacDisplayAccountWindow& iFacWindowDisplayAccount,
+               AccountWindow&,
                NewAccountWindow&,
                IEncryption&,
                IPasswordSecurity&,
@@ -39,20 +36,22 @@ public:
                IGenerateFile&);
     MainWindow(MainWindow const&)=delete;
     MainWindow& operator=(MainWindow const&)=delete;
+    ~MainWindow();
     void onEventClose() override;
-    void closeEvent(QCloseEvent *) override;
 
-public slots:
+private slots:
     void filterChanged(const QString&);
     void retrieveAccounts();
-    void setModelFromDataList(const QStringList &);
-    void openWindowNewAccount();
-    void displayWindowAccount(const QModelIndex&);
+    void setModelFromDataList(const QStringList&);
+    void displayWindowAccount(const QItemSelection&, const QItemSelection&);
     void generateFile();
+    void deleteAccount();
 
 private:
+    void closeEvent(QCloseEvent *) override;
+
     FacAccount& _facAccount;
-    FacDisplayAccountWindow& _facWindowDisplayAccount;
+    AccountWindow& _accountWindow;
     NewAccountWindow& _windowNewAccount;
     IEncryption& _encryption;
     IPasswordSecurity& _passwordSecurity;
@@ -61,13 +60,15 @@ private:
     ILog& _log;
     IGenerateFile& _generateFile;
 
-    QHBoxLayout _layoutH;
-    QLineEdit _filter;
-    QListView _listAccountsView;
-    QStandardItemModel _listAccountsModel;
+    QLineEdit _filterLineEdit;
+    QListView _accountView;
+    QHBoxLayout _viewAndDisplayAccountLayout;
+    QStandardItemModel _accountModel;
     QStringList _accountsData;
     QStringList _accountsDataFilter;
-    QVBoxLayout _layoutV;
-    QPushButton _newAccountButton;
-    QPushButton _generateFileButton;
+    QPushButton _newAccountButt{" New account"};
+    QPushButton _generateFileButt{" Generate a text file"};
+    QPushButton _deleteAccountButt{" Delete account"};
+    QHBoxLayout _buttLayout;
+    QVBoxLayout _mainLayout;
 };

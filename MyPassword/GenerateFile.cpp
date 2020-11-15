@@ -9,7 +9,7 @@ GenerateFile::GenerateFile(FacAccount& iFacAccount):
     _facAccount(iFacAccount){}
 
 int GenerateFile::generate(const std::string& iPathFile) const{
-    std::ofstream file(iPathFile);
+    std::ofstream file{iPathFile};
 
     if(file.is_open()){
         for(const auto& account: _facAccount.getAll()){

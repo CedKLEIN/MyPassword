@@ -21,7 +21,8 @@ static const QString LEFT{"left"};
 static const QString RIGHT{"right"};
 static const size_t TEXT_STANDARD_SIZE{18};
 static const QSize ICON_SIZE{18,18};
-static const uint SIZE_WINDOW_HORIZONTAL{500};
+static const uint SIZE_WINDOW_HORIZONTAL{1000};
+static const uint SIZE_WINDOW_VERTICAL{500};
 
 class Utility{
 public:

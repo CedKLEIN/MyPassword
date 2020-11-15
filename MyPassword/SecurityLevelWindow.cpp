@@ -3,7 +3,6 @@
 #include "Utility.h"
 
 #include <QIcon>
-#include <QDebug>
 
 SecurityLevelWindow::SecurityLevelWindow(IPasswordSecurity& iPasswordSecurity):
     _passwordSecurity(iPasswordSecurity)
@@ -23,7 +22,6 @@ SecurityLevelWindow::SecurityLevelWindow(IPasswordSecurity& iPasswordSecurity):
     _lowButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::LOW)));
     _veryLowButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::VERY_LOW)));
 
-    qDebug() << _passwordSecurity.getIconSeverityLvl(IPasswordSecurity::MEDIUM);
     _veryHighButt.setIconSize(QSize(40,40));
     _highButt.setIconSize(QSize(40,40));
     _mediumButt.setIconSize(QSize(40,40));

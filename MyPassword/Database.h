@@ -12,9 +12,9 @@ class Database final: public IDatabase
 {
 public:
     Database(FacAccount&);
+    ~Database();
     Database(Database const&)=delete;
     Database& operator=(Database const&)=delete;
-    virtual ~Database()=default;
 
     int create(const QStringList&) override final;
     int retrieve() override final;

@@ -11,15 +11,13 @@
 #include "Interface/IGenerateFile.h"
 
 #include <QDebug>
-#include <QObject>
 
-#include <QApplication>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QScrollBar>
 
 MainWindow::MainWindow(FacAccount& iFacAccount,
-                       FacDisplayAccountWindow& iFacWindowDisplayAccount,
+                       AccountWindow& iAccountWindow,
                        NewAccountWindow& iWindowNewAccount,
                        IEncryption& iEncryption,
                        IPasswordSecurity& iPasswordSecurity,
@@ -28,7 +26,7 @@ MainWindow::MainWindow(FacAccount& iFacAccount,
                        ILog& iLog,
                        IGenerateFile& iGenerateFile):
     _facAccount(iFacAccount),
-    _facWindowDisplayAccount(iFacWindowDisplayAccount),
+    _accountWindow(iAccountWindow),
     _windowNewAccount(iWindowNewAccount),
     _encryption(iEncryption),
     _passwordSecurity(iPasswordSecurity),
@@ -37,48 +35,65 @@ MainWindow::MainWindow(FacAccount& iFacAccount,
     _log(iLog),
     _generateFile(iGenerateFile)
 {
-    setFixedSize(SIZE_WINDOW_HORIZONTAL,SIZE_WINDOW_HORIZONTAL);
+    setMinimumHeight(600);
+    setFixedWidth(SIZE_WINDOW_HORIZONTAL);
     move(0,0);
+    setWindowIcon(QIcon(":/security"));
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
                   Utility::GET_STYLE_QLINEEDIT()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
                   Utility::GET_STYLE_QLISTVIEW());
 
     _windowNewAccount.addListener(this);
+    _accountWindow.addListener(this);
+    _accountWindow.hide();
 
     retrieveAccounts();
 
-    _filter.setPlaceholderText("Search...");
-    _listAccountsView.setModel(&_listAccountsModel);
-    _listAccountsView.verticalScrollBar()->setStyleSheet("QScrollBar:vertical {width: 2px;}");
-    _listAccountsView.setEditTriggers(QAbstractItemView::NoEditTriggers);
+    _filterLineEdit.setPlaceholderText("Search...");
+    _accountView.setModel(&_accountModel);
+    _accountView.verticalScrollBar()->setStyleSheet("QScrollBar:vertical {width: 2px;}");
+    _accountView.setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    _newAccountButton.setIcon(QIcon(":/add"));
-    _newAccountButton.setIconSize(QSize(30,30));
-    _newAccountButton.setToolTip("Add new account");
+    _newAccountButt.setIcon(QIcon(":/add"));
+    _newAccountButt.setIconSize(QSize(30,30));
+    _newAccountButt.setToolTip("Add new account");
 
-    _generateFileButton.setIcon(QIcon(":/paper"));
-    _generateFileButton.setIconSize(QSize(30,30));
-    _generateFileButton.setToolTip("Generate accounts in text file");
+    _generateFileButt.setIcon(QIcon(":/paper"));
+    _generateFileButt.setIconSize(QSize(30,30));
+    _generateFileButt.setToolTip("Generate accounts in text file");
 
-    _layoutH.addWidget(&_newAccountButton);
-    _layoutH.addWidget(&_generateFileButton);
+    _deleteAccountButt.setIcon(QIcon(":/delete"));
+    _deleteAccountButt.setIconSize(QSize(30,30));
+    _deleteAccountButt.setToolTip("Delete account selected");
+    _deleteAccountButt.setEnabled(false);
 
-    _layoutV.addWidget(&_filter);
-    _layoutV.addWidget(&_listAccountsView);
-    _layoutV.addLayout(&_layoutH);
+    _buttLayout.addWidget(&_newAccountButt);
+    _buttLayout.addWidget(&_generateFileButt);
+    _buttLayout.addWidget(&_deleteAccountButt);
 
-    setLayout(&_layoutV);
+    _mainLayout.addWidget(&_filterLineEdit);
+    _viewAndDisplayAccountLayout.addWidget(&_accountView);
+    _viewAndDisplayAccountLayout.addWidget(&_accountWindow);
+    _mainLayout.addLayout(&_viewAndDisplayAccountLayout);
+    _mainLayout.addLayout(&_buttLayout);
 
-    QObject::connect(&_filter,&QLineEdit::textChanged,this,&MainWindow::filterChanged);
-    QObject::connect(&_newAccountButton,&QPushButton::clicked,this,&MainWindow::openWindowNewAccount);
-    QObject::connect(&_generateFileButton,&QPushButton::clicked,this,&MainWindow::generateFile);
-    QObject::connect(&_listAccountsView, &QListView::doubleClicked, this,&MainWindow::displayWindowAccount);
+    setLayout(&_mainLayout);
+
+    QObject::connect(&_filterLineEdit,&QLineEdit::textChanged,this,&MainWindow::filterChanged);
+    QObject::connect(&_newAccountButt,&QPushButton::clicked,&_windowNewAccount,&NewAccountWindow::show);
+    QObject::connect(&_generateFileButt,&QPushButton::clicked,this,&MainWindow::generateFile);
+    QObject::connect(&_deleteAccountButt,&QPushButton::clicked,this,&MainWindow::deleteAccount);
+    QObject::connect(_accountView.selectionModel(), &QItemSelectionModel::selectionChanged, this,&MainWindow::displayWindowAccount);
 }
 
+
+MainWindow::~MainWindow(){
+    _accountModel.clear();
+}
 void MainWindow::onEventClose(){
     retrieveAccounts();
-    _windowNewAccount.cleanWindow();
+    _windowNewAccount.clearWindow();
 }
 
 void MainWindow::filterChanged(const QString& iText){
@@ -132,44 +147,24 @@ void MainWindow::retrieveAccounts(){
 }
 
 void MainWindow::setModelFromDataList(const QStringList& iDataList){
-    _listAccountsModel.clear();
+    _accountModel.clear();
     for(const auto& account: iDataList){
         QStandardItem *item = new QStandardItem(QIcon(_passwordSecurity.getIconSeverityLvl(_facAccount.get(account)->getSeverityLvl())),account);
-        _listAccountsModel.appendRow(item);
+        _accountModel.appendRow(item);
     }
 }
 
-void MainWindow::openWindowNewAccount(){
-    _windowNewAccount.show();
-}
-
-void MainWindow::displayWindowAccount(const QModelIndex& itemSlected)
+void MainWindow::displayWindowAccount(const QItemSelection& iItemSelected, const QItemSelection&)
 {
-    QString accountName{_listAccountsModel.data(itemSlected).toString()};
-    std::shared_ptr<Account> account{_facAccount.get(accountName)};
-    AccountWindow* window{_facWindowDisplayAccount.getAccount(account->getName())};
-    if(window){
-        window->show();
-        return;
-    }
-    _facWindowDisplayAccount.create(account->getName(),
-                                    _facAccount,
-                                    _encryption,
-                                    _passwordSecurity,
-                                    _securityLevelWindow,
-                                    _db,
-                                    _log);
-
-    window = _facWindowDisplayAccount.getAccount(account->getName());
-    window->addListener(this);
-    window->show();
-
-    _log.LOG_INFO("Account display : "+account->getName().toStdString());
+    _deleteAccountButt.setEnabled(true);
+    QString accountName{_accountModel.itemData(iItemSelected.indexes().front()).value(0).toString()};
+    _accountWindow.showWindow(accountName);
+    _log.LOG_INFO("Account display : "+accountName.toStdString());
 }
 
 void MainWindow::generateFile(){
-    QString pathFile = QFileDialog::getSaveFileName(this,
-                                                    tr("Save password file"), "./", tr("Text Files (*.txt)"));
+    QString pathFile{QFileDialog::getSaveFileName(this,
+                                                  tr("Save password file"), "./", tr("Text Files (*.txt)"))};
 
     int error{_generateFile.generate(pathFile.toStdString())};
 
@@ -180,11 +175,30 @@ void MainWindow::generateFile(){
     }
 }
 
-void MainWindow::closeEvent(QCloseEvent*){
-    for(const auto& window : _facWindowDisplayAccount.getWindowsDisplay()){
-        window->close();
+void MainWindow::deleteAccount(){
+    const QString& currentAccount{_accountModel.itemData(_accountView.selectionModel()->currentIndex()).value(0).toString()};
+
+    int answer{QMessageBox::warning(this, tr("Delete account"),
+                                    tr("Do you really want to delete your account "+currentAccount.toLocal8Bit()+"?"),
+                                    QMessageBox::Yes | QMessageBox::No)};
+
+    if(answer != QMessageBox::Yes)
+        return;
+
+    int error{_db.remove(currentAccount)};
+
+    if(error != Utility::ERROR::no_error){
+        QMessageBox::warning(this,tr("Warning"),
+                             tr(Utility::getMsgError(error).c_str()));
+        return;
     }
 
+    _log.LOG_INFO("Account deleted : "+currentAccount.toStdString());
+
+    retrieveAccounts();
+}
+
+void MainWindow::closeEvent(QCloseEvent*){
     _windowNewAccount.close();
-    QApplication::quit();
+    _accountWindow.close();
 }
