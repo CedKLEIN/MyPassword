@@ -4,6 +4,7 @@
 #include "Interface/IListener.h"
 
 #include <QLineEdit>
+#include <QTextEdit>
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -41,13 +42,14 @@ public:
 private slots:
     void checkPasswordSecurity(const QString&);
     void itemChangedLogin(const QString&);
-    void itemChangedDetails(const QString&);
+    void itemChangedDetails();
     bool saveModifLogin();
     bool saveModifDetails();
     bool saveModifPassword();
     void checkPassword();
     void viewPassword();
     void viewTestPwd();
+    void deleteAccount();
 
 private:
     void fireRefreshAccounts(){
@@ -69,13 +71,11 @@ private:
 
     QLabel _loginLabel{"Login : "};
     QLineEdit _loginLineEdit{""};
-    QPushButton _loginButt;
-    QHBoxLayout _loginLayout;
+    QPushButton _loginButt{"Change login"};
 
     QLabel _detailsLabel{"Details : "};
-    QLineEdit _detailsLineEdit;
-    QPushButton _detailsButt;
-    QHBoxLayout _detailsLayout;
+    QTextEdit _detailsTextEdit;
+    QPushButton _detailsButt{"Change details"};
 
     QLabel _testLabel{" Test your password :"};
     QLineEdit _testLineEdit;
@@ -92,6 +92,8 @@ private:
     QHBoxLayout _pwdLayout;
     bool isPassordView{false};
     int _pwdSecurityLvl{0};
+
+    QPushButton _deleteAccountButt{" Delete account"};
 
     QVBoxLayout _mainLayout;
 };

@@ -17,7 +17,6 @@ class IPasswordSecurity;
 class CreateAccountTab;
 class IDatabase;
 class ILog;
-class IGenerateFile;
 
 class AccountTab final : public QWidget, public IListener
 {
@@ -28,8 +27,7 @@ public:
                CreateAccountTab&,
                IPasswordSecurity&,
                IDatabase&,
-               ILog&,
-               IGenerateFile&);
+               ILog&);
     AccountTab(AccountTab const&)=delete;
     AccountTab& operator=(AccountTab const&)=delete;
     ~AccountTab();
@@ -40,8 +38,6 @@ private slots:
     void retrieveAccounts();
     void setModelFromDataList(const QStringList&);
     void displayWindowAccount(const QItemSelection&, const QItemSelection&);
-    void generateFile();
-    void deleteAccount();
 
 private:
     FacAccount& _facAccount;
@@ -50,7 +46,9 @@ private:
     IPasswordSecurity& _passwordSecurity;
     IDatabase& _db;
     ILog& _log;
-    IGenerateFile& _generateFile;
+
+    QWidget _accountWindowWidget;
+    QVBoxLayout _accountWindowLayout;
 
     QLineEdit _filterLineEdit;
     QListView _accountView;
@@ -58,8 +56,5 @@ private:
     QStandardItemModel _accountModel;
     QStringList _accountsData;
     QStringList _accountsDataFilter;
-    QPushButton _generateFileButt{" Generate a text file"};
-    QPushButton _deleteAccountButt{" Delete account"};
-    QHBoxLayout _buttLayout;
     QVBoxLayout _mainLayout;
 };

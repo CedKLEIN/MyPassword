@@ -19,5 +19,7 @@
         <file alias="add_grey">Icon/add_grey.png</file>
         <file alias="house_grey">Icon/house_grey.png</file>
         <file alias="checked">Icon/checked.png</file>
+        <file alias="paper_grey">Icon/paper_grey.png</file>
+        <file alias="actualize">Icon/actualize.png</file>
     </qresource>
 </RCC>

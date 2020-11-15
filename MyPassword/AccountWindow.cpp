@@ -9,6 +9,7 @@
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QScrollBar>
 
 AccountWindow::AccountWindow(FacAccount &iFacAccount,
                              IEncryption& iEncryption,
@@ -25,34 +26,28 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
 {
     setFixedWidth(SIZE_WINDOW_HORIZONTAL/2);
 
-    setStyleSheet(Utility::GET_STYLE_WIDGET()+
-                  Utility::GET_STYLE_QLINEEDIT()+
+    setStyleSheet(Utility::GET_STYLE_QLINEEDIT()+
+                  Utility::GET_STYLE_QTEXTEDIT()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
-                  Utility::GET_STYLE_QLABEL());
+                  "QPushButton{"+Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0)+"}");
 
     _nameLabel.setAlignment(Qt::AlignCenter);
-    _nameLabel.setStyleSheet(Utility::SET_TEXT_SIZE(40,BOLD)+
-                        Utility::SET_TEXT_COLOR(COLOR_LIGHT));
-
-    _loginLineEdit.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
-                                 Utility::SET_TEXT_COLOR(COLOR_BLUE_LIGHT)+
-                                 Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
-    _loginButt.setIconSize(ICON_SIZE);
-    _loginButt.setToolTip("Save change");
+    _nameLabel.setStyleSheet(Utility::SET_HEIGHT(30)+
+                             Utility::SET_BORDER_SIZE(0)+
+                             Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0)+
+                             Utility::SET_TEXT_SIZE(40,BOLD)+
+                             Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+    _loginLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+    _loginButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+                             Utility::SET_HEIGHT(35));
     _loginLineEdit.setMaxLength(TEXT_LOGIN_LENGTH);
-    _loginLayout.addWidget(&_loginLabel);
-    _loginLayout.addWidget(&_loginLineEdit);
-    _loginLayout.addWidget(&_loginButt);
+    _loginLineEdit.setPlaceholderText("...");
 
-    _detailsLineEdit.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
-                                   Utility::SET_TEXT_COLOR(COLOR_BLUE_LIGHT)+
-                                   Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
-    _detailsButt.setIconSize(ICON_SIZE);
-    _detailsButt.setToolTip("Save change");
-    _detailsLineEdit.setMaxLength(TEXT_DETAILS_LENGTH);
-    _detailsLayout.addWidget(&_detailsLabel);
-    _detailsLayout.addWidget(&_detailsLineEdit);
-    _detailsLayout.addWidget(&_detailsButt);
+    _detailsLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+    _detailsButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+                               Utility::SET_HEIGHT(35));
+    _detailsTextEdit.verticalScrollBar()->setStyleSheet("QScrollBar:vertical {width: 2px;}");
+    _detailsTextEdit.setPlaceholderText("...");
 
     _testLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
     _testLineEdit.setEchoMode(QLineEdit::Password);
@@ -79,23 +74,35 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _pwdLayout.addWidget(&_pwdViewButt);
     _pwdLayout.addWidget(&_pwdSecurityButt);
 
+    _deleteAccountButt.setIcon(QIcon(":/delete"));
+    _deleteAccountButt.setIconSize(QSize(20,20));
+    _deleteAccountButt.setToolTip("Delete account selected");
+    _deleteAccountButt.setStyleSheet("QPushButton:hover{"+Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
+                                     Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+"}");
+
     _mainLayout.setAlignment(Qt::AlignTop);
 
     _mainLayout.addSpacing(20);
     _mainLayout.addWidget(&_nameLabel);
     _mainLayout.addSpacing(25);
-    _mainLayout.addLayout(&_loginLayout);
-    _mainLayout.addLayout(&_detailsLayout);
+    _mainLayout.addWidget(&_loginLabel);
+    _mainLayout.addWidget(&_loginLineEdit);
+    _mainLayout.addWidget(&_loginButt);
+    _mainLayout.addWidget(&_detailsLabel);
+    _mainLayout.addWidget(&_detailsTextEdit);
+    _mainLayout.addWidget(&_detailsButt);
     _mainLayout.addSpacing(25);
+
+    _mainLayout.addWidget(&_pwdLabel);
+    _mainLayout.addLayout(&_pwdLayout);
+    _mainLayout.addWidget(&_pwdButt);
+    _mainLayout.addSpacing(20);
 
     _mainLayout.addWidget(&_testLabel);
     _mainLayout.addLayout(&_testLayout);
     _mainLayout.addWidget(&_testButt);
-
-    _mainLayout.addSpacing(20);
-    _mainLayout.addWidget(&_pwdLabel);
-    _mainLayout.addLayout(&_pwdLayout);
-    _mainLayout.addWidget(&_pwdButt);
+    _mainLayout.addSpacing(10);
+    _mainLayout.addWidget(&_deleteAccountButt);
     _mainLayout.addSpacing(10);
 
     setLayout(&_mainLayout);
@@ -105,11 +112,12 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     QObject::connect(&_pwdViewButt,&QPushButton::clicked,this,&AccountWindow::viewPassword);
     QObject::connect(&_testViewButt,&QPushButton::clicked,this,&AccountWindow::viewTestPwd);
     QObject::connect(&_loginLineEdit,&QLineEdit::textChanged,this,&AccountWindow::itemChangedLogin);
-    QObject::connect(&_detailsLineEdit,&QLineEdit::textChanged,this,&AccountWindow::itemChangedDetails);
+    QObject::connect(&_detailsTextEdit,&QTextEdit::textChanged,this,&AccountWindow::itemChangedDetails);
     QObject::connect(&_testButt,&QPushButton::clicked,this,&AccountWindow::checkPassword);
     QObject::connect(&_loginButt,&QPushButton::clicked,this,&AccountWindow::saveModifLogin);
     QObject::connect(&_detailsButt,&QPushButton::clicked,this,&AccountWindow::saveModifDetails);
     QObject::connect(&_pwdButt,&QPushButton::clicked,this,&AccountWindow::saveModifPassword);
+    QObject::connect(&_deleteAccountButt,&QPushButton::clicked,this,&AccountWindow::deleteAccount);
 }
 
 void AccountWindow::checkPasswordSecurity(const QString& iPwd){
@@ -145,14 +153,12 @@ void AccountWindow::checkPasswordSecurity(const QString& iPwd){
     _pwdSecurityButt.show();
 }
 
-void AccountWindow::itemChangedLogin(const QString&){
-    _loginButt.setIcon(QIcon(":/save"));
-    _loginButt.setEnabled(true);
-}
+void AccountWindow::itemChangedLogin(const QString&){}
 
-void AccountWindow::itemChangedDetails(const QString&){
-    _detailsButt.setIcon(QIcon(":/save"));
-    _detailsButt.setEnabled(true);
+void AccountWindow::itemChangedDetails(){
+    while(_detailsTextEdit.toPlainText().length()>TEXT_DETAILS_LENGTH){
+        _detailsTextEdit.textCursor().deletePreviousChar();
+    }
 }
 
 bool AccountWindow::saveModifLogin()
@@ -176,8 +182,6 @@ bool AccountWindow::saveModifLogin()
                   +_loginLineEdit.text().toStdString());
 
     fireRefreshAccounts();
-    _loginButt.setIcon(QIcon(":/save-dark2"));
-    _loginButt.setEnabled(false);
     return true;
 }
 
@@ -187,7 +191,7 @@ bool AccountWindow::saveModifDetails()
                          <<_nameLabel.text()
                          <<_facAccount.get(_nameLabel.text())->getLogin()
                          <<_facAccount.get(_nameLabel.text())->getPassword()
-                         <<_detailsLineEdit.text()
+                         <<_detailsTextEdit.toPlainText()
                          <<QString::number(_facAccount.get(_nameLabel.text())->getSeverityLvl()))};
 
     if(error != Utility::ERROR::no_error){
@@ -199,11 +203,9 @@ bool AccountWindow::saveModifDetails()
     _log.LOG_INFO("Details changed from : "
                   +_facAccount.get(_nameLabel.text())->getDetails().toStdString()
                   +" to : "
-                  +_detailsLineEdit.text().toStdString());
+                  +_detailsTextEdit.toPlainText().toStdString());
 
     fireRefreshAccounts();
-    _detailsButt.setIcon(QIcon(":/save-dark2"));
-    _detailsButt.setEnabled(false);
     return true;
 }
 
@@ -272,18 +274,37 @@ void AccountWindow::viewTestPwd(){
 void AccountWindow::showWindow(const QString& iName){
     _nameLabel.clear();
     _loginLineEdit.clear();
-    _detailsLineEdit.clear();
+    _detailsTextEdit.clear();
     _testLineEdit.clear();
     _pwdLineEdit.clear();
 
     _nameLabel.setText(iName);
     _loginLineEdit.setText(_facAccount.get(_nameLabel.text())->getLogin());
-    _loginButt.setIcon(QIcon(":/save-dark2"));
-    _loginButt.setEnabled(false);
-    _detailsLineEdit.setText(_facAccount.get(_nameLabel.text())->getDetails());
-    _detailsButt.setIcon(QIcon(":/save-dark2"));
-    _detailsButt.setEnabled(false);
+    _detailsTextEdit.setText(_facAccount.get(_nameLabel.text())->getDetails());
 
     _testLineEdit.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2));
-    show();
+}
+
+void AccountWindow::deleteAccount(){
+    const QString& currentAccount{_nameLabel.text()};
+
+    int answer{QMessageBox::warning(this, tr("Delete account"),
+                                    tr("Do you really want to delete your account "+currentAccount.toLocal8Bit()+"?"),
+                                    QMessageBox::Yes | QMessageBox::No)};
+
+    if(answer != QMessageBox::Yes)
+        return;
+
+    int error{_db.remove(currentAccount)};
+
+    if(error != Utility::ERROR::no_error){
+        QMessageBox::warning(this,tr("Warning"),
+                             tr(Utility::getMsgError(error).c_str()));
+        return;
+    }
+
+    _log.LOG_INFO("Account deleted : "+currentAccount.toStdString());
+
+    fireRefreshAccounts();
+    setVisible(false);
 }

@@ -6,7 +6,7 @@
 #include "Encryption.h"
 #include "Account.h"
 #include "Log.h"
-#include "GenerateFile.h"
+#include "GenerateFileTab.h"
 #include "PasswordSecurity.h"
 #include "SecurityLevelWindow.h"
 
@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
     Encryption encryption;
     FacAccount facAccount;
     PasswordSecurity passwordSecurity;
-    GenerateFile generateFile{facAccount};
     Database db{facAccount};
 
     SecurityLevelWindow securityLevelWindow{passwordSecurity};
@@ -41,6 +40,7 @@ int main(int argc, char *argv[])
                 securityLevelWindow,
                 db,
                 log};
+
     CreateAccountTab createAccountTab{encryption,
                 passwordSecurity,
                 securityLevelWindow,
@@ -52,10 +52,11 @@ int main(int argc, char *argv[])
                 createAccountTab,
                 passwordSecurity,
                 db,
-                log,
-                generateFile};
+                log};
 
-    MainWindow _mainWindow{accountTab,createAccountTab};
+    GenerateFileTab generateFileTab{facAccount};
+
+    MainWindow _mainWindow{accountTab,createAccountTab,generateFileTab};
     _mainWindow.show();
 
     return app.exec();

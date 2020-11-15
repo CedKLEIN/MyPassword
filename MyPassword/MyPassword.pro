@@ -11,11 +11,10 @@ HEADERS += \
     Database.h \
     DateTime.h \
     Encryption.h \
-    GenerateFile.h \
+    GenerateFileTab.h \
     Interface/IDatabase.h \
     Interface/IDateTime.h \
     Interface/IEncryption.h \
-    Interface/IGenerateFile.h \
     Interface/IListener.h \
     Interface/ILog.h \
     Interface/IPasswordSecurity.h \
@@ -33,7 +32,7 @@ SOURCES += \
     Database.cpp \
     DateTime.cpp \
     Encryption.cpp \
-    GenerateFile.cpp \
+    GenerateFileTab.cpp \
     Log.cpp \
     MainWindow.cpp \
     PasswordSecurity.cpp \

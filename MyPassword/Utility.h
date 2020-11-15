@@ -12,6 +12,7 @@ static const QString COLOR_BLUE_LIGHT{"#7BDCFE"};
 static const QString COLOR_YELLOW{"#DCDC9D"};
 static const QString COLOR_PINK{"#C586C0"};
 static const QString COLOR_GREY{"#9E9E9E"};
+static const QString COLOR_DARK_0{"#1E1E1E"};
 static const QString COLOR_DARK_1{"#252526"};
 static const QString COLOR_DARK_2{"#333333"};
 static const QString COLOR_LIGHT{"#E0E0E0"};
@@ -26,7 +27,7 @@ static const int TEXT_DETAILS_LENGTH{200};
 static const int TEXT_STANDARD_SIZE{18};
 static const QSize ICON_SIZE{18,18};
 static const uint SIZE_WINDOW_HORIZONTAL{1200};
-static const uint SIZE_WINDOW_VERTICAL{500};
+static const uint SIZE_WINDOW_VERTICAL{850};
 
 class Utility{
 public:

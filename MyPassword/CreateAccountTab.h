@@ -53,15 +53,15 @@ private:
 
     std::vector<IListener*> _listeners;
 
-    QLabel _titleLabel;
+    QLabel _titleLabel{"New account"};
 
-    QLabel _nameLabel{"Name:*"};
+    QLabel _nameLabel{"Name:*   "};
     QLabel _nameErrorLabel{"The name is mandatory."};
     QLabel _nameLengthLabel{"0/50"};
     QLineEdit _nameLineEdit;
     QHBoxLayout _nameLayout;
 
-    QLabel _loginLabel{"Login:"};
+    QLabel _loginLabel{"Login:     "};
     QLabel _loginLengthLabel{"0/50"};
     QLineEdit _loginLineEdit;
     QHBoxLayout _loginLayout;
@@ -75,14 +75,14 @@ private:
     bool isPassordView{false};
     int _pwdSecurityLvl{0};
 
-    QLabel _detailsLabel{"Details:"};
+    QLabel _detailsLabel{"Details:    "};
     QVBoxLayout _detailsLabelLayout;
     QLabel _detailsLengthLabel{"0/200"};
     QVBoxLayout _detailsLengthLabelLayout;
     QTextEdit _detailsTextEdit;
     QHBoxLayout _detailsLayout;
 
-    QPushButton _validateButt{"Submit"};
+    QPushButton _validateButt{"Create account"};
     QLabel _validationLabel{"New account created!"};
     QPushButton _validationIcon;
     QHBoxLayout _validationLayout;

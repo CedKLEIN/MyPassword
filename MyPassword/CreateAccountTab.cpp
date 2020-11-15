@@ -27,7 +27,6 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
                   Utility::GET_STYLE_QPUSHBUTTON()+
                   Utility::GET_STYLE_QLABEL());
 
-    _titleLabel.setText("NEW ACCOUNT");
     _titleLabel.setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
     _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
