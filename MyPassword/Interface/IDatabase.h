@@ -2,8 +2,6 @@
 
 #include <QString>
 
-#include <memory>
-
 class IDatabase{
 public:
     virtual int create(const QStringList&)=0;

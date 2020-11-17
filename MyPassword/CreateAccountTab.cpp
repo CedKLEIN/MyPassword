@@ -8,6 +8,7 @@
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QString>
 
 CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
                                    IPasswordSecurity& iPasswordSecurity,
@@ -47,7 +48,7 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
 
     _passwordLineEdit.setEchoMode(QLineEdit::Password);
     _passwordLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
-    _passwordViewButt.setIcon(QIcon(":/hide"));
+    _passwordViewButt.setIcon(QIcon(QStringLiteral(":/hide")));
     _passwordViewButt.setIconSize(ICON_SIZE);
     _passwordSecurityButt.setIconSize(ICON_SIZE);
     _passwordSecurityButt.hide();
@@ -71,7 +72,7 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
                                    Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC));
     _validationLabel.setVisible(false);
     _validationIcon.setVisible(false);
-    _validationIcon.setIcon(QIcon(":/checked"));
+    _validationIcon.setIcon(QIcon(QStringLiteral(":/checked")));
     _validationIcon.setIconSize(ICON_SIZE);
     _validationLayout.setAlignment(Qt::AlignLeft);
     _validationLayout.addWidget(&_validationIcon);
@@ -108,19 +109,19 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
 
 void CreateAccountTab::textChangedName(const QString&){
     _nameErrorLabel.setVisible(false);
-    _nameLineEdit.setStyleSheet("");
+    _nameLineEdit.setStyleSheet(QStringLiteral(""));
     _nameLengthLabel.setText(QString::number(_nameLineEdit.text().length())+"/"+
                              QString::number(TEXT_LOGIN_LENGTH));
 }
 
 void CreateAccountTab::textChangedLogin(const QString&){
-    _loginLineEdit.setStyleSheet("");
+    _loginLineEdit.setStyleSheet(QStringLiteral(""));
     _loginLengthLabel.setText(QString::number(_loginLineEdit.text().length())+"/"+
                               QString::number(TEXT_LOGIN_LENGTH));
 }
 
 void CreateAccountTab::textChangedPassword(const QString&){
-    _passwordLineEdit.setStyleSheet("");
+    _passwordLineEdit.setStyleSheet(QStringLiteral(""));
     _passwordLengthLabel.setText(QString::number(_passwordLineEdit.text().length())+"/"+
                                  QString::number(TEXT_LOGIN_LENGTH));
 }
@@ -129,7 +130,7 @@ void CreateAccountTab::textChangedDetails(){
     while(_detailsTextEdit.toPlainText().length()>TEXT_DETAILS_LENGTH){
         _detailsTextEdit.textCursor().deletePreviousChar();
     }
-    _detailsTextEdit.setStyleSheet("");
+    _detailsTextEdit.setStyleSheet(QStringLiteral(""));
     _detailsLengthLabel.setText(QString::number(_detailsTextEdit.toPlainText().length())+"/"+
                                 QString::number(TEXT_DETAILS_LENGTH));
 }
@@ -181,12 +182,12 @@ void CreateAccountTab::viewPassword(){
     if(isPassordView){
         isPassordView = false;
         _passwordLineEdit.setEchoMode(QLineEdit::Password);
-        _passwordViewButt.setIcon(QIcon(":/hide"));
+        _passwordViewButt.setIcon(QIcon(QStringLiteral(":/hide")));
 
     }else{
         isPassordView = true;
         _passwordLineEdit.setEchoMode(QLineEdit::Normal);
-        _passwordViewButt.setIcon(QIcon(":/view"));
+        _passwordViewButt.setIcon(QIcon(QStringLiteral(":/view")));
     }
 }
 

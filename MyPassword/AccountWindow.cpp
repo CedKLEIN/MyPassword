@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QString>
 
 AccountWindow::AccountWindow(FacAccount &iFacAccount,
                              IEncryption& iEncryption,
@@ -29,11 +30,12 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     setStyleSheet(Utility::GET_STYLE_QLINEEDIT()+
                   Utility::GET_STYLE_QTEXTEDIT()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
-                  "QPushButton{"+Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0)+"}");
+                  QLatin1String("QPushButton{")+
+                  Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0)+QLatin1String("}"));
 
-    _closeButt.setIcon(QIcon(":/close"));
+    _closeButt.setIcon(QIcon(QStringLiteral(":/close")));
     _closeButt.setIconSize(ICON_SIZE);
-    _closeButt.setToolTip("Close window");
+    _closeButt.setToolTip(tr("Close window"));
     _closeLayout.setAlignment(Qt::AlignRight);
     _closeLayout.addWidget(&_closeButt);
 
@@ -45,7 +47,7 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
                              Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
     _loginLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
-    _loginSavedButt.setIcon(QIcon(":/checked"));
+    _loginSavedButt.setIcon(QIcon(QStringLiteral(":/checked")));
     _loginSavedButt.setIconSize(QSize{17,17});
     _loginSavedButt.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREEN)+
                                   Utility::SET_TEXT_SIZE(17,ITALIC));
@@ -57,10 +59,10 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _loginButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                              Utility::SET_HEIGHT(35));
     _loginLineEdit.setMaxLength(TEXT_LOGIN_LENGTH);
-    _loginLineEdit.setPlaceholderText("...");
+    _loginLineEdit.setPlaceholderText(QStringLiteral("..."));
 
     _detailsLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
-    _detailsSavedButt.setIcon(QIcon(":/checked"));
+    _detailsSavedButt.setIcon(QIcon(QStringLiteral(":/checked")));
     _detailsSavedButt.setIconSize(QSize{17,17});
     _detailsSavedButt.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREEN)+
                                     Utility::SET_TEXT_SIZE(17,ITALIC));
@@ -70,11 +72,11 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _detailsLabelsLayout.addWidget(&_detailsSavedButt);
     _detailsButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                Utility::SET_HEIGHT(35));
-    _detailsTextEdit.verticalScrollBar()->setStyleSheet("QScrollBar:vertical {width: 2px;}");
+    _detailsTextEdit.verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
     _detailsTextEdit.setPlaceholderText("...");
 
     _pwdLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
-    _pwdSavedButt.setIcon(QIcon(":/checked"));
+    _pwdSavedButt.setIcon(QIcon(QStringLiteral(":/checked")));
     _pwdSavedButt.setIconSize(QSize{17,17});
     _pwdSavedButt.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREEN)+
                                 Utility::SET_TEXT_SIZE(17,ITALIC));
@@ -84,12 +86,12 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _pwdLabelsLayout.addWidget(&_pwdSavedButt);
     _pwdSecurityButt.setIconSize(ICON_SIZE);
     _pwdSecurityButt.hide();
-    _pwdLineEdit.setPlaceholderText("Password");
+    _pwdLineEdit.setPlaceholderText(tr("Password"));
     _pwdLineEdit.setEchoMode(QLineEdit::Password);
     _pwdLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
     _pwdButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                            Utility::SET_HEIGHT(35));
-    _pwdViewButt.setIcon(QIcon(":/hide"));
+    _pwdViewButt.setIcon(QIcon(QStringLiteral(":/hide")));
     _pwdViewButt.setIconSize(ICON_SIZE);
     _pwdLayout.addWidget(&_pwdLineEdit);
     _pwdLayout.addWidget(&_pwdViewButt);
@@ -97,20 +99,22 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
 
     _testLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
     _testLineEdit.setEchoMode(QLineEdit::Password);
-    _testLineEdit.setPlaceholderText("Test here...");
+    _testLineEdit.setPlaceholderText(tr("Test here..."));
     _testLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
     _testButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                             Utility::SET_HEIGHT(35));
-    _testViewButt.setIcon(QIcon(":/hide"));
+    _testViewButt.setIcon(QIcon(QStringLiteral(":/hide")));
     _testViewButt.setIconSize(ICON_SIZE);
     _testLayout.addWidget(&_testLineEdit);
     _testLayout.addWidget(&_testViewButt);
 
-    _deleteAccountButt.setIcon(QIcon(":/delete"));
+    _deleteAccountButt.setIcon(QIcon(QStringLiteral(":/delete")));
     _deleteAccountButt.setIconSize(QSize(20,20));
-    _deleteAccountButt.setToolTip("Delete account selected");
-    _deleteAccountButt.setStyleSheet("QPushButton:hover{"+Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
-                                     Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+"}");
+    _deleteAccountButt.setToolTip(tr("Delete account selected"));
+    _deleteAccountButt.setStyleSheet(QLatin1String("QPushButton:hover{")+
+                                     Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
+                                     Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+
+                                     QLatin1String("}"));
 
     _mainLayout.setAlignment(Qt::AlignTop);
     _mainLayout.setContentsMargins(0,0,0,0);
@@ -302,11 +306,11 @@ void AccountWindow::viewPassword(){
     if(isPassordView){
         isPassordView = false;
         _pwdLineEdit.setEchoMode(QLineEdit::Password);
-        _pwdViewButt.setIcon(QIcon(":/hide"));
+        _pwdViewButt.setIcon(QIcon(QStringLiteral(":/hide")));
     }else{
         isPassordView = true;
         _pwdLineEdit.setEchoMode(QLineEdit::Normal);
-        _pwdViewButt.setIcon(QIcon(":/view"));
+        _pwdViewButt.setIcon(QIcon(QStringLiteral(":/view")));
     }
 }
 
@@ -314,11 +318,11 @@ void AccountWindow::viewTestPwd(){
     if(isTestView){
         isTestView = false;
         _testLineEdit.setEchoMode(QLineEdit::Password);
-        _testViewButt.setIcon(QIcon(":/hide"));
+        _testViewButt.setIcon(QIcon(QStringLiteral(":/hide")));
     }else{
         isTestView = true;
         _testLineEdit.setEchoMode(QLineEdit::Normal);
-        _testViewButt.setIcon(QIcon(":/view"));
+        _testViewButt.setIcon(QIcon(QStringLiteral(":/view")));
     }
 }
 

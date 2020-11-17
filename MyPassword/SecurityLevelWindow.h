@@ -18,7 +18,7 @@ private:
     IPasswordSecurity& _passwordSecurity;
 
     QVBoxLayout _mainLyt;
-    QLabel _titleLabel{"Password Security Level"};
+    QLabel _titleLabel{tr("Password Security Level")};
     QPushButton _veryHighButt{tr("Your password is uncrackedable, more than 50 years are necessary to unblock it !")};
     QPushButton _highButt{tr("Your password is safe!")};
     QPushButton _mediumButt{tr("This level of password should be the minimum to use, between 1 year and 10 year to cracked it.")};

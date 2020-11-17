@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QScrollBar>
 #include <QFileDialog>
+#include <QString>
 
 #include <fstream>
 
@@ -20,15 +21,15 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount):
     _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
-    _generateTextButt.setIcon(QIcon(":/actualize"));
+    _generateTextButt.setIcon(QIcon(QStringLiteral(":/actualize")));
     _generateTextButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                     Utility::SET_HEIGHT(45));
-    _saveTextButt.setIcon(QIcon(":/save"));
+    _saveTextButt.setIcon(QIcon(QStringLiteral(":/save")));
     _saveTextButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                 Utility::SET_HEIGHT(45));
 
-    _textEdit.setPlaceholderText("1- Generate the text\n2- Copy text or click on save button");
-    _textEdit.verticalScrollBar()->setStyleSheet("QScrollBar:vertical {width: 2px;}");
+    _textEdit.setPlaceholderText(tr("1- Generate the text\n2- Copy text or click on save button"));
+    _textEdit.verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
 
     _buttLayout.addWidget(&_generateTextButt);
     _buttLayout.addWidget(&_saveTextButt);
@@ -56,9 +57,9 @@ void GenerateFileTab::fillTextEdit(){
     _textEdit.clear();
     for(const auto& account: _facAccount.getAll()){
         _textEdit.append(account->getName()+":");
-        _textEdit.append("Name: "+account->getLogin());
-        _textEdit.append("Details : "+account->getDetails());
-        _textEdit.append("");
+        _textEdit.append(QLatin1String("Name: ")+account->getLogin());
+        _textEdit.append(QLatin1String("Details : ")+account->getDetails());
+        _textEdit.append(QLatin1String(""));
     }
 }
 
@@ -76,16 +77,16 @@ void GenerateFileTab::saveTextInFile(){
                 file << line.toStdString() << std::endl;
             }
             file.close();
-            _outputSaveFileLabel.setText("File generated");
+            _outputSaveFileLabel.setText(tr("File generated"));
             _outputSaveFileLabel.setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                                Utility::SET_TEXT_COLOR(COLOR_GREEN));
         }else{
-            _outputSaveFileLabel.setText("File not created.");
+            _outputSaveFileLabel.setText(tr("File not created."));
             _outputSaveFileLabel.setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                                Utility::SET_TEXT_COLOR(COLOR_RED));
         }
     }else{
-        _outputSaveFileLabel.setText("The text is empty, generate the file first.");
+        _outputSaveFileLabel.setText(tr("The text is empty, generate the file first."));
         _outputSaveFileLabel.setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                            Utility::SET_TEXT_COLOR(COLOR_RED));
     }

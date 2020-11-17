@@ -1,6 +1,7 @@
 #include "PasswordSecurity.h"
 
 #include <QRegExp>
+#include <QString>
 
 int PasswordSecurity::getSecurityLevel(const QString& iPwd)const{
         if(iPwd.size()<9)
@@ -120,15 +121,15 @@ int PasswordSecurity::getSecurityLevel(const QString& iPwd)const{
 QString PasswordSecurity::getIconSeverityLvl(const int iSeverityLvl)const{
     switch(iSeverityLvl){
     case PasswordSecurity::VERY_LOW:
-        return ":/very_low";
+        return QStringLiteral(":/very_low");
     case PasswordSecurity::LOW:
-        return ":/low";
+        return QStringLiteral(":/low");
     case PasswordSecurity::MEDIUM:
-        return ":/medium";
+        return QStringLiteral(":/medium");
     case PasswordSecurity::HIGH:
-        return ":/high";
+        return QStringLiteral(":/high");
     case PasswordSecurity::VERY_HIGH:
-        return ":/very_high";
+        return QStringLiteral(":/very_high");
     default:
         return "";
     }
@@ -245,15 +246,15 @@ bool PasswordSecurity::hasOneOthers(const QString &iPwd)const{
 }
 
 bool PasswordSecurity::isOnlyNumbers(const QString &iPwd)const{
-    return QRegExp("[0-9]*").exactMatch(iPwd);
+    return QRegExp(QStringLiteral("[0-9]*")).exactMatch(iPwd);
 }
 
 bool PasswordSecurity::isOnlyLettersLower(const QString &iPwd)const{
-    return QRegExp("[a-z]*").exactMatch(iPwd);
+    return QRegExp(QStringLiteral("[a-z]*")).exactMatch(iPwd);
 }
 
 bool PasswordSecurity::isOnlyLettersUpper(const QString &iPwd)const{
-    return QRegExp("[A-Z]*").exactMatch(iPwd);
+    return QRegExp(QStringLiteral("[A-Z]*")).exactMatch(iPwd);
 }
 
 bool PasswordSecurity::isOnlyOthers(const QString &iPwd)const{

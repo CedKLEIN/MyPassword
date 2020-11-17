@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPushButton>
+#include <QString>
 
 class IEncryption;
 class IPasswordSecurity;
@@ -53,21 +54,21 @@ private:
 
     std::vector<IListener*> _listeners;
 
-    QLabel _titleLabel{"New account"};
+    QLabel _titleLabel{tr("New account")};
 
-    QLabel _nameLabel{"Name:*   "};
-    QLabel _nameErrorLabel{"The name is mandatory."};
-    QLabel _nameLengthLabel{"0/50"};
+    QLabel _nameLabel{tr("Name:*   ")};
+    QLabel _nameErrorLabel{tr("The name is mandatory.")};
+    QLabel _nameLengthLabel{QStringLiteral("0/50")};
     QLineEdit _nameLineEdit;
     QHBoxLayout _nameLayout;
 
-    QLabel _loginLabel{"Login:     "};
-    QLabel _loginLengthLabel{"0/50"};
+    QLabel _loginLabel{tr("Login:     ")};
+    QLabel _loginLengthLabel{QStringLiteral("0/50")};
     QLineEdit _loginLineEdit;
     QHBoxLayout _loginLayout;
 
-    QLabel _passwordLabel{"Password:"};
-    QLabel _passwordLengthLabel{"0/50"};
+    QLabel _passwordLabel{tr("Password:")};
+    QLabel _passwordLengthLabel{QStringLiteral("0/50")};
     QLineEdit _passwordLineEdit;
     QPushButton _passwordViewButt;
     QPushButton _passwordSecurityButt;
@@ -75,15 +76,15 @@ private:
     bool isPassordView{false};
     int _pwdSecurityLvl{0};
 
-    QLabel _detailsLabel{"Details:    "};
+    QLabel _detailsLabel{tr("Details:    ")};
     QVBoxLayout _detailsLabelLayout;
-    QLabel _detailsLengthLabel{"0/200"};
+    QLabel _detailsLengthLabel{QStringLiteral("0/200")};
     QVBoxLayout _detailsLengthLabelLayout;
     QTextEdit _detailsTextEdit;
     QHBoxLayout _detailsLayout;
 
-    QPushButton _validateButt{"Create account"};
-    QLabel _validationLabel{"New account created!"};
+    QPushButton _validateButt{tr("Create account")};
+    QLabel _validationLabel{tr("New account created!")};
     QPushButton _validationIcon;
     QHBoxLayout _validationLayout;
 

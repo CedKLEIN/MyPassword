@@ -3,6 +3,7 @@
 #include "Utility.h"
 
 #include <QIcon>
+#include <QString>
 
 SecurityLevelWindow::SecurityLevelWindow(IPasswordSecurity& iPasswordSecurity):
     _passwordSecurity(iPasswordSecurity)
@@ -10,9 +11,11 @@ SecurityLevelWindow::SecurityLevelWindow(IPasswordSecurity& iPasswordSecurity):
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
                   Utility::GET_STYLE_QLABEL()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
-                  "QPushButton:hover{}"+
-                  "QPushButton:pressed{"+Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
-                  Utility::SET_TEXT_COLOR(COLOR_LIGHT)+"}");
+                  QLatin1String("QPushButton:hover{}")+
+                  QLatin1String("QPushButton:pressed{")+
+                  Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
+                  Utility::SET_TEXT_COLOR(COLOR_LIGHT)+
+                  QLatin1String("}"));
     _titleLabel.setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
     _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));

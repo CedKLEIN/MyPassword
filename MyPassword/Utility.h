@@ -4,22 +4,22 @@
 #include <QString>
 #include <QSize>
 
-static const QString COLOR_WHITE{"#FFFFFF"};
-static const QString COLOR_RED{"#D32F2F"};
-static const QString COLOR_GREEN{"#388E3C"};
-static const QString COLOR_BLUE{"#1177BB"};
-static const QString COLOR_BLUE_LIGHT{"#7BDCFE"};
-static const QString COLOR_YELLOW{"#DCDC9D"};
-static const QString COLOR_PINK{"#C586C0"};
-static const QString COLOR_GREY{"#9E9E9E"};
-static const QString COLOR_DARK_0{"#1E1E1E"};
-static const QString COLOR_DARK_1{"#252526"};
-static const QString COLOR_DARK_2{"#333333"};
-static const QString COLOR_LIGHT{"#E0E0E0"};
-static const QString ITALIC{"italic"};
-static const QString BOLD{"bold"};
-static const QString LEFT{"left"};
-static const QString RIGHT{"right"};
+static const QString COLOR_WHITE{QStringLiteral("#FFFFFF")};
+static const QString COLOR_RED{QStringLiteral("#D32F2F")};
+static const QString COLOR_GREEN{QStringLiteral("#388E3C")};
+static const QString COLOR_BLUE{QStringLiteral("#1177BB")};
+static const QString COLOR_BLUE_LIGHT{QStringLiteral("#7BDCFE")};
+static const QString COLOR_YELLOW{QStringLiteral("#DCDC9D")};
+static const QString COLOR_PINK{QStringLiteral("#C586C0")};
+static const QString COLOR_GREY{QStringLiteral("#9E9E9E")};
+static const QString COLOR_DARK_0{QStringLiteral("#1E1E1E")};
+static const QString COLOR_DARK_1{QStringLiteral("#252526")};
+static const QString COLOR_DARK_2{QStringLiteral("#333333")};
+static const QString COLOR_LIGHT{QStringLiteral("#E0E0E0")};
+static const QString ITALIC{QStringLiteral("italic")};
+static const QString BOLD{QStringLiteral("bold")};
+static const QString LEFT{QStringLiteral("left")};
+static const QString RIGHT{QStringLiteral("right")};
 static const int TEXT_NAME_LENGTH{50};
 static const int TEXT_LOGIN_LENGTH{50};
 static const int TEXT_PASSWORD_LENGTH{50};
@@ -36,12 +36,12 @@ public:
     Utility& operator=(Utility const&)=delete;
 
     static QString GET_STYLE_WIDGET(){
-        return "QWidget{"+SET_BACKGROUND_COLOR(COLOR_DARK_1)+
+        return QLatin1String("QWidget{")+SET_BACKGROUND_COLOR(COLOR_DARK_1)+
                 SET_TEXT_COLOR(COLOR_LIGHT)+"}";
     }
 
     static QString GET_STYLE_QLABEL(){
-        return "QLabel{"+SET_HEIGHT(30)+
+        return QLatin1String("QLabel{")+SET_HEIGHT(30)+
                 SET_BORDER_SIZE(0)+
                 SET_BACKGROUND_COLOR(COLOR_DARK_1)+
                 SET_TEXT_COLOR(COLOR_GREY)+
@@ -49,7 +49,7 @@ public:
     }
 
     static QString GET_STYLE_QLINEEDIT(){
-        return "QLineEdit{"+SET_HEIGHT(30)+
+        return QLatin1String("QLineEdit{")+SET_HEIGHT(30)+
                 SET_BORDER_SIZE(0)+
                 SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                 SET_TEXT_COLOR(COLOR_LIGHT)+
@@ -57,89 +57,91 @@ public:
     }
 
     static QString GET_STYLE_QTEXTEDIT(){
-        return "QTextEdit{"+SET_BORDER_SIZE(0)+
+        return QLatin1String("QTextEdit{")+SET_BORDER_SIZE(0)+
                 SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                 SET_TEXT_COLOR(COLOR_LIGHT)+
-                SET_TEXT_SIZE(TEXT_STANDARD_SIZE)+"}";
+                SET_TEXT_SIZE(TEXT_STANDARD_SIZE)+QLatin1String("}");
     }
 
     static QString GET_STYLE_QPUSHBUTTON(){
-        return "QPushButton{"+SET_HEIGHT(30)+
+        return QLatin1String("QPushButton{")+SET_HEIGHT(30)+
                 SET_BACKGROUND_COLOR(COLOR_DARK_1)+
                 SET_TEXT_COLOR(COLOR_LIGHT)+
                 SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+
                 SET_BORDER_SIZE(0)+"}"+
-                "QPushButton:hover{"+SET_TEXT_COLOR(COLOR_LIGHT)+
+                QLatin1String("QPushButton:hover{")+SET_TEXT_COLOR(COLOR_LIGHT)+
                 SET_TEXT_SIZE(19,BOLD)+"}"+
-                "QPushButton:pressed{"+SET_BACKGROUND_COLOR(COLOR_DARK_2)+
+                QLatin1String("QPushButton:pressed{")+SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                 SET_TEXT_COLOR(COLOR_LIGHT)+
-                SET_TEXT_SIZE(19,BOLD)+"}";
+                SET_TEXT_SIZE(19,BOLD)+QLatin1String("}");
 
     }
 
     static QString GET_STYLE_QLISTVIEW(){
-        return "QListView{"+Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
+        return QLatin1String("QListView{")+Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
                 Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+
                 Utility::SET_BORDER_SIZE(0)+
-                Utility::SET_TEXT_COLOR(COLOR_WHITE)+"}";
+                Utility::SET_TEXT_COLOR(COLOR_WHITE)+QLatin1String("}");
 
     }
 
     static QString SET_HEIGHT(size_t iSize){
-        return "height: "+QString::number(iSize)+"px;\n";
+        return QLatin1String("height: ")+QString::number(iSize)+QLatin1String("px;\n");
     }
 
     static QString SET_WIDTH(size_t iSize){
-        return "width: "+QString::number(iSize)+"px;\n";
+        return QLatin1String("width: ")+QString::number(iSize)+QLatin1String("px;\n");
     }
 
     static QString SET_BORDER_SIZE(size_t iSize){
-        return "border: "+QString::number(iSize)+"px;\n";
+        return QLatin1String("border: ")+QString::number(iSize)+QLatin1String("px;\n");
     }
 
     static QString SET_MARGIN_SIZE(size_t iTop,
                                    size_t iRight,
                                    size_t iLeft,
                                    size_t iBottom){
-        return "margin: "+QString::number(iTop)+"px \
-                                                "+QString::number(iRight)+"px \
-                                                "+QString::number(iLeft)+"px \
-                                                "+QString::number(iBottom)+"px;\n";
+        return QLatin1String("margin: ")+
+                QString::number(iTop)+QLatin1String("px ")+
+                QString::number(iRight)+QLatin1String("px ")+
+                QString::number(iLeft)+QLatin1String("px ")+
+                QString::number(iBottom)+QLatin1String("px;\n");
     }
 
     static QString SET_PADDING_SIZE(size_t iTop,
-                                   size_t iRight,
-                                   size_t iLeft,
-                                   size_t iBottom){
-        return "padding: "+QString::number(iTop)+"px \
-                                                "+QString::number(iRight)+"px \
-                                                "+QString::number(iLeft)+"px \
-                                                "+QString::number(iBottom)+"px;\n";
+                                    size_t iRight,
+                                    size_t iLeft,
+                                    size_t iBottom){
+        return QLatin1String("padding: ")+
+                QString::number(iTop)+QLatin1String("px ")+
+                QString::number(iRight)+QLatin1String("px ")+
+                QString::number(iLeft)+QLatin1String("px ")+
+                QString::number(iBottom)+QLatin1String("px;\n");
     }
 
     static QString SET_BORDER_COLOR(const QString& iColor){
-        return "border-color: "+iColor+";\n";
+        return QLatin1String("border-color: ")+iColor+QLatin1String(";\n");
     }
 
     static QString SET_TEXT_ALIGN(const QString& iAligh){
-        return "text-align: "+iAligh+";\n";
+        return QLatin1String("text-align: ")+iAligh+QLatin1String(";\n");
     }
 
     static QString SET_TEXT_SIZE(size_t iSize, const QString& iStyle=""){
-        QString cssStr{"font: "};
+        QString cssStr{QStringLiteral("font: ")};
         if (!iStyle.isEmpty()){
-            cssStr+=iStyle+" ";
+            cssStr+=iStyle+QLatin1String(" ");
         }
-        cssStr+=QString::number(iSize)+"px;\n";
+        cssStr+=QString::number(iSize)+QLatin1String("px;\n");
         return cssStr;
     }
 
     static QString SET_TEXT_COLOR(const QString& iColor){
-        return "color: "+iColor+";\n";
+        return QLatin1String("color: ")+iColor+QLatin1String(";\n");
     }
 
     static QString SET_BACKGROUND_COLOR(const QString& iColor){
-        return "background-color: "+iColor+";\n";
+        return QLatin1String("background-color: ")+iColor+QLatin1String(";\n");
     }
 
 

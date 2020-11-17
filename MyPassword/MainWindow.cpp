@@ -19,27 +19,27 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
     _settingsTab(iSettingsTab)
 {
     setMinimumHeight(SIZE_WINDOW_VERTICAL);
-    setWindowIcon(QIcon(":/security"));
+    setWindowIcon(QIcon(QStringLiteral(":/security")));
     move(0,0);
     setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
                   Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
-    _tabAccountButt.setIcon(QIcon(":/house"));
+    _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house")));
     _tabAccountButt.setIconSize(QSize(40,40));
     _tabAccountButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                                   Utility::SET_BORDER_SIZE(0));
 
-    _tabCreateAccountButt.setIcon(QIcon(":/add_grey"));
+    _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
     _tabCreateAccountButt.setIconSize(QSize(40,40));
     _tabCreateAccountButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                                         Utility::SET_BORDER_SIZE(0));
 
-    _tabGenerateFileButt.setIcon(QIcon(":/paper_grey"));
+    _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
     _tabGenerateFileButt.setIconSize(QSize(40,40));
     _tabGenerateFileButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                                         Utility::SET_BORDER_SIZE(0));
 
-    _tabSettingsButt.setIcon(QIcon(":/settings_grey"));
+    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
     _tabSettingsButt.setIconSize(QSize(40,40));
     _tabSettingsButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                                         Utility::SET_BORDER_SIZE(0));
@@ -82,10 +82,10 @@ void MainWindow::showTabAccounts(){
     _generateFileTab.setVisible(false);
     _settingsTab.setVisible(false);
     _accountTab.setVisible(true);
-    _tabAccountButt.setIcon(QIcon(":/house"));
-    _tabCreateAccountButt.setIcon(QIcon(":/add_grey"));
-    _tabGenerateFileButt.setIcon(QIcon(":/paper_grey"));
-    _tabSettingsButt.setIcon(QIcon(":/settings_grey"));
+    _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house")));
+    _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
+    _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
+    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
 }
 void MainWindow::showTabCreateAccount(){
     _accountTab.setVisible(false);
@@ -93,10 +93,10 @@ void MainWindow::showTabCreateAccount(){
     _settingsTab.setVisible(false);
     _createAccountTab.setVisible(true);
     _createAccountTab.onTabSelected();
-    _tabAccountButt.setIcon(QIcon(":/house_grey"));
-    _tabCreateAccountButt.setIcon(QIcon(":/add"));
-    _tabGenerateFileButt.setIcon(QIcon(":/paper_grey"));
-    _tabSettingsButt.setIcon(QIcon(":/settings_grey"));
+    _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house_grey")));
+    _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add")));
+    _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
+    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
 }
 
 void MainWindow::showTabGenerateFile(){
@@ -105,10 +105,10 @@ void MainWindow::showTabGenerateFile(){
     _settingsTab.setVisible(false);
     _generateFileTab.setVisible(true);
     _generateFileTab.onTabSelected();
-    _tabAccountButt.setIcon(QIcon(":/house_grey"));
-    _tabCreateAccountButt.setIcon(QIcon(":/add_grey"));
-    _tabGenerateFileButt.setIcon(QIcon(":/paper"));
-    _tabSettingsButt.setIcon(QIcon(":/settings_grey"));
+    _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house_grey")));
+    _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
+    _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper")));
+    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
 }
 
 void MainWindow::showTabSettings(){
@@ -116,8 +116,8 @@ void MainWindow::showTabSettings(){
     _createAccountTab.setVisible(false);
     _generateFileTab.setVisible(false);
     _settingsTab.setVisible(true);
-    _tabAccountButt.setIcon(QIcon(":/house_grey"));
-    _tabCreateAccountButt.setIcon(QIcon(":/add_grey"));
-    _tabGenerateFileButt.setIcon(QIcon(":/paper_grey"));
-    _tabSettingsButt.setIcon(QIcon(":/settings"));
+    _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house_grey")));
+    _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
+    _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
+    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings")));
 }

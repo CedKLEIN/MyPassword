@@ -7,21 +7,22 @@
 #include <QDir>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QString>
 
 Database::Database(FacAccount& iFacAccount):
     _facAccount(iFacAccount)
 {
-    _db = QSqlDatabase::addDatabase("QSQLITE");
-    _db.setDatabaseName(QDir::currentPath()+"/database.db");
+    _db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
+    _db.setDatabaseName(QDir::currentPath()+QLatin1String("/database.db"));
 
     dbOpen();
-    QSqlQuery query("CREATE TABLE ACCOUNT(\
-                    NAME             VARCHAR(50) PRIMARY KEY NOT NULL,\
-                    LOGIN            VARCHAR(50),\
-                    PASSWORD         VARCHAR(50),\
-                    DETAILS          VARCHAR(200),\
-                    SECURITY_LVL     VARCHAR(1));", _db);
-    dbClose();
+    QSqlQuery query(QStringLiteral("CREATE TABLE ACCOUNT(\
+                                   NAME             VARCHAR(50) PRIMARY KEY NOT NULL,\
+                                   LOGIN            VARCHAR(50),\
+                                   PASSWORD         VARCHAR(50),\
+                                   DETAILS          VARCHAR(200),\
+                                   SECURITY_LVL     VARCHAR(1));"), _db);
+            dbClose();
 }
 
 Database::~Database(){
@@ -45,19 +46,19 @@ bool Database::dbClose()
 int Database::create(const QStringList& iData){
     if(dbOpen())
     {
-        QString queryStr("INSERT INTO ACCOUNT \
-                         ( NAME, LOGIN, PASSWORD, DETAILS, SECURITY_LVL) \
-                         VALUES \
-                         ('" + iData[0].toLocal8Bit() +"',\
-                          '" + iData[1].toLocal8Bit() +"',\
-                          '" + iData[2].toLocal8Bit() +"',\
-                          '" + iData[3].toLocal8Bit() +"',\
-                          '" + iData[4] +"');");
+        QString queryStr(QLatin1String("INSERT INTO ACCOUNT \
+                                       ( NAME, LOGIN, PASSWORD, DETAILS, SECURITY_LVL) \
+                                       VALUES \
+                                       ('") + iData[0].toLocal8Bit() +QLatin1String("',\
+                                        '") + iData[1].toLocal8Bit() +QLatin1String("',\
+                                        '") + iData[2].toLocal8Bit() +QLatin1String("',\
+                                        '") + iData[3].toLocal8Bit() +QLatin1String("',\
+                                        '") + iData[4] +QLatin1String("');"));
 
-                QSqlQuery query(queryStr, _db);
+                         QSqlQuery query(queryStr, _db);
 
-        if(!dbClose())
-            return Utility::ERROR::db_failed_to_close;
+                if(!dbClose())
+                return Utility::ERROR::db_failed_to_close;
 
         if (query.lastError().isValid())
             return Utility::ERROR::db_unique_key_already_exist;
@@ -71,7 +72,7 @@ int Database::retrieve()
 {
     if(dbOpen())
     {
-        QSqlQuery query("SELECT * FROM ACCOUNT", _db);
+        QSqlQuery query(QStringLiteral("SELECT * FROM ACCOUNT"), _db);
 
         if (query.lastError().isValid())
             return Utility::ERROR::db_failed_to_get_data;
@@ -97,7 +98,9 @@ int Database::remove(const QString& iPrimaryKey)
 {
     if(dbOpen())
     {
-        QString queryStr("DELETE FROM ACCOUNT WHERE NAME='" + iPrimaryKey + "';");
+        QString queryStr(QLatin1String("DELETE FROM ACCOUNT WHERE NAME='")+
+                         iPrimaryKey+
+                         QLatin1String("';"));
         QSqlQuery query(queryStr, _db);
 
         if(!dbClose())
@@ -115,14 +118,14 @@ int Database::modify(const QStringList& iData)
 {
     if(dbOpen())
     {
-        QString queryStr("UPDATE ACCOUNT SET \
-                         LOGIN='"+ iData[1] +"',\
-                         PASSWORD='"+ iData[2] +"',\
-                         DETAILS='"+ iData[3] +"',\
-                         SECURITY_LVL='"+ iData[4] +"'\
-                WHERE NAME='"+ iData[0] +"';");
+        QString queryStr(QLatin1String("UPDATE ACCOUNT SET LOGIN='")+
+                         iData[1] +QLatin1String("',PASSWORD='")+
+                iData[2]+QLatin1String("',DETAILS='")+
+                iData[3]+QLatin1String("',SECURITY_LVL='")+
+                iData[4]+QLatin1String("'WHERE NAME='")+
+                iData[0]+QLatin1String("';"));
 
-                QSqlQuery query(queryStr, _db);
+        QSqlQuery query(queryStr, _db);
 
         if(!dbClose())
             return Utility::ERROR::db_failed_to_close;

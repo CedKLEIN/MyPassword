@@ -73,37 +73,37 @@ private:
 
     QLabel _nameLabel;
 
-    QLabel _loginLabel{"Login : "};
+    QLabel _loginLabel{tr("Login : ")};
     QPushButton _loginSavedButt{tr(" Modification saved")};
     QHBoxLayout _loginLabelsLayout;
     QLineEdit _loginLineEdit;
-    QPushButton _loginButt{"Change login"};
+    QPushButton _loginButt{tr("Change login")};
 
-    QLabel _detailsLabel{"Details : "};
+    QLabel _detailsLabel{tr("Details : ")};
     QPushButton _detailsSavedButt{tr(" Modification saved")};
     QHBoxLayout _detailsLabelsLayout;
     QTextEdit _detailsTextEdit;
-    QPushButton _detailsButt{"Change details"};
+    QPushButton _detailsButt{tr("Change details")};
 
-    QLabel _testLabel{" Test your password :"};
+    QLabel _testLabel{tr(" Test your password :")};
     QLineEdit _testLineEdit;
-    QPushButton _testButt{"Check"};
+    QPushButton _testButt{tr("Check")};
     QPushButton _testViewButt;
     QHBoxLayout _testLayout;
     bool isTestView{false};
 
-    QLabel _pwdLabel{" Change your password :"};
+    QLabel _pwdLabel{tr(" Change your password :")};
     QPushButton _pwdSavedButt{tr(" Modification saved")};
     QHBoxLayout _pwdLabelsLayout;
     QLineEdit _pwdLineEdit;
-    QPushButton _pwdButt{"Change password"};
+    QPushButton _pwdButt{tr("Change password")};
     QPushButton _pwdViewButt;
     QPushButton _pwdSecurityButt;
     QHBoxLayout _pwdLayout;
     bool isPassordView{false};
     int _pwdSecurityLvl{0};
 
-    QPushButton _deleteAccountButt{" Delete account"};
+    QPushButton _deleteAccountButt{tr(" Delete account")};
 
     QVBoxLayout _mainLayout;
 };

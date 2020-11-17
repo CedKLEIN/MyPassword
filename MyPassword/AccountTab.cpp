@@ -41,10 +41,10 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
 
     retrieveAccounts();
 
-    _filterLineEdit.setPlaceholderText("Search...");
+    _filterLineEdit.setPlaceholderText(tr("Search..."));
     _filterLineEdit.setMaxLength(TEXT_NAME_LENGTH);
     _accountView.setModel(&_accountModel);
-    _accountView.verticalScrollBar()->setStyleSheet("QScrollBar:vertical {width: 2px;}");
+    _accountView.verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
     _accountView.setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     _viewAndDisplayAccountLayout.addWidget(&_accountView);

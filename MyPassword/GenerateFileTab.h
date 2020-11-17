@@ -24,11 +24,11 @@ public slots:
 
 private:
     FacAccount& _facAccount;
-    QLabel _titleLabel{"Generate account in text file"};
+    QLabel _titleLabel{tr("Generate account in text file")};
     QLabel _outputSaveFileLabel;
     QStringList _textStringList;
-    QPushButton _generateTextButt{" Generate text"};
-    QPushButton _saveTextButt{" Save in a file"};
+    QPushButton _generateTextButt{tr(" Generate text")};
+    QPushButton _saveTextButt{tr(" Save in a file")};
     QTextEdit _textEdit;
     QHBoxLayout _buttLayout;
     QVBoxLayout _mainLayout;
