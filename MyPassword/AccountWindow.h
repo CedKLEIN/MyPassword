@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QLabel>
+#include <QIcon>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -67,13 +68,20 @@ private:
 
     std::vector<IListener*> _listeners;
 
-    QLabel _nameLabel{""};
+    QPushButton _closeButt;
+    QHBoxLayout _closeLayout;
+
+    QLabel _nameLabel;
 
     QLabel _loginLabel{"Login : "};
-    QLineEdit _loginLineEdit{""};
+    QPushButton _loginSavedButt{tr(" Modification saved")};
+    QHBoxLayout _loginLabelsLayout;
+    QLineEdit _loginLineEdit;
     QPushButton _loginButt{"Change login"};
 
     QLabel _detailsLabel{"Details : "};
+    QPushButton _detailsSavedButt{tr(" Modification saved")};
+    QHBoxLayout _detailsLabelsLayout;
     QTextEdit _detailsTextEdit;
     QPushButton _detailsButt{"Change details"};
 
@@ -85,6 +93,8 @@ private:
     bool isTestView{false};
 
     QLabel _pwdLabel{" Change your password :"};
+    QPushButton _pwdSavedButt{tr(" Modification saved")};
+    QHBoxLayout _pwdLabelsLayout;
     QLineEdit _pwdLineEdit;
     QPushButton _pwdButt{"Change password"};
     QPushButton _pwdViewButt;

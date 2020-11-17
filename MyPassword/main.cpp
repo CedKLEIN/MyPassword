@@ -1,12 +1,13 @@
 #include "MainWindow.h"
 #include "AccountTab.h"
 #include "CreateAccountTab.h"
+#include "GenerateFileTab.h"
+#include "SettingsTab.h"
 #include "Database.h"
 #include "AccountWindow.h"
 #include "Encryption.h"
 #include "Account.h"
 #include "Log.h"
-#include "GenerateFileTab.h"
 #include "PasswordSecurity.h"
 #include "SecurityLevelWindow.h"
 
@@ -14,13 +15,10 @@
 
 /*
  * To do:
- * Better display
  * set tooltip for each icon
  * Check english only
  * Make shoter all name ex: password = pwd ...
  * Settings
- * Check number caractere per lineEdit
- * Clear items
  */
 
 int main(int argc, char *argv[])
@@ -56,8 +54,10 @@ int main(int argc, char *argv[])
 
     GenerateFileTab generateFileTab{facAccount};
 
-    MainWindow _mainWindow{accountTab,createAccountTab,generateFileTab};
-    _mainWindow.show();
+    SettingsTab settingsTab;
+
+    MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab};
+    mainWindow.show();
 
     return app.exec();
 }

@@ -21,5 +21,8 @@
         <file alias="checked">Icon/checked.png</file>
         <file alias="paper_grey">Icon/paper_grey.png</file>
         <file alias="actualize">Icon/actualize.png</file>
+        <file alias="close">Icon/close.png</file>
+        <file alias="settings">Icon/setting.png</file>
+        <file alias="settings_grey">Icon/setting_grey.png</file>
     </qresource>
 </RCC>

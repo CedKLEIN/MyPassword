@@ -22,6 +22,7 @@ HEADERS += \
     MainWindow.h \
     PasswordSecurity.h \
     SecurityLevelWindow.h \
+    SettingsTab.h \
     Utility.h
 
 SOURCES += \
@@ -37,6 +38,7 @@ SOURCES += \
     MainWindow.cpp \
     PasswordSecurity.cpp \
     SecurityLevelWindow.cpp \
+    SettingsTab.cpp \
     main.cpp
 
 RESOURCES += \

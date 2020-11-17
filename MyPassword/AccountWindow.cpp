@@ -31,36 +31,57 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
                   Utility::GET_STYLE_QPUSHBUTTON()+
                   "QPushButton{"+Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0)+"}");
 
+    _closeButt.setIcon(QIcon(":/close"));
+    _closeButt.setIconSize(ICON_SIZE);
+    _closeButt.setToolTip("Close window");
+    _closeLayout.setAlignment(Qt::AlignRight);
+    _closeLayout.addWidget(&_closeButt);
+
     _nameLabel.setAlignment(Qt::AlignCenter);
     _nameLabel.setStyleSheet(Utility::SET_HEIGHT(30)+
                              Utility::SET_BORDER_SIZE(0)+
                              Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0)+
                              Utility::SET_TEXT_SIZE(40,BOLD)+
                              Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+
     _loginLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+    _loginSavedButt.setIcon(QIcon(":/checked"));
+    _loginSavedButt.setIconSize(QSize{17,17});
+    _loginSavedButt.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREEN)+
+                                  Utility::SET_TEXT_SIZE(17,ITALIC));
+    _loginSavedButt.setVisible(false);
+    _loginLabelsLayout.setAlignment(Qt::AlignLeft);
+    _loginLabelsLayout.addWidget(&_loginLabel);
+    _loginLabelsLayout.addWidget(&_loginSavedButt);
+
     _loginButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                              Utility::SET_HEIGHT(35));
     _loginLineEdit.setMaxLength(TEXT_LOGIN_LENGTH);
     _loginLineEdit.setPlaceholderText("...");
 
     _detailsLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+    _detailsSavedButt.setIcon(QIcon(":/checked"));
+    _detailsSavedButt.setIconSize(QSize{17,17});
+    _detailsSavedButt.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREEN)+
+                                    Utility::SET_TEXT_SIZE(17,ITALIC));
+    _detailsSavedButt.setVisible(false);
+    _detailsLabelsLayout.setAlignment(Qt::AlignLeft);
+    _detailsLabelsLayout.addWidget(&_detailsLabel);
+    _detailsLabelsLayout.addWidget(&_detailsSavedButt);
     _detailsButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                Utility::SET_HEIGHT(35));
     _detailsTextEdit.verticalScrollBar()->setStyleSheet("QScrollBar:vertical {width: 2px;}");
     _detailsTextEdit.setPlaceholderText("...");
 
-    _testLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
-    _testLineEdit.setEchoMode(QLineEdit::Password);
-    _testLineEdit.setPlaceholderText("Test here...");
-    _testLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
-    _testButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
-                            Utility::SET_HEIGHT(35));
-    _testViewButt.setIcon(QIcon(":/hide"));
-    _testViewButt.setIconSize(ICON_SIZE);
-    _testLayout.addWidget(&_testLineEdit);
-    _testLayout.addWidget(&_testViewButt);
-
     _pwdLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+    _pwdSavedButt.setIcon(QIcon(":/checked"));
+    _pwdSavedButt.setIconSize(QSize{17,17});
+    _pwdSavedButt.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREEN)+
+                                Utility::SET_TEXT_SIZE(17,ITALIC));
+    _pwdSavedButt.setVisible(false);
+    _pwdLabelsLayout.setAlignment(Qt::AlignLeft);
+    _pwdLabelsLayout.addWidget(&_pwdLabel);
+    _pwdLabelsLayout.addWidget(&_pwdSavedButt);
     _pwdSecurityButt.setIconSize(ICON_SIZE);
     _pwdSecurityButt.hide();
     _pwdLineEdit.setPlaceholderText("Password");
@@ -74,6 +95,17 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _pwdLayout.addWidget(&_pwdViewButt);
     _pwdLayout.addWidget(&_pwdSecurityButt);
 
+    _testLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+    _testLineEdit.setEchoMode(QLineEdit::Password);
+    _testLineEdit.setPlaceholderText("Test here...");
+    _testLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
+    _testButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+                            Utility::SET_HEIGHT(35));
+    _testViewButt.setIcon(QIcon(":/hide"));
+    _testViewButt.setIconSize(ICON_SIZE);
+    _testLayout.addWidget(&_testLineEdit);
+    _testLayout.addWidget(&_testViewButt);
+
     _deleteAccountButt.setIcon(QIcon(":/delete"));
     _deleteAccountButt.setIconSize(QSize(20,20));
     _deleteAccountButt.setToolTip("Delete account selected");
@@ -81,19 +113,25 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
                                      Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+"}");
 
     _mainLayout.setAlignment(Qt::AlignTop);
+    _mainLayout.setContentsMargins(0,0,0,0);
 
+    _mainLayout.addLayout(&_closeLayout);
     _mainLayout.addSpacing(20);
+
     _mainLayout.addWidget(&_nameLabel);
     _mainLayout.addSpacing(25);
-    _mainLayout.addWidget(&_loginLabel);
+
+    _mainLayout.addLayout(&_loginLabelsLayout);
     _mainLayout.addWidget(&_loginLineEdit);
     _mainLayout.addWidget(&_loginButt);
-    _mainLayout.addWidget(&_detailsLabel);
+    _mainLayout.addSpacing(25);
+
+    _mainLayout.addLayout(&_detailsLabelsLayout);
     _mainLayout.addWidget(&_detailsTextEdit);
     _mainLayout.addWidget(&_detailsButt);
     _mainLayout.addSpacing(25);
 
-    _mainLayout.addWidget(&_pwdLabel);
+    _mainLayout.addLayout(&_pwdLabelsLayout);
     _mainLayout.addLayout(&_pwdLayout);
     _mainLayout.addWidget(&_pwdButt);
     _mainLayout.addSpacing(20);
@@ -102,11 +140,13 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _mainLayout.addLayout(&_testLayout);
     _mainLayout.addWidget(&_testButt);
     _mainLayout.addSpacing(10);
+
     _mainLayout.addWidget(&_deleteAccountButt);
     _mainLayout.addSpacing(10);
 
     setLayout(&_mainLayout);
 
+    QObject::connect(&_closeButt,&QPushButton::clicked,this,&AccountWindow::hide);
     QObject::connect(&_pwdSecurityButt,&QPushButton::clicked,&_securityLevelWindow,&SecurityLevelWindow::show);
     QObject::connect(&_pwdLineEdit,&QLineEdit::textChanged,this,&AccountWindow::checkPasswordSecurity);
     QObject::connect(&_pwdViewButt,&QPushButton::clicked,this,&AccountWindow::viewPassword);
@@ -182,6 +222,7 @@ bool AccountWindow::saveModifLogin()
                   +_loginLineEdit.text().toStdString());
 
     fireRefreshAccounts();
+    _loginSavedButt.setVisible(true);
     return true;
 }
 
@@ -206,10 +247,19 @@ bool AccountWindow::saveModifDetails()
                   +_detailsTextEdit.toPlainText().toStdString());
 
     fireRefreshAccounts();
+    _detailsSavedButt.setVisible(true);
     return true;
 }
 
 bool AccountWindow::saveModifPassword(){
+
+    int answer{QMessageBox::warning(this, tr("Change password"),
+                                    tr("Do you really want to change your password ?"),
+                                    QMessageBox::Yes | QMessageBox::No)};
+
+    if(answer != QMessageBox::Yes)
+        return false;
+
     int error{_db.modify(QStringList()
                          <<_facAccount.get(_nameLabel.text())->getName()
                          <<_facAccount.get(_nameLabel.text())->getLogin()
@@ -227,6 +277,7 @@ bool AccountWindow::saveModifPassword(){
 
     _pwdLineEdit.clear();
     fireRefreshAccounts();
+    _pwdSavedButt.setVisible(true);
     return true;
 }
 
@@ -277,6 +328,9 @@ void AccountWindow::showWindow(const QString& iName){
     _detailsTextEdit.clear();
     _testLineEdit.clear();
     _pwdLineEdit.clear();
+    _loginSavedButt.setVisible(false);
+    _detailsSavedButt.setVisible(false);
+    _pwdSavedButt.setVisible(false);
 
     _nameLabel.setText(iName);
     _loginLineEdit.setText(_facAccount.get(_nameLabel.text())->getLogin());
