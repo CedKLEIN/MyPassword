@@ -3,7 +3,6 @@
 #include "Account.h"
 #include "Utility.h"
 
-#include <QDebug>
 #include <QScrollBar>
 #include <QFileDialog>
 #include <QString>
@@ -56,9 +55,9 @@ void GenerateFileTab::onTabSelected(){
 void GenerateFileTab::fillTextEdit(){
     _textEdit.clear();
     for(const auto& account: _facAccount.getAll()){
-        _textEdit.append(account->getName()+":");
-        _textEdit.append(QLatin1String("Name: ")+account->getLogin());
-        _textEdit.append(QLatin1String("Details : ")+account->getDetails());
+        _textEdit.append(account->getName()+QLatin1String(":"));
+        _textEdit.append(tr("Name: ")+account->getLogin());
+        _textEdit.append(tr("Details : ")+account->getDetails());
         _textEdit.append(QLatin1String(""));
     }
 }
@@ -81,12 +80,12 @@ void GenerateFileTab::saveTextInFile(){
             _outputSaveFileLabel.setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                                Utility::SET_TEXT_COLOR(COLOR_GREEN));
         }else{
-            _outputSaveFileLabel.setText(tr("File not created."));
+            _outputSaveFileLabel.setText(tr("File not created"));
             _outputSaveFileLabel.setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                                Utility::SET_TEXT_COLOR(COLOR_RED));
         }
     }else{
-        _outputSaveFileLabel.setText(tr("The text is empty, generate the file first."));
+        _outputSaveFileLabel.setText(tr("The text is empty, generate the text first"));
         _outputSaveFileLabel.setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                            Utility::SET_TEXT_COLOR(COLOR_RED));
     }

@@ -28,6 +28,7 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     setFixedWidth(SIZE_WINDOW_HORIZONTAL/2);
 
     setStyleSheet(Utility::GET_STYLE_QLINEEDIT()+
+                  Utility::GET_STYLE_QTOOLTYPE()+
                   Utility::GET_STYLE_QTEXTEDIT()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
                   QLatin1String("QPushButton{")+
@@ -35,7 +36,6 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
 
     _closeButt.setIcon(QIcon(QStringLiteral(":/close")));
     _closeButt.setIconSize(ICON_SIZE);
-    _closeButt.setToolTip(tr("Close window"));
     _closeLayout.setAlignment(Qt::AlignRight);
     _closeLayout.addWidget(&_closeButt);
 
@@ -73,7 +73,7 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _detailsButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                Utility::SET_HEIGHT(35));
     _detailsTextEdit.verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
-    _detailsTextEdit.setPlaceholderText("...");
+    _detailsTextEdit.setPlaceholderText(QStringLiteral("..."));
 
     _pwdLabel.setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_LIGHT));
     _pwdSavedButt.setIcon(QIcon(QStringLiteral(":/checked")));
@@ -176,19 +176,19 @@ void AccountWindow::checkPasswordSecurity(const QString& iPwd){
 
     switch(_pwdSecurityLvl){
     case IPasswordSecurity::VERY_LOW:
-        _pwdSecurityButt.setToolTip(tr("Your password is not safe at all!"));
+        _pwdSecurityButt.setToolTip(tr("Safety: VERY LOW"));
         break;
     case IPasswordSecurity::LOW:
-        _pwdSecurityButt.setToolTip(tr("Your password can be cracked easily!"));
+        _pwdSecurityButt.setToolTip(tr("Safety: LOW"));
         break;
     case IPasswordSecurity::MEDIUM:
-        _pwdSecurityButt.setToolTip(tr("Your password is at the minimum safety!"));
+        _pwdSecurityButt.setToolTip(tr("Safety: MEDIUM"));
         break;
     case IPasswordSecurity::HIGH:
-        _pwdSecurityButt.setToolTip(tr("Your password is safe!"));
+        _pwdSecurityButt.setToolTip(tr("Safety: HIGH"));
         break;
     case IPasswordSecurity::VERY_HIGH:
-        _pwdSecurityButt.setToolTip(tr("More than 50 years is necessary to cracked your password!"));
+        _pwdSecurityButt.setToolTip(tr("Safety: VERY HIGH"));
         break;
     default:
         _pwdSecurityButt.hide();

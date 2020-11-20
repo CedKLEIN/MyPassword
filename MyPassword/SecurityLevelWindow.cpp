@@ -9,13 +9,12 @@ SecurityLevelWindow::SecurityLevelWindow(IPasswordSecurity& iPasswordSecurity):
     _passwordSecurity(iPasswordSecurity)
 {
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
-                  Utility::GET_STYLE_QLABEL()+
-                  Utility::GET_STYLE_QPUSHBUTTON()+
-                  QLatin1String("QPushButton:hover{}")+
-                  QLatin1String("QPushButton:pressed{")+
+                  QLatin1String("QPushButton{")+
+                  Utility::SET_HEIGHT(70)+
                   Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
                   Utility::SET_TEXT_COLOR(COLOR_LIGHT)+
-                  QLatin1String("}"));
+                  Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+
+                  Utility::SET_BORDER_SIZE(0)+"}");
     _titleLabel.setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
     _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
@@ -25,11 +24,11 @@ SecurityLevelWindow::SecurityLevelWindow(IPasswordSecurity& iPasswordSecurity):
     _lowButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::LOW)));
     _veryLowButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::VERY_LOW)));
 
-    _veryHighButt.setIconSize(QSize(40,40));
-    _highButt.setIconSize(QSize(40,40));
-    _mediumButt.setIconSize(QSize(40,40));
-    _lowButt.setIconSize(QSize(40,40));
-    _veryLowButt.setIconSize(QSize(40,40));
+    _veryHighButt.setIconSize(QSize(60,60));
+    _highButt.setIconSize(QSize(60,60));
+    _mediumButt.setIconSize(QSize(60,60));
+    _lowButt.setIconSize(QSize(60,60));
+    _veryLowButt.setIconSize(QSize(60,60));
 
     _veryHighButt.setStyleSheet(Utility::SET_TEXT_ALIGN(LEFT)+
                                 Utility::SET_TEXT_SIZE(20));

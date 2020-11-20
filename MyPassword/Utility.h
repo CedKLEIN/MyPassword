@@ -20,6 +20,7 @@ static const QString ITALIC{QStringLiteral("italic")};
 static const QString BOLD{QStringLiteral("bold")};
 static const QString LEFT{QStringLiteral("left")};
 static const QString RIGHT{QStringLiteral("right")};
+static const QString OUTSET{QStringLiteral("outset")};
 static const int TEXT_NAME_LENGTH{50};
 static const int TEXT_LOGIN_LENGTH{50};
 static const int TEXT_PASSWORD_LENGTH{50};
@@ -54,6 +55,12 @@ public:
                 SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                 SET_TEXT_COLOR(COLOR_LIGHT)+
                 SET_TEXT_SIZE(TEXT_STANDARD_SIZE)+"}";
+    }
+
+    static QString GET_STYLE_QTOOLTYPE(){
+        return QLatin1String("QToolTip {")+
+                SET_BACKGROUND_COLOR(COLOR_LIGHT)+
+                SET_TEXT_COLOR(COLOR_DARK_2)+"}";
     }
 
     static QString GET_STYLE_QTEXTEDIT(){
@@ -108,6 +115,17 @@ public:
                 QString::number(iBottom)+QLatin1String("px;\n");
     }
 
+    static QString SET_BORDER_WIDTH(size_t iTop,
+                                   size_t iRight,
+                                   size_t iLeft,
+                                   size_t iBottom){
+        return QLatin1String("border-width: ")+
+                QString::number(iTop)+QLatin1String("px ")+
+                QString::number(iRight)+QLatin1String("px ")+
+                QString::number(iLeft)+QLatin1String("px ")+
+                QString::number(iBottom)+QLatin1String("px;\n");
+    }
+
     static QString SET_PADDING_SIZE(size_t iTop,
                                     size_t iRight,
                                     size_t iLeft,
@@ -125,6 +143,11 @@ public:
 
     static QString SET_TEXT_ALIGN(const QString& iAligh){
         return QLatin1String("text-align: ")+iAligh+QLatin1String(";\n");
+    }
+
+
+    static QString SET_BORDER_STYLE(const QString& iAligh){
+        return QLatin1String("border-style: ")+iAligh+QLatin1String(";\n");
     }
 
     static QString SET_TEXT_SIZE(size_t iSize, const QString& iStyle=""){

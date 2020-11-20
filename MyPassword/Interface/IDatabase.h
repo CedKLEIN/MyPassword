@@ -4,6 +4,7 @@
 
 class IDatabase{
 public:
+    virtual ~IDatabase()=default;
     virtual int create(const QStringList&)=0;
     virtual int retrieve()=0;
     virtual int remove(const QString&)=0;

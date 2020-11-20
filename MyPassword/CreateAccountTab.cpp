@@ -23,6 +23,7 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
 {
     setFixedWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
+                  Utility::GET_STYLE_QTOOLTYPE()+
                   Utility::GET_STYLE_QLINEEDIT()+
                   Utility::GET_STYLE_QTEXTEDIT()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
@@ -157,19 +158,19 @@ void CreateAccountTab::checkPasswordSecurity(const QString& iPwd){
 
     switch(_pwdSecurityLvl){
     case IPasswordSecurity::VERY_LOW:
-        _passwordSecurityButt.setToolTip(tr("Your password is not safe at all!"));
+        _passwordSecurityButt.setToolTip(tr("Safety: VERY LOW"));
         break;
     case IPasswordSecurity::LOW:
-        _passwordSecurityButt.setToolTip(tr("Your password can be cracked easily!"));
+        _passwordSecurityButt.setToolTip(tr("Safety: LOW"));
         break;
     case IPasswordSecurity::MEDIUM:
-        _passwordSecurityButt.setToolTip(tr("Your password is at the minimum safety!"));
+        _passwordSecurityButt.setToolTip(tr("Safety: MEDIUM"));
         break;
     case IPasswordSecurity::HIGH:
-        _passwordSecurityButt.setToolTip(tr("Your password is safe!"));
+        _passwordSecurityButt.setToolTip(tr("Safety: HIGH"));
         break;
     case IPasswordSecurity::VERY_HIGH:
-        _passwordSecurityButt.setToolTip(tr("More than 50 years is necessary to cracked your password!"));
+        _passwordSecurityButt.setToolTip(tr("Safety: VERY HIGH"));
         break;
     default:
         _passwordSecurityButt.hide();

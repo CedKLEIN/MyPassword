@@ -25,6 +25,12 @@ private slots:
     void showTabSettings();
 
 private:
+    void setButtNotSelected(QPushButton&);
+    void setButtSelected(QPushButton&);
+    void reset();
+    void hideTabs();
+    void makeIconGrey();
+
     AccountTab& _accountTab;
     CreateAccountTab& _createAccountTab;
     GenerateFileTab& _generateFileTab;

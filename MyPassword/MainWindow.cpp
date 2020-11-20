@@ -26,38 +26,31 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
 
     _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house")));
     _tabAccountButt.setIconSize(QSize(40,40));
-    _tabAccountButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
-                                  Utility::SET_BORDER_SIZE(0));
+    setButtSelected(_tabAccountButt);
 
     _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
     _tabCreateAccountButt.setIconSize(QSize(40,40));
-    _tabCreateAccountButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
-                                        Utility::SET_BORDER_SIZE(0));
+    setButtNotSelected(_tabCreateAccountButt);
 
     _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
     _tabGenerateFileButt.setIconSize(QSize(40,40));
-    _tabGenerateFileButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
-                                        Utility::SET_BORDER_SIZE(0));
+    setButtNotSelected(_tabGenerateFileButt);
 
     _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
     _tabSettingsButt.setIconSize(QSize(40,40));
-    _tabSettingsButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
-                                        Utility::SET_BORDER_SIZE(0));
+    setButtNotSelected(_tabSettingsButt);
 
     _createAccountTab.setVisible(false);
     _generateFileTab.setVisible(false);
     _settingsTab.setVisible(false);
 
+    _menuLayout.setContentsMargins(0,0,0,0);
     _menuLayout.setAlignment(Qt::AlignTop);
-    _menuLayout.addSpacing(30);
+    _menuLayout.addSpacing(10);
     _menuLayout.addWidget(&_tabAccountButt);
-    _menuLayout.addSpacing(30);
     _menuLayout.addWidget(&_tabCreateAccountButt);
-    _menuLayout.addSpacing(30);
     _menuLayout.addWidget(&_tabGenerateFileButt);
-    _menuLayout.addSpacing(30);
     _menuLayout.addWidget(&_tabSettingsButt);
-    _menuLayout.addSpacing(30);
 
     _menu.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2));
     _menu.setLayout(&_menuLayout);
@@ -77,47 +70,72 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
     QObject::connect(&_tabSettingsButt,&QPushButton::clicked,this,&MainWindow::showTabSettings);
 }
 
+void MainWindow::setButtNotSelected(QPushButton& iButt){
+    iButt.setStyleSheet(Utility::SET_WIDTH(80)+
+                        Utility::SET_HEIGHT(70)+
+                        Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
+                        Utility::SET_BORDER_SIZE(0));
+}
+
+void MainWindow::setButtSelected(QPushButton& iButt){
+    iButt.setStyleSheet(Utility::SET_WIDTH(76)+
+                        Utility::SET_HEIGHT(70)+
+                        Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
+                        Utility::SET_BORDER_SIZE(0)+
+                        Utility::SET_BORDER_WIDTH(0,0,0,4)+
+                        Utility::SET_BORDER_STYLE(OUTSET)+
+                        Utility::SET_BORDER_COLOR(COLOR_LIGHT));
+}
+
 void MainWindow::showTabAccounts(){
-    _createAccountTab.setVisible(false);
-    _generateFileTab.setVisible(false);
-    _settingsTab.setVisible(false);
+    reset();
     _accountTab.setVisible(true);
     _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house")));
-    _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
-    _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
-    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
+    setButtSelected(_tabAccountButt);
 }
 void MainWindow::showTabCreateAccount(){
-    _accountTab.setVisible(false);
-    _generateFileTab.setVisible(false);
-    _settingsTab.setVisible(false);
+    reset();
     _createAccountTab.setVisible(true);
     _createAccountTab.onTabSelected();
-    _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house_grey")));
     _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add")));
-    _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
-    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
+    setButtSelected(_tabCreateAccountButt);
 }
 
 void MainWindow::showTabGenerateFile(){
-    _accountTab.setVisible(false);
-    _createAccountTab.setVisible(false);
-    _settingsTab.setVisible(false);
+    reset();
     _generateFileTab.setVisible(true);
     _generateFileTab.onTabSelected();
-    _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house_grey")));
-    _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
     _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper")));
-    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
+    setButtSelected(_tabGenerateFileButt);
 }
 
 void MainWindow::showTabSettings(){
+    reset();
+    _settingsTab.setVisible(true);
+    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings")));
+    setButtSelected(_tabSettingsButt);
+}
+
+void MainWindow::reset(){
+    hideTabs();
+    makeIconGrey();
+}
+
+void MainWindow::hideTabs(){
     _accountTab.setVisible(false);
     _createAccountTab.setVisible(false);
     _generateFileTab.setVisible(false);
-    _settingsTab.setVisible(true);
+    _settingsTab.setVisible(false);
+}
+
+void MainWindow::makeIconGrey(){
     _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house_grey")));
     _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
     _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
-    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings")));
+    _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
+
+    setButtNotSelected(_tabAccountButt);
+    setButtNotSelected(_tabCreateAccountButt);
+    setButtNotSelected(_tabGenerateFileButt);
+    setButtNotSelected(_tabSettingsButt);
 }

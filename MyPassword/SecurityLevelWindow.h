@@ -19,9 +19,9 @@ private:
 
     QVBoxLayout _mainLyt;
     QLabel _titleLabel{tr("Password Security Level")};
-    QPushButton _veryHighButt{tr("Your password is uncrackedable, more than 50 years are necessary to unblock it !")};
-    QPushButton _highButt{tr("Your password is safe!")};
-    QPushButton _mediumButt{tr("This level of password should be the minimum to use, between 1 year and 10 year to cracked it.")};
-    QPushButton _lowButt{tr("The password can be cracked in less than 1 year, don't use for social network or site with credit card account.")};
-    QPushButton _veryLowButt{tr("The password is really not safe. Less than 1 month is necessary to get it. This should not be used on any way.")};
+    QPushButton _veryHighButt{tr("Safety: VERY HIGH\nPerfect password, almost impossible to crack!")};
+    QPushButton _highButt{tr("Safety: HIGH\nYour password is hack resistant!")};
+    QPushButton _mediumButt{tr("Safety: MEDIUM\nThis is the minimum safety level you should use.")};
+    QPushButton _lowButt{tr("Safety: LOW\nStill not enough, nerver use this password with sensible account, you will regret it.")};
+    QPushButton _veryLowButt{tr("Safety: VERY LOW\nIt is high time to change your password, this password is too short. It can be cracked very quickly with a standard desktop computer.")};
 };
