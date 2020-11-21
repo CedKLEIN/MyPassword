@@ -31,11 +31,11 @@ private:
 
     QLabel _securityLabel{tr("Password Security level:")};
     QWidget _securityWidget;
-    QPushButton _veryHighButt{tr("Safety: VERY HIGH\nPerfect password, almost impossible to crack!")};
-    QPushButton _highButt{tr("Safety: HIGH\nYour password is hack resistant!")};
-    QPushButton _mediumButt{tr("Safety: MEDIUM\nThis is the minimum safety level you should use.")};
-    QPushButton _lowButt{tr("Safety: LOW\nStill not enough, nerver use this password with sensible account.")};
-    QPushButton _veryLowButt{tr("Safety: VERY LOW\nIt is high time to change your password, this password is too short.")};
+    QPushButton _veryHighButt{tr("VERY HIGH:\nPerfect password, almost impossible to crack!")};
+    QPushButton _highButt{tr("HIGH:\nYour password is hack resistant!")};
+    QPushButton _mediumButt{tr("MEDIUM:\nThis is the minimum safety level you should use.")};
+    QPushButton _lowButt{tr("LOW:\nStill not enough, nerver use this password with sensible account.")};
+    QPushButton _veryLowButt{tr("VERY LOW:\nIt is high time to change your password, this password is too short.")};
     QVBoxLayout _securityLayout;
 
     QVBoxLayout _mainLayout;

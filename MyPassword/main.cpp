@@ -10,6 +10,7 @@
 #include "Account.h"
 #include "Log.h"
 #include "PasswordSecurity.h"
+#include "Settings.h"
 
 #include <QApplication>
 
@@ -31,13 +32,15 @@ int main(int argc, char *argv[])
     FacAccount facAccount;
     PasswordSecurity passwordSecurity;
     Database db{facAccount};
+    Settings settings;
 
     AccountWindow accountWindow{facAccount,
                 encryption,
                 passwordSecurity,
                 db,
                 log};
-    SettingsTab settingsTab{facAccount,db};
+
+    SettingsTab settingsTab{facAccount,db,settings};
 
     CreateAccountTab createAccountTab{encryption,
                 passwordSecurity,
@@ -50,7 +53,8 @@ int main(int argc, char *argv[])
                 passwordSecurity,
                 db,
                 log,
-                settingsTab};
+                settingsTab,
+                settings};
 
     GenerateFileTab generateFileTab{facAccount};
     InfoTab infoTab{passwordSecurity};

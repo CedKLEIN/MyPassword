@@ -21,6 +21,9 @@ static const QString BOLD{QStringLiteral("bold")};
 static const QString LEFT{QStringLiteral("left")};
 static const QString RIGHT{QStringLiteral("right")};
 static const QString OUTSET{QStringLiteral("outset")};
+static const QString ENGLISH{QStringLiteral("english")};
+static const QString FRENCH{QStringLiteral("french")};
+static const QString SPANISH{QStringLiteral("spanish")};
 static const int TEXT_NAME_LENGTH{50};
 static const int TEXT_LOGIN_LENGTH{50};
 static const int TEXT_PASSWORD_LENGTH{50};
@@ -89,6 +92,14 @@ public:
                 Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+
                 Utility::SET_BORDER_SIZE(0)+
                 Utility::SET_TEXT_COLOR(COLOR_WHITE)+QLatin1String("}");
+
+    }
+
+    static QString GET_STYLE_QCHECKBOX(){
+        return QLatin1String("QCheckBox{")+SET_HEIGHT(40)+
+                SET_BACKGROUND_COLOR(COLOR_DARK_2)+
+                SET_TEXT_COLOR(COLOR_LIGHT)+
+                SET_TEXT_SIZE(19,BOLD)+QLatin1String("}");
 
     }
 

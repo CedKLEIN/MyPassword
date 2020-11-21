@@ -5,8 +5,9 @@
 #include "SettingsTab.h"
 #include "Interface/IPasswordSecurity.h"
 #include "Interface/IDatabase.h"
-#include "Utility.h"
 #include "Interface/ILog.h"
+#include "Interface/ISettings.h"
+#include "Utility.h"
 
 #include <QDebug>
 
@@ -20,14 +21,16 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
                        IPasswordSecurity& iPasswordSecurity,
                        IDatabase& iDb,
                        ILog& iLog,
-                       SettingsTab& iSettingsTab):
+                       SettingsTab& iSettingsTab,
+                       ISettings& iISettings):
     _facAccount(iFacAccount),
     _accountWindow(iAccountWindow),
     _createAccountTab(iCreateAccountTab),
     _passwordSecurity(iPasswordSecurity),
     _db(iDb),
     _log(iLog),
-    _settingsTab(iSettingsTab)
+    _settingsTab(iSettingsTab),
+    _settings(iISettings)
 {
     setFixedWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
@@ -123,9 +126,16 @@ void AccountTab::retrieveAccounts(){
 
 void AccountTab::setModelFromDataList(const QStringList& iDataList){
     _accountModel.clear();
-    for(const auto& account: iDataList){
-        QStandardItem *item = new QStandardItem(QIcon(_passwordSecurity.getIconSeverityLvl(_facAccount.get(account)->getSeverityLvl())),account);
-        _accountModel.appendRow(item);
+    if(_settings.isSecurityIconShow()){
+        for(const auto& account: iDataList){
+            QStandardItem *item = new QStandardItem(QIcon(_passwordSecurity.getIconSeverityLvl(_facAccount.get(account)->getSeverityLvl())),account);
+            _accountModel.appendRow(item);
+        }
+    }else {
+        for(const auto& account: iDataList){
+            QStandardItem *item = new QStandardItem(account);
+            _accountModel.appendRow(item);
+        }
     }
 }
 

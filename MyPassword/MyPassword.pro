@@ -19,9 +19,11 @@ HEADERS += \
     Interface/IListener.h \
     Interface/ILog.h \
     Interface/IPasswordSecurity.h \
+    Interface/ISettings.h \
     Log.h \
     MainWindow.h \
     PasswordSecurity.h \
+    Settings.h \
     SettingsTab.h \
     Utility.h
 
@@ -38,6 +40,7 @@ SOURCES += \
     Log.cpp \
     MainWindow.cpp \
     PasswordSecurity.cpp \
+    Settings.cpp \
     SettingsTab.cpp \
     main.cpp
 
