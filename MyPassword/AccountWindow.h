@@ -15,7 +15,6 @@
 
 class IEncryption;
 class IPasswordSecurity;
-class SecurityLevelWindow;
 class IDatabase;
 class ILog;
 
@@ -27,7 +26,6 @@ public:
     AccountWindow(FacAccount&,
                   IEncryption&,
                   IPasswordSecurity&,
-                  SecurityLevelWindow&,
                   IDatabase&,
                   ILog&);
     AccountWindow(AccountWindow const&)=delete;
@@ -62,7 +60,6 @@ private:
     FacAccount& _facAccount;
     IEncryption& _encryption;
     IPasswordSecurity& _passwordSecurity;
-    SecurityLevelWindow& _securityLevelWindow;
     IDatabase& _db;
     ILog& _log;
 

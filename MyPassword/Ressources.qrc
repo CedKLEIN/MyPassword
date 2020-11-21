@@ -27,5 +27,7 @@
         <file alias="english">Icon/english.png</file>
         <file alias="france">Icon/france.png</file>
         <file alias="spanish">Icon/spanish.png</file>
+        <file alias="question">Icon/question.png</file>
+        <file alias="question_grey">Icon/question_grey.png</file>
     </qresource>
 </RCC>

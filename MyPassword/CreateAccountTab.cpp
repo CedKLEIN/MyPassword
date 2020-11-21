@@ -4,7 +4,6 @@
 #include "Interface/IPasswordSecurity.h"
 #include "Interface/ILog.h"
 #include "Utility.h"
-#include "SecurityLevelWindow.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -12,12 +11,10 @@
 
 CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
                                    IPasswordSecurity& iPasswordSecurity,
-                                   SecurityLevelWindow& iSecurityLevelWindow,
                                    IDatabase& iDb,
                                    ILog& iLog):
     _encryption(iEncryption),
     _passwordSecurity(iPasswordSecurity),
-    _securityLevelWindow(iSecurityLevelWindow),
     _db(iDb),
     _log(iLog)
 {
@@ -105,7 +102,6 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
     QObject::connect(&_loginLineEdit,&QLineEdit::textChanged,this,&CreateAccountTab::textChangedLogin);
     QObject::connect(&_passwordLineEdit,&QLineEdit::textChanged,this,&CreateAccountTab::textChangedPassword);
     QObject::connect(&_detailsTextEdit,&QTextEdit::textChanged,this,&CreateAccountTab::textChangedDetails);
-    QObject::connect(&_passwordSecurityButt,&QPushButton::clicked,&_securityLevelWindow,&SecurityLevelWindow::show);
     QObject::connect(&_passwordViewButt,&QPushButton::clicked,this,&CreateAccountTab::viewPassword);
     QObject::connect(&_passwordLineEdit,&QLineEdit::textChanged,this,&CreateAccountTab::checkPasswordSecurity);
     QObject::connect(&_validateButt,&QPushButton::clicked,this,&CreateAccountTab::validateForm);
@@ -113,6 +109,8 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
 
 void CreateAccountTab::textChangedName(const QString&){
     _nameErrorLabel.setVisible(false);
+    _validationLabel.setVisible(false);
+    _validationIcon.setVisible(false);
     _nameLineEdit.setStyleSheet(QStringLiteral(""));
     _nameLengthLabel.setText(QString::number(_nameLineEdit.text().length())+"/"+
                              QString::number(TEXT_LOGIN_LENGTH));
@@ -222,6 +220,7 @@ void CreateAccountTab::validateForm() {
     clearWindow();
     _validationLabel.setVisible(true);
     _validationIcon.setVisible(true);
+    _nameLineEdit.setFocus();
 }
 
 void CreateAccountTab::onTabSelected(){
@@ -229,9 +228,6 @@ void CreateAccountTab::onTabSelected(){
     _validationIcon.setVisible(false);
     _nameErrorLabel.setVisible(false);
     _nameLineEdit.setStyleSheet("");
-}
-
-void CreateAccountTab::showEvent(QShowEvent*){
     _nameLineEdit.setFocus();
 }
 

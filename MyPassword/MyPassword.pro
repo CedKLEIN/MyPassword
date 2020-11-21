@@ -12,6 +12,7 @@ HEADERS += \
     DateTime.h \
     Encryption.h \
     GenerateFileTab.h \
+    InfoTab.h \
     Interface/IDatabase.h \
     Interface/IDateTime.h \
     Interface/IEncryption.h \
@@ -21,7 +22,6 @@ HEADERS += \
     Log.h \
     MainWindow.h \
     PasswordSecurity.h \
-    SecurityLevelWindow.h \
     SettingsTab.h \
     Utility.h
 
@@ -34,10 +34,10 @@ SOURCES += \
     DateTime.cpp \
     Encryption.cpp \
     GenerateFileTab.cpp \
+    InfoTab.cpp \
     Log.cpp \
     MainWindow.cpp \
     PasswordSecurity.cpp \
-    SecurityLevelWindow.cpp \
     SettingsTab.cpp \
     main.cpp
 

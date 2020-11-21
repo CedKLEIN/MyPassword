@@ -20,7 +20,7 @@ class CreateAccountTab final : public QWidget
 {
     Q_OBJECT
 public:
-    CreateAccountTab(IEncryption&,IPasswordSecurity&,SecurityLevelWindow&,IDatabase&,ILog&);
+    CreateAccountTab(IEncryption&, IPasswordSecurity&, IDatabase&, ILog&);
     CreateAccountTab(CreateAccountTab const&)=delete;
     CreateAccountTab& operator=(CreateAccountTab const&)=delete;
     void onTabSelected();
@@ -39,7 +39,6 @@ private slots:
     void validateForm();
 
 private:
-    void showEvent(QShowEvent*)override final;
     void clearWindow();
     void fireEventUpdate(){
         for(const auto& listener : _listeners){
@@ -49,7 +48,6 @@ private:
 
     IEncryption& _encryption;
     IPasswordSecurity& _passwordSecurity;
-    SecurityLevelWindow& _securityLevelWindow;
     IDatabase& _db;
     ILog& _log;
 

@@ -1,6 +1,5 @@
 #include "AccountWindow.h"
 
-#include "SecurityLevelWindow.h"
 #include "Interface/IEncryption.h"
 #include "Interface/IPasswordSecurity.h"
 #include "Interface/IDatabase.h"
@@ -15,13 +14,11 @@
 AccountWindow::AccountWindow(FacAccount &iFacAccount,
                              IEncryption& iEncryption,
                              IPasswordSecurity& iPasswordSecurity,
-                             SecurityLevelWindow& iSecurityLevelWindow,
                              IDatabase& iDb,
                              ILog& iLog) :
     _facAccount(iFacAccount),
     _encryption(iEncryption),
     _passwordSecurity(iPasswordSecurity),
-    _securityLevelWindow(iSecurityLevelWindow),
     _db(iDb),
     _log(iLog)
 {
@@ -151,7 +148,6 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     setLayout(&_mainLayout);
 
     QObject::connect(&_closeButt,&QPushButton::clicked,this,&AccountWindow::hide);
-    QObject::connect(&_pwdSecurityButt,&QPushButton::clicked,&_securityLevelWindow,&SecurityLevelWindow::show);
     QObject::connect(&_pwdLineEdit,&QLineEdit::textChanged,this,&AccountWindow::checkPasswordSecurity);
     QObject::connect(&_pwdViewButt,&QPushButton::clicked,this,&AccountWindow::viewPassword);
     QObject::connect(&_testViewButt,&QPushButton::clicked,this,&AccountWindow::viewTestPwd);

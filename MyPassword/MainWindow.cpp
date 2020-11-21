@@ -4,6 +4,7 @@
 #include "CreateAccountTab.h"
 #include "GenerateFileTab.h"
 #include "SettingsTab.h"
+#include "InfoTab.h"
 
 #include "Utility.h"
 
@@ -12,11 +13,13 @@
 MainWindow::MainWindow(AccountTab& iAccountTab,
                        CreateAccountTab& iCreateAccountTab,
                        GenerateFileTab& iGenerateFileTab,
-                       SettingsTab& iSettingsTab):
+                       SettingsTab& iSettingsTab,
+                       InfoTab& iInfoTab):
     _accountTab(iAccountTab),
     _createAccountTab(iCreateAccountTab),
     _generateFileTab(iGenerateFileTab),
-    _settingsTab(iSettingsTab)
+    _settingsTab(iSettingsTab),
+    _infoTab(iInfoTab)
 {
     setMinimumHeight(SIZE_WINDOW_VERTICAL);
     setWindowIcon(QIcon(QStringLiteral(":/security")));
@@ -44,9 +47,15 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
     _tabSettingsButt.setFocusPolicy(Qt::NoFocus);
     setButtNotSelected(_tabSettingsButt);
 
+    _tabInfoButt.setIcon(QIcon(QStringLiteral(":/question_grey")));
+    _tabInfoButt.setIconSize(QSize(40,40));
+    _tabInfoButt.setFocusPolicy(Qt::NoFocus);
+    setButtNotSelected(_tabInfoButt);
+
     _createAccountTab.setVisible(false);
     _generateFileTab.setVisible(false);
     _settingsTab.setVisible(false);
+    _infoTab.setVisible(false);
 
     _menuLayout.setContentsMargins(0,0,0,0);
     _menuLayout.setAlignment(Qt::AlignTop);
@@ -55,6 +64,7 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
     _menuLayout.addWidget(&_tabCreateAccountButt);
     _menuLayout.addWidget(&_tabGenerateFileButt);
     _menuLayout.addWidget(&_tabSettingsButt);
+    _menuLayout.addWidget(&_tabInfoButt);
 
     _menu.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2));
     _menu.setLayout(&_menuLayout);
@@ -65,6 +75,7 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
     _mainLayout.addWidget(&_createAccountTab);
     _mainLayout.addWidget(&_generateFileTab);
     _mainLayout.addWidget(&_settingsTab);
+    _mainLayout.addWidget(&_infoTab);
 
     setLayout(&_mainLayout);
 
@@ -72,6 +83,7 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
     QObject::connect(&_tabCreateAccountButt,&QPushButton::clicked,this,&MainWindow::showTabCreateAccount);
     QObject::connect(&_tabGenerateFileButt,&QPushButton::clicked,this,&MainWindow::showTabGenerateFile);
     QObject::connect(&_tabSettingsButt,&QPushButton::clicked,this,&MainWindow::showTabSettings);
+    QObject::connect(&_tabInfoButt,&QPushButton::clicked,this,&MainWindow::showTabInfo);
 }
 
 void MainWindow::setButtNotSelected(QPushButton& iButt){
@@ -120,6 +132,13 @@ void MainWindow::showTabSettings(){
     setButtSelected(_tabSettingsButt);
 }
 
+void MainWindow::showTabInfo(){
+    reset();
+    _infoTab.setVisible(true);
+    _tabInfoButt.setIcon(QIcon(QStringLiteral(":/question")));
+    setButtSelected(_tabInfoButt);
+}
+
 void MainWindow::reset(){
     hideTabs();
     makeIconGrey();
@@ -130,6 +149,7 @@ void MainWindow::hideTabs(){
     _createAccountTab.setVisible(false);
     _generateFileTab.setVisible(false);
     _settingsTab.setVisible(false);
+    _infoTab.setVisible(false);
 }
 
 void MainWindow::makeIconGrey(){
@@ -137,9 +157,11 @@ void MainWindow::makeIconGrey(){
     _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
     _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
     _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
+    _tabInfoButt.setIcon(QIcon(QStringLiteral(":/question_grey")));
 
     setButtNotSelected(_tabAccountButt);
     setButtNotSelected(_tabCreateAccountButt);
     setButtNotSelected(_tabGenerateFileButt);
     setButtNotSelected(_tabSettingsButt);
+    setButtNotSelected(_tabInfoButt);
 }

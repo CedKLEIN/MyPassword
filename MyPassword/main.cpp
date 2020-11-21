@@ -3,13 +3,13 @@
 #include "CreateAccountTab.h"
 #include "GenerateFileTab.h"
 #include "SettingsTab.h"
+#include "InfoTab.h"
 #include "Database.h"
 #include "AccountWindow.h"
 #include "Encryption.h"
 #include "Account.h"
 #include "Log.h"
 #include "PasswordSecurity.h"
-#include "SecurityLevelWindow.h"
 
 #include <QApplication>
 
@@ -32,19 +32,15 @@ int main(int argc, char *argv[])
     PasswordSecurity passwordSecurity;
     Database db{facAccount};
 
-    SecurityLevelWindow securityLevelWindow{passwordSecurity};
-
     AccountWindow accountWindow{facAccount,
                 encryption,
                 passwordSecurity,
-                securityLevelWindow,
                 db,
                 log};
     SettingsTab settingsTab{facAccount,db};
 
     CreateAccountTab createAccountTab{encryption,
                 passwordSecurity,
-                securityLevelWindow,
                 db,
                 log};
 
@@ -57,9 +53,9 @@ int main(int argc, char *argv[])
                 settingsTab};
 
     GenerateFileTab generateFileTab{facAccount};
+    InfoTab infoTab{passwordSecurity};
 
-
-    MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab};
+    MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab,infoTab};
     mainWindow.show();
 
     return app.exec();
