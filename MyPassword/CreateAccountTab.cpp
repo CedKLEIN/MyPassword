@@ -30,7 +30,7 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
                   Utility::GET_STYLE_QLABEL());
 
     _titleLabel.setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
-    _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
+    _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(40)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
     _nameErrorLabel.setVisible(false);
@@ -51,8 +51,10 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
     _passwordLineEdit.setMaxLength(TEXT_PASSWORD_LENGTH);
     _passwordViewButt.setIcon(QIcon(QStringLiteral(":/hide")));
     _passwordViewButt.setIconSize(ICON_SIZE);
+    _passwordViewButt.setFocusPolicy(Qt::NoFocus);
     _passwordSecurityButt.setIconSize(ICON_SIZE);
     _passwordSecurityButt.hide();
+    _passwordSecurityButt.setFocusPolicy(Qt::NoFocus);
     _passwordLayout.addWidget(&_passwordLabel);
     _passwordLayout.addWidget(&_passwordLineEdit);
     _passwordLayout.addWidget(&_passwordViewButt);
@@ -63,6 +65,7 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
     _detailsLabelLayout.addWidget(&_detailsLabel);
     _detailsLengthLabelLayout.setAlignment(Qt::AlignTop);
     _detailsLengthLabelLayout.addWidget(&_detailsLengthLabel);
+    _detailsTextEdit.setTabChangesFocus(true);
     _detailsLayout.addLayout(&_detailsLabelLayout);
     _detailsLayout.addWidget(&_detailsTextEdit);
     _detailsLayout.addLayout(&_detailsLengthLabelLayout);
@@ -226,5 +229,9 @@ void CreateAccountTab::onTabSelected(){
     _validationIcon.setVisible(false);
     _nameErrorLabel.setVisible(false);
     _nameLineEdit.setStyleSheet("");
+}
+
+void CreateAccountTab::showEvent(QShowEvent*){
+    _nameLineEdit.setFocus();
 }
 

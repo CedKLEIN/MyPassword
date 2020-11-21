@@ -2,6 +2,7 @@
 
 #include "AccountWindow.h"
 #include "CreateAccountTab.h"
+#include "SettingsTab.h"
 #include "Interface/IPasswordSecurity.h"
 #include "Interface/IDatabase.h"
 #include "Utility.h"
@@ -18,13 +19,15 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
                        CreateAccountTab& iCreateAccountTab,
                        IPasswordSecurity& iPasswordSecurity,
                        IDatabase& iDb,
-                       ILog& iLog):
+                       ILog& iLog,
+                       SettingsTab& iSettingsTab):
     _facAccount(iFacAccount),
     _accountWindow(iAccountWindow),
     _createAccountTab(iCreateAccountTab),
     _passwordSecurity(iPasswordSecurity),
     _db(iDb),
-    _log(iLog)
+    _log(iLog),
+    _settingsTab(iSettingsTab)
 {
     setFixedWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
@@ -34,6 +37,7 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
 
     _createAccountTab.addListener(this);
     _accountWindow.addListener(this);
+    _settingsTab.addListener(this);
     _accountWindowLayout.addWidget(&_accountWindow);
     _accountWindowWidget.setLayout(&_accountWindowLayout);
     _accountWindowWidget.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0));
@@ -60,7 +64,7 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
 
 
 AccountTab::~AccountTab(){
-    _accountModel.clear();
+    //_accountModel.clear();
 }
 void AccountTab::onEventClose(){
     retrieveAccounts();
@@ -98,6 +102,7 @@ void AccountTab::filterChanged(const QString& iText){
 void AccountTab::retrieveAccounts(){
     _accountsData.clear();
     _facAccount.clear();
+    _accountWindow.hide();
 
     int error{_db.retrieve()};
 

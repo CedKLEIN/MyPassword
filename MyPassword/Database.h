@@ -20,6 +20,7 @@ public:
     int retrieve() override final;
     int remove(const QString&) override final;
     int modify(const QStringList&) override final;
+    int removeAll() override final;
 
 private:
     bool dbOpen() override final;

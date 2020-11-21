@@ -137,3 +137,21 @@ int Database::modify(const QStringList& iData)
     }
     return Utility::ERROR::db_not_open;
 }
+
+int Database::removeAll()
+{
+    if(dbOpen())
+    {
+        QString queryStr(QStringLiteral("DELETE FROM ACCOUNT;"));
+        QSqlQuery query(queryStr, _db);
+
+        if(!dbClose())
+            return Utility::ERROR::db_failed_to_close;
+
+        if (query.lastError().isValid())
+            return Utility::ERROR::db_failed_to_remove;
+
+        return  Utility::ERROR::no_error;
+    }
+    return Utility::ERROR::db_not_open;
+}

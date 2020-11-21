@@ -26,18 +26,22 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
 
     _tabAccountButt.setIcon(QIcon(QStringLiteral(":/house")));
     _tabAccountButt.setIconSize(QSize(40,40));
+    _tabAccountButt.setFocusPolicy(Qt::NoFocus);
     setButtSelected(_tabAccountButt);
 
     _tabCreateAccountButt.setIcon(QIcon(QStringLiteral(":/add_grey")));
     _tabCreateAccountButt.setIconSize(QSize(40,40));
+    _tabCreateAccountButt.setFocusPolicy(Qt::NoFocus);
     setButtNotSelected(_tabCreateAccountButt);
 
     _tabGenerateFileButt.setIcon(QIcon(QStringLiteral(":/paper_grey")));
     _tabGenerateFileButt.setIconSize(QSize(40,40));
+    _tabGenerateFileButt.setFocusPolicy(Qt::NoFocus);
     setButtNotSelected(_tabGenerateFileButt);
 
     _tabSettingsButt.setIcon(QIcon(QStringLiteral(":/settings_grey")));
     _tabSettingsButt.setIconSize(QSize(40,40));
+    _tabSettingsButt.setFocusPolicy(Qt::NoFocus);
     setButtNotSelected(_tabSettingsButt);
 
     _createAccountTab.setVisible(false);

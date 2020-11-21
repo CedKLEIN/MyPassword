@@ -39,6 +39,7 @@ private slots:
     void validateForm();
 
 private:
+    void showEvent(QShowEvent*)override final;
     void clearWindow();
     void fireEventUpdate(){
         for(const auto& listener : _listeners){

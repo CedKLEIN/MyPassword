@@ -16,9 +16,10 @@
 /*
  * To do:
  * set tooltip for each icon
- * Check english only
  * Make shoter all name ex: password = pwd ...
- * Settings
+ * QSettings save language
+ * delete all acount
+ * fix bug
  */
 
 int main(int argc, char *argv[])
@@ -32,12 +33,14 @@ int main(int argc, char *argv[])
     Database db{facAccount};
 
     SecurityLevelWindow securityLevelWindow{passwordSecurity};
+
     AccountWindow accountWindow{facAccount,
                 encryption,
                 passwordSecurity,
                 securityLevelWindow,
                 db,
                 log};
+    SettingsTab settingsTab{facAccount,db};
 
     CreateAccountTab createAccountTab{encryption,
                 passwordSecurity,
@@ -50,11 +53,11 @@ int main(int argc, char *argv[])
                 createAccountTab,
                 passwordSecurity,
                 db,
-                log};
+                log,
+                settingsTab};
 
     GenerateFileTab generateFileTab{facAccount};
 
-    SettingsTab settingsTab;
 
     MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab};
     mainWindow.show();

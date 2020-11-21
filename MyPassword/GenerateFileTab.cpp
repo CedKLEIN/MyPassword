@@ -17,7 +17,7 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount):
                   Utility::GET_STYLE_QTEXTEDIT());
 
     _titleLabel.setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
-    _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(35,BOLD)+
+    _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(40)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
     _generateTextButt.setIcon(QIcon(QStringLiteral(":/actualize")));

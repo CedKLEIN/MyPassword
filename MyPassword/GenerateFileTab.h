@@ -24,7 +24,7 @@ public slots:
 
 private:
     FacAccount& _facAccount;
-    QLabel _titleLabel{tr("Generate account in text file")};
+    QLabel _titleLabel{tr("Generate data account in text file")};
     QLabel _outputSaveFileLabel;
     QStringList _textStringList;
     QPushButton _generateTextButt{tr(" Generate text")};

@@ -17,6 +17,7 @@ class IPasswordSecurity;
 class CreateAccountTab;
 class IDatabase;
 class ILog;
+class SettingsTab;
 
 class AccountTab final : public QWidget, public IListener
 {
@@ -27,7 +28,8 @@ public:
                CreateAccountTab&,
                IPasswordSecurity&,
                IDatabase&,
-               ILog&);
+               ILog&,
+               SettingsTab&);
     AccountTab(AccountTab const&)=delete;
     AccountTab& operator=(AccountTab const&)=delete;
     ~AccountTab();
@@ -46,6 +48,7 @@ private:
     IPasswordSecurity& _passwordSecurity;
     IDatabase& _db;
     ILog& _log;
+    SettingsTab& _settingsTab;
 
     QWidget _accountWindowWidget;
     QVBoxLayout _accountWindowLayout;

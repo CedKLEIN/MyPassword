@@ -33,6 +33,9 @@ public:
     FacAccount()=default;
     FacAccount(FacAccount const&)=delete;
     FacAccount& operator=(FacAccount const&)=delete;
+    ~FacAccount(){
+        clear();
+    }
 
     void create(const QString& iName,
                 const QString& iLogin,
