@@ -1,7 +1,12 @@
 #include "PasswordSecurity.h"
+#include "Interface/ISettings.h"
+#include "Utility.h"
 
 #include <QRegExp>
 #include <QString>
+
+PasswordSecurity::PasswordSecurity(ISettings& iISettings):
+    _settings(iISettings){}
 
 int PasswordSecurity::getSecurityLevel(const QString& iPwd)const{
         if(iPwd.size()<9)
@@ -119,6 +124,16 @@ int PasswordSecurity::getSecurityLevel(const QString& iPwd)const{
 }
 
 QString PasswordSecurity::getIconSeverityLvl(const int iSeverityLvl)const{
+    if(_settings.getSecurityIconThemes()==SecurityIconThemes2)
+        return getIconTheme2(iSeverityLvl);
+    else if(_settings.getSecurityIconThemes()==SecurityIconThemes3)
+        return getIconTheme3(iSeverityLvl);
+    else {
+        return getIconTheme1(iSeverityLvl);
+    }
+}
+
+QString PasswordSecurity::getIconTheme1(const int iSeverityLvl)const{
     switch(iSeverityLvl){
     case PasswordSecurity::VERY_LOW:
         return QStringLiteral(":/very_low");
@@ -130,6 +145,40 @@ QString PasswordSecurity::getIconSeverityLvl(const int iSeverityLvl)const{
         return QStringLiteral(":/high");
     case PasswordSecurity::VERY_HIGH:
         return QStringLiteral(":/very_high");
+    default:
+        return "";
+    }
+}
+
+QString PasswordSecurity::getIconTheme2(const int iSeverityLvl)const{
+    switch(iSeverityLvl){
+    case PasswordSecurity::VERY_LOW:
+        return QStringLiteral(":/very_low_theme2");
+    case PasswordSecurity::LOW:
+        return QStringLiteral(":/low_theme2");
+    case PasswordSecurity::MEDIUM:
+        return QStringLiteral(":/medium_theme2");
+    case PasswordSecurity::HIGH:
+        return QStringLiteral(":/high_theme2");
+    case PasswordSecurity::VERY_HIGH:
+        return QStringLiteral(":/very_high_theme2");
+    default:
+        return "";
+    }
+}
+
+QString PasswordSecurity::getIconTheme3(const int iSeverityLvl)const{
+    switch(iSeverityLvl){
+    case PasswordSecurity::VERY_LOW:
+        return QStringLiteral(":/very_low_theme3");
+    case PasswordSecurity::LOW:
+        return QStringLiteral(":/low_theme3");
+    case PasswordSecurity::MEDIUM:
+        return QStringLiteral(":/medium_theme3");
+    case PasswordSecurity::HIGH:
+        return QStringLiteral(":/high_theme3");
+    case PasswordSecurity::VERY_HIGH:
+        return QStringLiteral(":/very_high_theme3");
     default:
         return "";
     }

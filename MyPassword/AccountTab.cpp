@@ -65,10 +65,6 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
     QObject::connect(_accountView.selectionModel(), &QItemSelectionModel::selectionChanged, this,&AccountTab::displayWindowAccount);
 }
 
-
-AccountTab::~AccountTab(){
-    //_accountModel.clear();
-}
 void AccountTab::onEventClose(){
     retrieveAccounts();
 }

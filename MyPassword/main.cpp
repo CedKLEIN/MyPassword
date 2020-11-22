@@ -17,9 +17,8 @@
 /*
  * To do:
  * set tooltip for each icon
- * Make shoter all name ex: password = pwd ...
+ * Make shorter all name ex: password = pwd ...
  * QSettings save language
- * delete all acount
  * fix bug
  */
 
@@ -30,9 +29,9 @@ int main(int argc, char *argv[])
     Log log;
     Encryption encryption;
     FacAccount facAccount;
-    PasswordSecurity passwordSecurity;
-    Database db{facAccount};
     Settings settings;
+    Database db{facAccount};
+    PasswordSecurity passwordSecurity{settings};
 
     AccountWindow accountWindow{facAccount,
                 encryption,

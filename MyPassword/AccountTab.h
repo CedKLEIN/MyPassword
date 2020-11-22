@@ -34,7 +34,6 @@ public:
                ISettings&);
     AccountTab(AccountTab const&)=delete;
     AccountTab& operator=(AccountTab const&)=delete;
-    ~AccountTab();
     void onEventClose() override;
 
 private slots:

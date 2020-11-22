@@ -8,5 +8,7 @@ struct ISettings{
     virtual void setLanguage(const QString&)=0;
     virtual bool isSecurityIconShow()const=0;
     virtual void setIsSecurityIconShow(bool)=0;
+    virtual QString getSecurityIconThemes()const=0;
+    virtual void setSecurityIconThemes(const QString&)=0;
 };
 

@@ -31,9 +31,57 @@ SettingsTab::SettingsTab(FacAccount& iFacAccount,IDatabase& iDatabase,ISettings&
                                     Utility::SET_BORDER_SIZE(0)+
                                     Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2)+
                                     Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
+
     setComboBoxLanguage();
 
     _securityIconShowCheckBox.setChecked(_settings.isSecurityIconShow());
+
+    _veryHighTheme1Butt.setFocusPolicy(Qt::NoFocus);
+    _highTheme1Butt.setFocusPolicy(Qt::NoFocus);
+    _mediumTheme1Butt.setFocusPolicy(Qt::NoFocus);
+    _lowTheme1Butt.setFocusPolicy(Qt::NoFocus);
+    _veryLowTheme1Butt.setFocusPolicy(Qt::NoFocus);
+    _securityIconTheme1Layout.setAlignment(Qt::AlignLeft);
+    _securityIconTheme1Layout.addWidget(&_securityIconTheme1RadioButton);
+    _securityIconTheme1Layout.addWidget(&_veryHighTheme1Butt);
+    _securityIconTheme1Layout.addWidget(&_highTheme1Butt);
+    _securityIconTheme1Layout.addWidget(&_mediumTheme1Butt);
+    _securityIconTheme1Layout.addWidget(&_lowTheme1Butt);
+    _securityIconTheme1Layout.addWidget(&_veryLowTheme1Butt);
+
+    _veryHighTheme2Butt.setFocusPolicy(Qt::NoFocus);
+    _highTheme2Butt.setFocusPolicy(Qt::NoFocus);
+    _mediumTheme2Butt.setFocusPolicy(Qt::NoFocus);
+    _lowTheme2Butt.setFocusPolicy(Qt::NoFocus);
+    _veryLowTheme2Butt.setFocusPolicy(Qt::NoFocus);
+    _securityIconTheme2Layout.setAlignment(Qt::AlignLeft);
+    _securityIconTheme2Layout.addWidget(&_securityIconTheme2RadioButton);
+    _securityIconTheme2Layout.addWidget(&_veryHighTheme2Butt);
+    _securityIconTheme2Layout.addWidget(&_highTheme2Butt);
+    _securityIconTheme2Layout.addWidget(&_mediumTheme2Butt);
+    _securityIconTheme2Layout.addWidget(&_lowTheme2Butt);
+    _securityIconTheme2Layout.addWidget(&_veryLowTheme2Butt);
+
+    _veryHighTheme3Butt.setFocusPolicy(Qt::NoFocus);
+    _highTheme3Butt.setFocusPolicy(Qt::NoFocus);
+    _mediumTheme3Butt.setFocusPolicy(Qt::NoFocus);
+    _lowTheme3Butt.setFocusPolicy(Qt::NoFocus);
+    _veryLowTheme3Butt.setFocusPolicy(Qt::NoFocus);
+    _securityIconTheme3Layout.setAlignment(Qt::AlignLeft);
+    _securityIconTheme3Layout.addWidget(&_securityIconTheme3RadioButton);
+    _securityIconTheme3Layout.addWidget(&_veryHighTheme3Butt);
+    _securityIconTheme3Layout.addWidget(&_highTheme3Butt);
+    _securityIconTheme3Layout.addWidget(&_mediumTheme3Butt);
+    _securityIconTheme3Layout.addWidget(&_lowTheme3Butt);
+    _securityIconTheme3Layout.addWidget(&_veryLowTheme3Butt);
+
+    _securityIconLayout.addLayout(&_securityIconTheme1Layout);
+    _securityIconLayout.addLayout(&_securityIconTheme2Layout);
+    _securityIconLayout.addLayout(&_securityIconTheme3Layout);
+    _securityIconQWidget.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2));
+    _securityIconQWidget.setLayout(&_securityIconLayout);
+
+    getSecurityThemeSettings();
 
     _resetButt.setStyleSheet(Utility::SET_HEIGHT(40)+
                              Utility::SET_BACKGROUND_COLOR(COLOR_BLUE));
@@ -47,6 +95,9 @@ SettingsTab::SettingsTab(FacAccount& iFacAccount,IDatabase& iDatabase,ISettings&
     _mainLayout.addSpacing(20);
     _mainLayout.addWidget(&_securityLabel);
     _mainLayout.addWidget(&_securityIconShowCheckBox);
+    _mainLayout.addSpacing(10);
+    _mainLayout.addWidget(&_securityIconLabel);
+    _mainLayout.addWidget(&_securityIconQWidget);
     _mainLayout.addSpacing(20);
     _mainLayout.addWidget(&_resetLabel);
     _mainLayout.addWidget(&_resetButt);
@@ -54,7 +105,19 @@ SettingsTab::SettingsTab(FacAccount& iFacAccount,IDatabase& iDatabase,ISettings&
 
     QObject::connect(&_languageComboBox,QOverload<int>::of(&QComboBox::currentIndexChanged),this,&SettingsTab::languageChange);
     QObject::connect(&_securityIconShowCheckBox,&QCheckBox::stateChanged,this,&SettingsTab::securityIconShowChange);
+    QObject::connect(&_securityIconTheme1RadioButton,&QRadioButton::toggled,this,&SettingsTab::setSecurityThemeSettings);
+    QObject::connect(&_securityIconTheme2RadioButton,&QRadioButton::toggled,this,&SettingsTab::setSecurityThemeSettings);
+    QObject::connect(&_securityIconTheme3RadioButton,&QRadioButton::toggled,this,&SettingsTab::setSecurityThemeSettings);
     QObject::connect(&_resetButt,&QPushButton::clicked,this,&SettingsTab::reset);
+}
+
+void SettingsTab::getSecurityThemeSettings(){
+    if(_settings.getSecurityIconThemes() == SecurityIconThemes1)
+        _securityIconTheme1RadioButton.setChecked(true);
+    else if(_settings.getSecurityIconThemes() == SecurityIconThemes2)
+        _securityIconTheme2RadioButton.setChecked(true);
+    else if(_settings.getSecurityIconThemes() == SecurityIconThemes3)
+        _securityIconTheme3RadioButton.setChecked(true);
 }
 
 void SettingsTab::setComboBoxLanguage(){
@@ -99,4 +162,13 @@ void SettingsTab::languageChange(int iIndex){
 void SettingsTab::securityIconShowChange(int){
     _settings.setIsSecurityIconShow(_securityIconShowCheckBox.isChecked());
     fireRefreshAccounts();
+}
+
+void SettingsTab::setSecurityThemeSettings(bool){
+    if(_securityIconTheme1RadioButton.isChecked())
+        _settings.setSecurityIconThemes(SecurityIconThemes1);
+    else if(_securityIconTheme2RadioButton.isChecked())
+        _settings.setSecurityIconThemes(SecurityIconThemes2);
+    else if(_securityIconTheme3RadioButton.isChecked())
+        _settings.setSecurityIconThemes(SecurityIconThemes3);
 }

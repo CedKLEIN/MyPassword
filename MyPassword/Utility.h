@@ -6,10 +6,13 @@
 
 static const QString COLOR_WHITE{QStringLiteral("#FFFFFF")};
 static const QString COLOR_RED{QStringLiteral("#D32F2F")};
+static const QString COLOR_ORANGE{QStringLiteral("#FF9800")};
 static const QString COLOR_GREEN{QStringLiteral("#388E3C")};
+static const QString COLOR_GREEN_LIGHT{QStringLiteral("#8BC34A")};
 static const QString COLOR_BLUE{QStringLiteral("#1177BB")};
 static const QString COLOR_BLUE_LIGHT{QStringLiteral("#7BDCFE")};
-static const QString COLOR_YELLOW{QStringLiteral("#DCDC9D")};
+static const QString COLOR_YELLOW{QStringLiteral("#FFEB3B")};
+static const QString COLOR_YELLOW_DARK{QStringLiteral("#DCDC9D")};
 static const QString COLOR_PINK{QStringLiteral("#C586C0")};
 static const QString COLOR_GREY{QStringLiteral("#9E9E9E")};
 static const QString COLOR_DARK_0{QStringLiteral("#1E1E1E")};
@@ -24,6 +27,9 @@ static const QString OUTSET{QStringLiteral("outset")};
 static const QString ENGLISH{QStringLiteral("english")};
 static const QString FRENCH{QStringLiteral("french")};
 static const QString SPANISH{QStringLiteral("spanish")};
+static const QString SecurityIconThemes1{QStringLiteral("theme1")};
+static const QString SecurityIconThemes2{QStringLiteral("theme2")};
+static const QString SecurityIconThemes3{QStringLiteral("theme3")};
 static const int TEXT_NAME_LENGTH{50};
 static const int TEXT_LOGIN_LENGTH{50};
 static const int TEXT_PASSWORD_LENGTH{50};

@@ -4,10 +4,12 @@
 
 #include <QString>
 
+class ISettings;
+
 class PasswordSecurity final : public IPasswordSecurity
 {
 public:
-    PasswordSecurity()=default;
+    PasswordSecurity(ISettings&);
     PasswordSecurity(PasswordSecurity const&)=delete;
     PasswordSecurity& operator=(PasswordSecurity const&)=delete;
 
@@ -15,6 +17,9 @@ public:
     QString getIconSeverityLvl(const int)const override final;
 
 private:
+    QString getIconTheme1(const int)const;
+    QString getIconTheme2(const int)const;
+    QString getIconTheme3(const int)const;
     bool hasAll(const QString&)const;
     bool hasOnlyNumberAndLowerAndUpper(const QString&)const;
     bool hasOnlyNumberAndLowerAndOthers(const QString&)const;
@@ -34,4 +39,6 @@ private:
     bool isOnlyLettersLower(const QString&)const;
     bool isOnlyLettersUpper(const QString&)const;
     bool isOnlyOthers(const QString &)const;
+
+    ISettings& _settings;
 };
