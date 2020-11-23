@@ -45,7 +45,7 @@ public:
         _vectAccount.emplace_back(new Account(iName,iLogin,iPassword,iDetails,iSeverityLvl));
     }
 
-    std::shared_ptr<Account> get(const QString& iName){
+    Account* get(const QString& iName){
         for(const auto& account : _vectAccount){
             if (account->getName() == iName){
                 return account;
@@ -54,13 +54,15 @@ public:
         return nullptr;
     }
 
-    std::vector<std::shared_ptr<Account>> getAll(){
+    std::vector<Account*> getAll(){
         return _vectAccount;
     }
 
     void clear(){
+        for(const auto& account: _vectAccount)
+            delete account;
         _vectAccount.clear();
     }
 private:
-    std::vector<std::shared_ptr<Account>> _vectAccount;
+    std::vector<Account*> _vectAccount;
 };

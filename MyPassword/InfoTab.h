@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QScrollArea>
 
 class IPasswordSecurity;
 
@@ -18,6 +19,10 @@ private:
     void setSecurityButt(QPushButton&);
 
     IPasswordSecurity& _passwordSecurity;
+
+    QWidget _scrollBarWidget;
+    QScrollArea _scrollArea;
+    QVBoxLayout _scrollBarLayout;
 
     QLabel _titleLabel{QStringLiteral("MyPassword")};
     QPushButton _iconTitle{QIcon{QStringLiteral(":/security")},""};

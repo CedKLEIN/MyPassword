@@ -61,5 +61,7 @@ int main(int argc, char *argv[])
     MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab,infoTab};
     mainWindow.show();
 
-    return app.exec();
+    int a= app.exec();
+
+    return a;
 }

@@ -171,4 +171,6 @@ void SettingsTab::setSecurityThemeSettings(bool){
         _settings.setSecurityIconThemes(SecurityIconThemes2);
     else if(_securityIconTheme3RadioButton.isChecked())
         _settings.setSecurityIconThemes(SecurityIconThemes3);
+
+    fireRefreshAccounts();
 }

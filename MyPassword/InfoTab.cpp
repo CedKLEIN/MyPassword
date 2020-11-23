@@ -45,19 +45,28 @@ InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity):
     _securityWidget.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2));
     _securityWidget.setLayout(&_securityLayout);
 
+    _scrollBarLayout.setAlignment(Qt::AlignTop);
+    _scrollBarLayout.addWidget(&_aboutAppLabel);
+    _scrollBarLayout.addWidget(&_aboutAppLineEdit);
+    _scrollBarLayout.addSpacing(20);
+    _scrollBarLayout.addWidget(&_webSiteLabel);
+    _scrollBarLayout.addWidget(&_webSiteLineEdit);
+    _scrollBarLayout.addSpacing(20);
+    _scrollBarLayout.addWidget(&_securityLabel);
+    _scrollBarLayout.addWidget(&_securityWidget);
+    _scrollBarLayout.addSpacing(20);
+
+    _scrollBarWidget.setLayout(&_scrollBarLayout);
+    _scrollBarWidget.setStyleSheet(Utility::SET_BORDER_SIZE(0));
+    _scrollArea.setWidgetResizable(true);
+    _scrollArea.setStyleSheet("QScrollArea{"+Utility::SET_BORDER_SIZE(0)+"}"+
+                             QLatin1Literal("QScrollBar:vertical {width: 2px;}"));
+    _scrollArea.setWidget(&_scrollBarWidget);
     _mainLayout.setAlignment(Qt::AlignTop);
     _mainLayout.addSpacing(20);
     _mainLayout.addLayout(&_titleLayout);
     _mainLayout.addSpacing(20);
-    _mainLayout.addWidget(&_aboutAppLabel);
-    _mainLayout.addWidget(&_aboutAppLineEdit);
-    _mainLayout.addSpacing(20);
-    _mainLayout.addWidget(&_webSiteLabel);
-    _mainLayout.addWidget(&_webSiteLineEdit);
-    _mainLayout.addSpacing(20);
-    _mainLayout.addWidget(&_securityLabel);
-    _mainLayout.addWidget(&_securityWidget);
-
+    _mainLayout.addWidget(&_scrollArea);
     setLayout(&_mainLayout);
 }
 
