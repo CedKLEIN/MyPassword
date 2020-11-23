@@ -17,6 +17,7 @@ InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity):
     _titleLayout.setAlignment(Qt::AlignCenter);
     _iconTitle.setStyleSheet(Utility::SET_HEIGHT(50));
     _iconTitle.setIconSize(QSize{40,40});
+    _iconTitle.setFocusPolicy(Qt::NoFocus);
     _titleLayout.addWidget(&_iconTitle);
     _titleLayout.addWidget(&_titleLabel);
 
@@ -59,8 +60,9 @@ InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity):
     _scrollBarWidget.setLayout(&_scrollBarLayout);
     _scrollBarWidget.setStyleSheet(Utility::SET_BORDER_SIZE(0));
     _scrollArea.setWidgetResizable(true);
-    _scrollArea.setStyleSheet("QScrollArea{"+Utility::SET_BORDER_SIZE(0)+"}"+
-                             QLatin1Literal("QScrollBar:vertical {width: 2px;}"));
+    _scrollArea.setStyleSheet(QLatin1Literal("QScrollArea{")+Utility::SET_BORDER_SIZE(0)+
+                              QLatin1Literal("}")+
+                              QLatin1Literal("QScrollBar:vertical {width: 2px;}"));
     _scrollArea.setWidget(&_scrollBarWidget);
     _mainLayout.setAlignment(Qt::AlignTop);
     _mainLayout.addSpacing(20);
@@ -71,6 +73,7 @@ InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity):
 }
 
 void InfoTab::setSecurityButt(QPushButton& iButt){
+    iButt.setFocusPolicy(Qt::NoFocus);
     iButt.setIconSize(QSize(40,40));
     iButt.setStyleSheet(Utility::SET_TEXT_ALIGN(LEFT)+
                         Utility::SET_TEXT_SIZE(19)+

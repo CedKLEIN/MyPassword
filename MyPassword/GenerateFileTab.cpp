@@ -20,15 +20,16 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount):
     _titleLabel.setStyleSheet(Utility::SET_TEXT_SIZE(40)+
                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
+    _textEdit.setPlaceholderText(tr("1- Generate the text\n2- Copy text or click on save button"));
+    _textEdit.verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
+    _textEdit.setTabChangesFocus(true);
+
     _generateTextButt.setIcon(QIcon(QStringLiteral(":/actualize")));
     _generateTextButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                     Utility::SET_HEIGHT(45));
     _saveTextButt.setIcon(QIcon(QStringLiteral(":/save")));
     _saveTextButt.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                 Utility::SET_HEIGHT(45));
-
-    _textEdit.setPlaceholderText(tr("1- Generate the text\n2- Copy text or click on save button"));
-    _textEdit.verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
 
     _buttLayout.addWidget(&_generateTextButt);
     _buttLayout.addWidget(&_saveTextButt);

@@ -35,6 +35,7 @@ SettingsTab::SettingsTab(FacAccount& iFacAccount,IDatabase& iDatabase,ISettings&
     setComboBoxLanguage();
 
     _securityIconShowCheckBox.setChecked(_settings.isSecurityIconShow());
+    _securityIconShowCheckBox.setFocusPolicy(Qt::NoFocus);
 
     _veryHighTheme1Butt.setFocusPolicy(Qt::NoFocus);
     _highTheme1Butt.setFocusPolicy(Qt::NoFocus);
