@@ -44,5 +44,7 @@ SOURCES += \
     SettingsTab.cpp \
     main.cpp
 
+TRANSLATIONS = mypassword_fr.ts mypassword_es.ts
+
 RESOURCES += \
     Ressources.qrc

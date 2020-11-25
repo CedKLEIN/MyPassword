@@ -32,7 +32,7 @@ private:
     QLineEdit _aboutAppLineEdit{tr("MyPassword deployed the /11/2020 by Cédric KLEIN.")};
 
     QLabel _webSiteLabel{tr("Download and help:")};
-    QLineEdit _webSiteLineEdit{tr("https://github.com/CedKLEIN/PasswordHandler")};
+    QLineEdit _webSiteLineEdit{"https://github.com/CedKLEIN/PasswordHandler"};
 
     QLabel _securityLabel{tr("Password Security level:")};
     QWidget _securityWidget;

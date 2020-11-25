@@ -15,12 +15,13 @@
 class FacAccount;
 class IDatabase;
 class ISettings;
+class QApplication;
 
 class SettingsTab final : public QWidget
 {
     Q_OBJECT
 public:
-    SettingsTab(FacAccount&, IDatabase&, ISettings&);
+    SettingsTab(FacAccount&,IDatabase&,ISettings&,QApplication&);
 
     void addListener(IListener* iListener){
         _listeners.push_back(iListener);
@@ -45,6 +46,7 @@ private:
     FacAccount& _facAccount;
     IDatabase& _database;
     ISettings& _settings;
+    QApplication& _app;
 
     QLabel _titleLabel{tr("Settings")};
     QHBoxLayout _titleLayout;

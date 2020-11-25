@@ -107,7 +107,6 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
 
     _deleteAccountButt.setIcon(QIcon(QStringLiteral(":/delete")));
     _deleteAccountButt.setIconSize(QSize(20,20));
-    _deleteAccountButt.setToolTip(tr("Delete account selected"));
     _deleteAccountButt.setStyleSheet(QLatin1String("QPushButton:hover{")+
                                      Utility::SET_BACKGROUND_COLOR(COLOR_DARK_1)+
                                      Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD)+

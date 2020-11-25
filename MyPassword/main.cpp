@@ -11,27 +11,33 @@
 #include "Log.h"
 #include "PasswordSecurity.h"
 #include "Settings.h"
+#include "Utility.h"
 
 #include <QApplication>
-
-/*
- * To do:
- * set tooltip for each icon
- * Make shorter all name ex: password = pwd ...
- * QSettings save language
- * fix bug
- */
+#include <QTranslator>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    Settings settings;
+
+    QTranslator translator;
+    if(settings.getLanguage() == FRENCH){
+        translator.load("mypassword_fr");
+        app.installTranslator(&translator);
+    }else if(settings.getLanguage() == SPANISH){
+        translator.load("mypassword_es");
+        app.installTranslator(&translator);
+    }
+
     Log log;
     Encryption encryption;
     FacAccount facAccount;
-    Settings settings;
     Database db{facAccount};
     PasswordSecurity passwordSecurity{settings};
+
 
     AccountWindow accountWindow{facAccount,
                 encryption,
@@ -39,7 +45,7 @@ int main(int argc, char *argv[])
                 db,
                 log};
 
-    SettingsTab settingsTab{facAccount,db,settings};
+    SettingsTab settingsTab{facAccount,db,settings,app};
 
     CreateAccountTab createAccountTab{encryption,
                 passwordSecurity,
@@ -61,7 +67,5 @@ int main(int argc, char *argv[])
     MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab,infoTab};
     mainWindow.show();
 
-    int a= app.exec();
-
-    return a;
+    return app.exec();
 }

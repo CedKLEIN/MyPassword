@@ -5,16 +5,21 @@
 #include "Utility.h"
 
 #include <QMessageBox>
-#include <QDebug>
+#include <QApplication>
+#include <QProcess>
 
 static const QString settingsTab_english{QObject::tr("  English")};
 static const QString settingsTab_french{QObject::tr("  French")};
 static const QString settingsTab_spanish{QObject::tr("  Spanish")};
 
-SettingsTab::SettingsTab(FacAccount& iFacAccount,IDatabase& iDatabase,ISettings& iSettings):
+SettingsTab::SettingsTab(FacAccount& iFacAccount,
+                         IDatabase& iDatabase,
+                         ISettings& iSettings,
+                         QApplication& iApp):
     _facAccount{iFacAccount},
     _database{iDatabase},
-    _settings{iSettings}
+    _settings{iSettings},
+    _app{iApp}
 {
     setFixedWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
@@ -152,12 +157,24 @@ void SettingsTab::reset(){
 void SettingsTab::languageChange(int iIndex){
     const QString& iNewLanguage{_languageComboBox.itemText(iIndex)};
 
-    if(iNewLanguage == settingsTab_english)
+    if(iNewLanguage == settingsTab_english){
         _settings.setLanguage(ENGLISH);
-    else if(iNewLanguage == settingsTab_french)
+    }
+    else if(iNewLanguage == settingsTab_french){
         _settings.setLanguage(FRENCH);
-    else if(iNewLanguage == settingsTab_spanish)
+    }
+    else if(iNewLanguage == settingsTab_spanish){
         _settings.setLanguage(SPANISH);
+    }
+
+    int answer{QMessageBox::warning(this, tr("Change language"),
+                         tr("Restart the application to apply the new language?"),
+                         QMessageBox::Yes | QMessageBox::No)};
+
+    if(answer == QMessageBox::Yes){
+        _app.quit();
+        QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+    }
 }
 
 void SettingsTab::securityIconShowChange(int){
