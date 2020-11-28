@@ -1,8 +1,8 @@
 #include <QtTest>
 
-#include "../Src/PasswordSecurity.h"
-#include "../Src/Settings.h"
-#include "../Src/Utility.h"
+#include "../../Src/PasswordSecurity.h"
+#include "../../Src/Settings.h"
+#include "../../Src/Utility.h"
 
 class TestPasswordSecurity : public QObject
 {
@@ -53,7 +53,6 @@ private:
     void COMPARE_DATA_SEVERITY_LEVEL();
     Testable::Settings _settings;
     PasswordSecurity _passwordSecurity{_settings};
-
 };
 
 void TestPasswordSecurity::COMPARE_DATA_ICON_NAME(){
@@ -446,4 +445,4 @@ void TestPasswordSecurity::security_level_when_only_number_lower_upper_and_other
 
 QTEST_MAIN(TestPasswordSecurity)
 
-#include "tst_testpasswordsecurity.moc"
+#include "TestPasswordSecurity.moc"
