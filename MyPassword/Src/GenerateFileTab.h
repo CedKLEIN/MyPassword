@@ -8,12 +8,13 @@
 #include <QPushButton>
 
 class FacAccount;
+class ILog;
 
 class GenerateFileTab : public QWidget
 {
     Q_OBJECT
 public:
-    GenerateFileTab(FacAccount &iFacAccount);
+    GenerateFileTab(FacAccount &iFacAccount,ILog&);
     GenerateFileTab(GenerateFileTab const&)=delete;
     GenerateFileTab& operator=(GenerateFileTab const&)=delete;
     void onTabSelected();
@@ -24,6 +25,7 @@ public slots:
 
 private:
     FacAccount& _facAccount;
+    ILog& _log;
     QLabel _titleLabel{tr("Generate data account in text file")};
     QLabel _outputSaveFileLabel;
     QStringList _textStringList;

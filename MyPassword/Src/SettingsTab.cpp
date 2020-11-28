@@ -2,6 +2,7 @@
 #include "Account.h"
 #include "Interface/IDatabase.h"
 #include "Interface/ISettings.h"
+#include "Interface/ILog.h"
 #include "Utility.h"
 
 #include <QMessageBox>
@@ -14,10 +15,12 @@ static const QString settingsTab_spanish{QObject::tr("  Spanish")};
 
 SettingsTab::SettingsTab(FacAccount& iFacAccount,
                          IDatabase& iDatabase,
+                         ILog& iLog,
                          ISettings& iSettings,
                          QApplication& iApp):
     _facAccount{iFacAccount},
     _database{iDatabase},
+    _log{iLog},
     _settings{iSettings},
     _app{iApp}
 {
@@ -151,6 +154,7 @@ void SettingsTab::reset(){
         return;
 
     _database.removeAll();
+    _log.LOG_CRITICAL("Deletion of all account");
     fireRefreshAccounts();
 }
 

@@ -1,6 +1,7 @@
 #include "GenerateFileTab.h"
 
 #include "Account.h"
+#include "Interface/ILog.h"
 #include "Utility.h"
 
 #include <QScrollBar>
@@ -9,8 +10,9 @@
 
 #include <fstream>
 
-GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount):
-    _facAccount(iFacAccount)
+GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount, ILog& iLog):
+    _facAccount{iFacAccount},
+    _log{iLog}
 {
     setFixedWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_QPUSHBUTTON()+
@@ -80,6 +82,7 @@ void GenerateFileTab::saveTextInFile(){
             _outputSaveFileLabel.setText(tr("File generated"));
             _outputSaveFileLabel.setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                                Utility::SET_TEXT_COLOR(COLOR_GREEN));
+            _log.LOG_INFO("File generated");
         }else{
             _outputSaveFileLabel.setText(tr("File not created"));
             _outputSaveFileLabel.setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+

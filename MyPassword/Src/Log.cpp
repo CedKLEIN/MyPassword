@@ -1,7 +1,5 @@
 #include "Log.h"
 
-#include<QDebug>
-
 #include <fstream>
 
 void Log::LOG_DEBUG(const std::string& iMsg) const{
@@ -28,7 +26,5 @@ void Log::writeLog(const std::string& iLogType,const std::string& iMsg) const{
         file << " " << iLogType << " ";
         file << iMsg << std::endl;
         file.close();
-    }else{
-        qDebug() << "Impossible to open the file";
     }
 }

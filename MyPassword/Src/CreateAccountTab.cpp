@@ -5,7 +5,6 @@
 #include "Interface/ILog.h"
 #include "Utility.h"
 
-#include <QDebug>
 #include <QMessageBox>
 #include <QString>
 

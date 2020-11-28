@@ -15,7 +15,6 @@
 
 #include <QApplication>
 #include <QTranslator>
-#include <QDebug>
 
 /*
  * Clean src.pri useless
@@ -50,7 +49,7 @@ int main(int argc, char *argv[])
                 db,
                 log};
 
-    SettingsTab settingsTab{facAccount,db,settings,app};
+    SettingsTab settingsTab{facAccount,db,log,settings,app};
 
     CreateAccountTab createAccountTab{encryption,
                 passwordSecurity,
@@ -66,7 +65,7 @@ int main(int argc, char *argv[])
                 settingsTab,
                 settings};
 
-    GenerateFileTab generateFileTab{facAccount};
+    GenerateFileTab generateFileTab{facAccount,log};
     InfoTab infoTab{passwordSecurity};
 
     MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab,infoTab};

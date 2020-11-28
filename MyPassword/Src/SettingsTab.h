@@ -14,6 +14,7 @@
 
 class FacAccount;
 class IDatabase;
+class ILog;
 class ISettings;
 class QApplication;
 
@@ -21,7 +22,7 @@ class SettingsTab final : public QWidget
 {
     Q_OBJECT
 public:
-    SettingsTab(FacAccount&,IDatabase&,ISettings&,QApplication&);
+    SettingsTab(FacAccount&,IDatabase&,ILog&,ISettings&,QApplication&);
 
     void addListener(IListener* iListener){
         _listeners.push_back(iListener);
@@ -45,6 +46,7 @@ private:
 
     FacAccount& _facAccount;
     IDatabase& _database;
+    ILog& _log;
     ISettings& _settings;
     QApplication& _app;
 

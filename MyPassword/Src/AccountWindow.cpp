@@ -6,7 +6,6 @@
 #include "Utility.h"
 #include "Interface/ILog.h"
 
-#include <QDebug>
 #include <QMessageBox>
 #include <QScrollBar>
 #include <QString>
@@ -150,7 +149,6 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     QObject::connect(&_pwdLineEdit,&QLineEdit::textChanged,this,&AccountWindow::checkPasswordSecurity);
     QObject::connect(&_pwdViewButt,&QPushButton::clicked,this,&AccountWindow::viewPassword);
     QObject::connect(&_testViewButt,&QPushButton::clicked,this,&AccountWindow::viewTestPwd);
-    QObject::connect(&_loginLineEdit,&QLineEdit::textChanged,this,&AccountWindow::itemChangedLogin);
     QObject::connect(&_detailsTextEdit,&QTextEdit::textChanged,this,&AccountWindow::itemChangedDetails);
     QObject::connect(&_testButt,&QPushButton::clicked,this,&AccountWindow::checkPassword);
     QObject::connect(&_loginButt,&QPushButton::clicked,this,&AccountWindow::saveModifLogin);
@@ -191,8 +189,6 @@ void AccountWindow::checkPasswordSecurity(const QString& iPwd){
     }
     _pwdSecurityButt.show();
 }
-
-void AccountWindow::itemChangedLogin(const QString&){}
 
 void AccountWindow::itemChangedDetails(){
     while(_detailsTextEdit.toPlainText().length()>TEXT_DETAILS_LENGTH){

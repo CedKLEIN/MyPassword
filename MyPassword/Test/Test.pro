@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS = TestEncryption TestPasswordSecurity
+SUBDIRS = TestDateTime TestEncryption TestPasswordSecurity

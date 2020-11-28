@@ -3,11 +3,11 @@
 #include "Account.h"
 #include "Utility.h"
 
-#include <QDebug>
 #include <QDir>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QString>
+#include <QVariant>
 
 Database::Database(FacAccount& iFacAccount):
     _facAccount(iFacAccount)

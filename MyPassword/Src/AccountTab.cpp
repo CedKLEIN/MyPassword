@@ -9,8 +9,6 @@
 #include "Interface/ISettings.h"
 #include "Utility.h"
 
-#include <QDebug>
-
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QScrollBar>

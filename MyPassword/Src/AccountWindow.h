@@ -40,7 +40,6 @@ public:
 
 private slots:
     void checkPasswordSecurity(const QString&);
-    void itemChangedLogin(const QString&);
     void itemChangedDetails();
     bool saveModifLogin();
     bool saveModifDetails();

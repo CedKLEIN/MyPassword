@@ -1,7 +1,5 @@
 #include "Settings.h"
 
-#include <QDebug>
-
 static const QString settings_language{QStringLiteral("Language")};
 static const QString settings_isSecurityIconShow{QStringLiteral("isSecurityIconShow")};
 static const QString settings_SecurityIconThemes{QStringLiteral("SecurityIconThemes")};
