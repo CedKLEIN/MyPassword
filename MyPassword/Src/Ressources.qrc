@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="add">Icon/add.png</file>
+        <file alias="delete">Icon/delete.png</file>
+        <file alias="paper">Icon/paper.png</file>
+        <file alias="save">Icon/save.png</file>
+        <file alias="arrow-down">Icon/arrow-down.png</file>
+        <file alias="arrow-right">Icon/arrow-right.png</file>
+        <file alias="save-dark2">Icon/save_dark2.png</file>
+        <file alias="view">Icon/view.png</file>
+        <file alias="hide">Icon/hide.png</file>
+        <file alias="high">Icon/high.png</file>
+        <file alias="low">Icon/low.png</file>
+        <file alias="medium">Icon/medium.png</file>
+        <file alias="very_high">Icon/very_high.png</file>
+        <file alias="very_low">Icon/very_low.png</file>
+        <file alias="security">Icon/security.png</file>
+        <file alias="house">Icon/house.png</file>
+        <file alias="add_grey">Icon/add_grey.png</file>
+        <file alias="house_grey">Icon/house_grey.png</file>
+        <file alias="checked">Icon/checked.png</file>
+        <file alias="paper_grey">Icon/paper_grey.png</file>
+        <file alias="actualize">Icon/actualize.png</file>
+        <file alias="close">Icon/close.png</file>
+        <file alias="settings">Icon/setting.png</file>
+        <file alias="settings_grey">Icon/setting_grey.png</file>
+        <file alias="english">Icon/english.png</file>
+        <file alias="france">Icon/france.png</file>
+        <file alias="spanish">Icon/spanish.png</file>
+        <file alias="question">Icon/question.png</file>
+        <file alias="question_grey">Icon/question_grey.png</file>
+        <file alias="high_theme2">Icon/high_theme2..png</file>
+        <file alias="low_theme2">Icon/low_theme2..png</file>
+        <file alias="medium_theme2">Icon/medium_theme2..png</file>
+        <file alias="very_high_theme2">Icon/very_high_theme2.png</file>
+        <file alias="very_low_theme2">Icon/very_low_theme2..png</file>
+        <file alias="high_theme3">Icon/high_theme3.png</file>
+        <file alias="low_theme3">Icon/low_theme3.png</file>
+        <file alias="medium_theme3">Icon/medium_theme3.png</file>
+        <file alias="very_high_theme3">Icon/very_high_theme3.png</file>
+        <file alias="very_low_theme3">Icon/very_low_theme3.png</file>
+    </qresource>
+</RCC>

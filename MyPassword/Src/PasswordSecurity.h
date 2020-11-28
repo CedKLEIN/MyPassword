@@ -42,3 +42,22 @@ private:
 
     ISettings& _settings;
 };
+
+namespace Testable {
+class PasswordSecurity final : public IPasswordSecurity
+{
+public:
+    PasswordSecurity(){}
+    PasswordSecurity(PasswordSecurity const&)=delete;
+    PasswordSecurity& operator=(PasswordSecurity const&)=delete;
+
+    int getSecurityLevel(const QString&)const override final{return _securityLvl;}
+    void setSecurityLevel(int in){_securityLvl=in;}
+    QString getIconSeverityLvl(const int)const override final{return iconSecuritylvl;}
+    void setIconSeverityLvl(const QString& in){iconSecuritylvl=in;}
+
+private:
+    int _securityLvl{0};
+    QString iconSecuritylvl;
+};
+}
