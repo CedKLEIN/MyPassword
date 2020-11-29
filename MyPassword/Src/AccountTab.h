@@ -2,7 +2,7 @@
 
 #include "Account.h"
 
-#include "Interface/IListener.h"
+#include "Interface/IUpdateAccountListener.h"
 
 #include <QStringList>
 #include <QListView>
@@ -20,7 +20,7 @@ class ILog;
 class SettingsTab;
 class ISettings;
 
-class AccountTab final : public QWidget, public IListener
+class AccountTab final : public QWidget, public IUpdateAccountListener
 {
     Q_OBJECT
 public:
@@ -34,7 +34,7 @@ public:
                ISettings&);
     AccountTab(AccountTab const&)=delete;
     AccountTab& operator=(AccountTab const&)=delete;
-    void onEventClose() override;
+    void onEventUpdateAccount() override;
 
 private slots:
     void filterChanged(const QString&);

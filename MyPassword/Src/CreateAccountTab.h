@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Interface/IListener.h"
+#include "Interface/IUpdateAccountListener.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -25,7 +25,7 @@ public:
     CreateAccountTab& operator=(CreateAccountTab const&)=delete;
     void onTabSelected();
 
-    void addListener(IListener* iListener){
+    void addListener(IUpdateAccountListener* iListener){
         _listeners.push_back(iListener);
     }
 
@@ -42,7 +42,7 @@ private:
     void clearWindow();
     void fireEventUpdate(){
         for(const auto& listener : _listeners){
-            listener->onEventClose();
+            listener->onEventUpdateAccount();
         }
     }
 
@@ -51,7 +51,7 @@ private:
     IDatabase& _db;
     ILog& _log;
 
-    std::vector<IListener*> _listeners;
+    std::vector<IUpdateAccountListener*> _listeners;
 
     QLabel _titleLabel{tr("New account")};
 

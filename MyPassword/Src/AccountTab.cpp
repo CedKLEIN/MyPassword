@@ -30,7 +30,7 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
     _settingsTab(iSettingsTab),
     _settings(iISettings)
 {
-    setFixedWidth(SIZE_WINDOW_HORIZONTAL);
+    setMinimumWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
                   Utility::GET_STYLE_QLINEEDIT()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
@@ -38,7 +38,7 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
 
     _createAccountTab.addListener(this);
     _accountWindow.addListener(this);
-    _settingsTab.addListener(this);
+    _settingsTab.addUpdateAccountListener(this);
     _accountWindowLayout.addWidget(&_accountWindow);
     _accountWindowWidget.setLayout(&_accountWindowLayout);
     _accountWindowWidget.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0));
@@ -63,7 +63,7 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
     QObject::connect(_accountView.selectionModel(), &QItemSelectionModel::selectionChanged, this,&AccountTab::displayWindowAccount);
 }
 
-void AccountTab::onEventClose(){
+void AccountTab::onEventUpdateAccount(){
     retrieveAccounts();
 }
 

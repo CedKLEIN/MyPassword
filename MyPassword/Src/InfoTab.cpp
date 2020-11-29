@@ -1,12 +1,16 @@
 #include "InfoTab.h"
 #include "Interface/IPasswordSecurity.h"
+#include "SettingsTab.h"
 
 #include "Utility.h"
 
-InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity):
-    _passwordSecurity{iPasswordSecurity}
+InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity,
+                 SettingsTab& iSettingsTab):
+    _passwordSecurity{iPasswordSecurity},
+    _settingsTab{iSettingsTab}
 {
-    setFixedWidth(SIZE_WINDOW_HORIZONTAL);
+    _settingsTab.addUpdateIconThemeListeners(this);
+    setMinimumWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
                   Utility::GET_STYLE_QLABEL()+
@@ -26,11 +30,7 @@ InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity):
     _webSiteLineEdit.setStyleSheet(Utility::SET_TEXT_SIZE(19)+
                                    Utility::SET_HEIGHT(40));
 
-    _veryHighButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::VERY_HIGH)));
-    _highButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::HIGH)));
-    _mediumButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::MEDIUM)));
-    _lowButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::LOW)));
-    _veryLowButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::VERY_LOW)));
+    setIcon();
 
     setSecurityButt(_veryHighButt);
     setSecurityButt(_highButt);
@@ -60,9 +60,9 @@ InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity):
     _scrollBarWidget.setLayout(&_scrollBarLayout);
     _scrollBarWidget.setStyleSheet(Utility::SET_BORDER_SIZE(0));
     _scrollArea.setWidgetResizable(true);
-    _scrollArea.setStyleSheet(QLatin1Literal("QScrollArea{")+Utility::SET_BORDER_SIZE(0)+
-                              QLatin1Literal("}")+
-                              QLatin1Literal("QScrollBar:vertical {width: 2px;}"));
+    _scrollArea.setStyleSheet(QLatin1String("QScrollArea{")+Utility::SET_BORDER_SIZE(0)+
+                              QLatin1String("}")+
+                              QLatin1String("QScrollBar:vertical {width: 2px;}"));
     _scrollArea.setWidget(&_scrollBarWidget);
     _mainLayout.setAlignment(Qt::AlignTop);
     _mainLayout.addSpacing(20);
@@ -79,3 +79,16 @@ void InfoTab::setSecurityButt(QPushButton& iButt){
                         Utility::SET_TEXT_SIZE(19)+
                         Utility::SET_HEIGHT(50));
 }
+
+void InfoTab::setIcon(){
+    _veryHighButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::VERY_HIGH)));
+    _highButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::HIGH)));
+    _mediumButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::MEDIUM)));
+    _lowButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::LOW)));
+    _veryLowButt.setIcon(QIcon(_passwordSecurity.getIconSeverityLvl(IPasswordSecurity::VERY_LOW)));
+}
+
+void InfoTab::onEventUpdateIconTheme(){
+    setIcon();
+}
+

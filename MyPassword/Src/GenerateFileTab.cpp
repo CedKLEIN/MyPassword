@@ -14,7 +14,7 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount, ILog& iLog):
     _facAccount{iFacAccount},
     _log{iLog}
 {
-    setFixedWidth(SIZE_WINDOW_HORIZONTAL);
+    setMinimumWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_QPUSHBUTTON()+
                   Utility::GET_STYLE_QTEXTEDIT());
 

@@ -16,11 +16,6 @@
 #include <QApplication>
 #include <QTranslator>
 
-/*
- * Clean src.pri useless
- * Add logs
- * */
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -66,7 +61,7 @@ int main(int argc, char *argv[])
                 settings};
 
     GenerateFileTab generateFileTab{facAccount,log};
-    InfoTab infoTab{passwordSecurity};
+    InfoTab infoTab{passwordSecurity,settingsTab};
 
     MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab,infoTab};
     mainWindow.show();

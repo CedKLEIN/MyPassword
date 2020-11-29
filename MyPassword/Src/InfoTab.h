@@ -6,19 +6,24 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QScrollArea>
+#include "Interface/IUpdateIconThemeListener.h"
 
 class IPasswordSecurity;
+class SettingsTab;
 
-class InfoTab: public QWidget
+class InfoTab: public QWidget, public IUpdateIconThemeListener
 {
     Q_OBJECT
 public:
-    InfoTab(IPasswordSecurity&);
+    InfoTab(IPasswordSecurity&,SettingsTab&);
 
 private:
     void setSecurityButt(QPushButton&);
+    void setIcon();
+    void onEventUpdateIconTheme() override final;
 
     IPasswordSecurity& _passwordSecurity;
+    SettingsTab& _settingsTab;
 
     QWidget _scrollBarWidget;
     QScrollArea _scrollArea;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Account.h"
-#include "Interface/IListener.h"
+#include "Interface/IUpdateAccountListener.h"
 
 #include <QLineEdit>
 #include <QTextEdit>
@@ -31,7 +31,7 @@ public:
     AccountWindow(AccountWindow const&)=delete;
     AccountWindow& operator=(AccountWindow const&)=delete;
 
-    void addListener(IListener* iListener){
+    void addListener(IUpdateAccountListener* iListener){
         _listeners.push_back(iListener);
     }
 
@@ -52,7 +52,7 @@ private slots:
 private:
     void fireRefreshAccounts(){
         for(const auto& listener : _listeners){
-            listener->onEventClose();
+            listener->onEventUpdateAccount();
         }
     }
 
@@ -62,7 +62,7 @@ private:
     IDatabase& _db;
     ILog& _log;
 
-    std::vector<IListener*> _listeners;
+    std::vector<IUpdateAccountListener*> _listeners;
 
     QPushButton _closeButt;
     QHBoxLayout _closeLayout;

@@ -22,10 +22,11 @@ HEADERS += \
     Interface/IDatabase.h \
     Interface/IDateTime.h \
     Interface/IEncryption.h \
-    Interface/IListener.h \
     Interface/ILog.h \
     Interface/IPasswordSecurity.h \
     Interface/ISettings.h \
+    Interface/IUpdateAccountListener.h \
+    Interface/IUpdateIconThemeListener.h \
     Log.h \
     MainWindow.h \
     PasswordSecurity.h \

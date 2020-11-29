@@ -21,6 +21,7 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
     _settingsTab(iSettingsTab),
     _infoTab(iInfoTab)
 {
+    setWindowTitle("MyPassword");
     setMinimumHeight(SIZE_WINDOW_VERTICAL);
     setWindowIcon(QIcon(QStringLiteral(":/security")));
     move(0,0);
@@ -67,9 +68,11 @@ MainWindow::MainWindow(AccountTab& iAccountTab,
     _menuLayout.addWidget(&_tabInfoButt);
 
     _menu.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_2));
+    _menu.setFixedWidth(80);
     _menu.setLayout(&_menuLayout);
 
     _mainLayout.setContentsMargins(0,0,0,0);
+    _mainLayout.setAlignment(Qt::AlignLeft);
     _mainLayout.addWidget(&_menu);
     _mainLayout.addWidget(&_accountTab);
     _mainLayout.addWidget(&_createAccountTab);

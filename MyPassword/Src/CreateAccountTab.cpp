@@ -17,7 +17,7 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
     _db(iDb),
     _log(iLog)
 {
-    setFixedWidth(SIZE_WINDOW_HORIZONTAL);
+    setMinimumWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
                   Utility::GET_STYLE_QTOOLTYPE()+
                   Utility::GET_STYLE_QLINEEDIT()+

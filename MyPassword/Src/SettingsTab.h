@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Interface/IListener.h"
+#include "Interface/IUpdateAccountListener.h"
+#include "Interface/IUpdateIconThemeListener.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -24,8 +25,12 @@ class SettingsTab final : public QWidget
 public:
     SettingsTab(FacAccount&,IDatabase&,ILog&,ISettings&,QApplication&);
 
-    void addListener(IListener* iListener){
-        _listeners.push_back(iListener);
+    void addUpdateAccountListener(IUpdateAccountListener* iListener){
+        _updateAccountListeners.push_back(iListener);
+    }
+
+    void addUpdateIconThemeListeners(IUpdateIconThemeListener* iListener){
+        _updateIconThemeListeners.push_back(iListener);
     }
 
 private slots:
@@ -38,9 +43,15 @@ private:
     void getSecurityThemeSettings();
     void setComboBoxLanguage();
 
-    void fireRefreshAccounts(){
-        for(const auto& listener : _listeners){
-            listener->onEventClose();
+    void fireEventRefreshAccounts(){
+        for(const auto& listener : _updateAccountListeners){
+            listener->onEventUpdateAccount();
+        }
+    }
+
+    void fireEventIconTheme(){
+        for(const auto& listener : _updateIconThemeListeners){
+            listener->onEventUpdateIconTheme();
         }
     }
 
@@ -53,7 +64,8 @@ private:
     QLabel _titleLabel{tr("Settings")};
     QHBoxLayout _titleLayout;
 
-    std::vector<IListener*> _listeners;
+    std::vector<IUpdateAccountListener*> _updateAccountListeners;
+    std::vector<IUpdateIconThemeListener*> _updateIconThemeListeners;
 
     QLabel _languageLabel{tr("Language:")};
     QComboBox _languageComboBox;

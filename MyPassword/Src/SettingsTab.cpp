@@ -23,8 +23,8 @@ SettingsTab::SettingsTab(FacAccount& iFacAccount,
     _log{iLog},
     _settings{iSettings},
     _app{iApp}
-{
-    setFixedWidth(SIZE_WINDOW_HORIZONTAL);
+{    
+    setMinimumWidth(SIZE_WINDOW_HORIZONTAL);
     setStyleSheet(Utility::GET_STYLE_WIDGET()+
                   Utility::GET_STYLE_QLABEL()+
                   Utility::GET_STYLE_QPUSHBUTTON()+
@@ -155,7 +155,7 @@ void SettingsTab::reset(){
 
     _database.removeAll();
     _log.LOG_CRITICAL("Deletion of all account");
-    fireRefreshAccounts();
+    fireEventRefreshAccounts();
 }
 
 void SettingsTab::languageChange(int iIndex){
@@ -183,7 +183,7 @@ void SettingsTab::languageChange(int iIndex){
 
 void SettingsTab::securityIconShowChange(int){
     _settings.setIsSecurityIconShow(_securityIconShowCheckBox.isChecked());
-    fireRefreshAccounts();
+    fireEventRefreshAccounts();
 }
 
 void SettingsTab::setSecurityThemeSettings(bool){
@@ -194,5 +194,6 @@ void SettingsTab::setSecurityThemeSettings(bool){
     else if(_securityIconTheme3RadioButton.isChecked())
         _settings.setSecurityIconThemes(SecurityIconThemes3);
 
-    fireRefreshAccounts();
+    fireEventRefreshAccounts();
+    fireEventIconTheme();
 }
