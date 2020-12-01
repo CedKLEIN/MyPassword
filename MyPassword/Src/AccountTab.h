@@ -34,12 +34,13 @@ public:
                ISettings&);
     AccountTab(AccountTab const&)=delete;
     AccountTab& operator=(AccountTab const&)=delete;
+    ~AccountTab();
     void onEventUpdateAccount() override;
 
 private slots:
     void filterChanged(const QString&);
     void retrieveAccounts();
-    void setModelFromDataList(const QStringList&);
+    void setModelFromDataList(const QStringList*);
     void displayWindowAccount(const QItemSelection&, const QItemSelection&);
 
 private:
@@ -52,14 +53,14 @@ private:
     SettingsTab& _settingsTab;
     ISettings& _settings;
 
-    QWidget _accountWindowWidget;
-    QVBoxLayout _accountWindowLayout;
+    QWidget* _accountWindowWidget{new QWidget};
+    QVBoxLayout* _accountWindowLayout{new QVBoxLayout};
 
-    QLineEdit _filterLineEdit;
-    QListView _accountView;
-    QHBoxLayout _viewAndDisplayAccountLayout;
-    QStandardItemModel _accountModel;
-    QStringList _accountsData;
-    QStringList _accountsDataFilter;
-    QVBoxLayout _mainLayout;
+    QLineEdit* _filterLineEdit{new QLineEdit};
+    QListView* _accountView{new QListView};
+    QHBoxLayout* _viewAndDisplayAccountLayout{new QHBoxLayout};
+    QStandardItemModel* _accountModel{new QStandardItemModel};
+    QStringList* _accountsData{new QStringList};
+    QStringList* _accountsDataFilter{new QStringList};
+    QVBoxLayout* _mainLayout{new QVBoxLayout};
 };

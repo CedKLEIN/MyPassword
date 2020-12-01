@@ -39,28 +39,32 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
     _createAccountTab.addListener(this);
     _accountWindow.addListener(this);
     _settingsTab.addUpdateAccountListener(this);
-    _accountWindowLayout.addWidget(&_accountWindow);
-    _accountWindowWidget.setLayout(&_accountWindowLayout);
-    _accountWindowWidget.setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0));
-    _accountWindowWidget.hide();
+    _accountWindowLayout->addWidget(&_accountWindow);
+    _accountWindowWidget->setLayout(_accountWindowLayout);
+    _accountWindowWidget->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_DARK_0));
+    _accountWindowWidget->hide();
 
     retrieveAccounts();
 
-    _filterLineEdit.setPlaceholderText(tr("Search..."));
-    _filterLineEdit.setMaxLength(TEXT_NAME_LENGTH);
-    _accountView.setModel(&_accountModel);
-    _accountView.verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
-    _accountView.setEditTriggers(QAbstractItemView::NoEditTriggers);
+    _filterLineEdit->setPlaceholderText(tr("Search..."));
+    _filterLineEdit->setMaxLength(TEXT_NAME_LENGTH);
+    _accountView->setModel(_accountModel);
+    _accountView->verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
+    _accountView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    _viewAndDisplayAccountLayout.addWidget(&_accountView);
-    _viewAndDisplayAccountLayout.addWidget(&_accountWindowWidget);
-    _mainLayout.addWidget(&_filterLineEdit);
-    _mainLayout.addLayout(&_viewAndDisplayAccountLayout);
+    _viewAndDisplayAccountLayout->addWidget(_accountView);
+    _viewAndDisplayAccountLayout->addWidget(_accountWindowWidget);
+    _mainLayout->addWidget(_filterLineEdit);
+    _mainLayout->addLayout(_viewAndDisplayAccountLayout);
+    setLayout(_mainLayout);
 
-    setLayout(&_mainLayout);
+    QObject::connect(_filterLineEdit,&QLineEdit::textChanged,this,&AccountTab::filterChanged);
+    QObject::connect(_accountView->selectionModel(), &QItemSelectionModel::selectionChanged, this,&AccountTab::displayWindowAccount);
+}
 
-    QObject::connect(&_filterLineEdit,&QLineEdit::textChanged,this,&AccountTab::filterChanged);
-    QObject::connect(_accountView.selectionModel(), &QItemSelectionModel::selectionChanged, this,&AccountTab::displayWindowAccount);
+AccountTab::~AccountTab(){
+    delete _accountsData;
+    delete _accountsDataFilter;
 }
 
 void AccountTab::onEventUpdateAccount(){
@@ -68,12 +72,12 @@ void AccountTab::onEventUpdateAccount(){
 }
 
 void AccountTab::filterChanged(const QString& iText){
-    _accountsDataFilter.clear();
+    _accountsDataFilter->clear();
 
     bool opti{false};
 
     QString textLower{iText.toLower()};
-    for(const auto& account: _accountsData){
+    for(const auto& account: *_accountsData){
 
         QString accountLower{account.toLower()};
         bool match{true};
@@ -86,7 +90,7 @@ void AccountTab::filterChanged(const QString& iText){
                 }
             }
             if(match){
-                _accountsDataFilter.push_back(account);
+                _accountsDataFilter->push_back(account);
                 opti = true;
             }
             if(!match && opti)
@@ -97,7 +101,7 @@ void AccountTab::filterChanged(const QString& iText){
 }
 
 void AccountTab::retrieveAccounts(){
-    _accountsData.clear();
+    _accountsData->clear();
     _facAccount.clear();
     _accountWindow.hide();
 
@@ -110,34 +114,34 @@ void AccountTab::retrieveAccounts(){
     }
 
     for(const auto& account: _facAccount.getAll()){
-        _accountsData << account->getName();
+        *_accountsData << account->getName();
     }
 
-    _accountsData.sort(Qt::CaseInsensitive);
+    _accountsData->sort(Qt::CaseInsensitive);
 
     setModelFromDataList(_accountsData);
 }
 
-void AccountTab::setModelFromDataList(const QStringList& iDataList){
-    _accountModel.clear();
+void AccountTab::setModelFromDataList(const QStringList* iDataList){
+    _accountModel->clear();
     if(_settings.isSecurityIconShow()){
-        for(const auto& account: iDataList){
+        for(const auto& account: *iDataList){
             QStandardItem *item = new QStandardItem(QIcon(_passwordSecurity.getIconSeverityLvl(_facAccount.get(account)->getSeverityLvl())),account);
-            _accountModel.appendRow(item);
+            _accountModel->appendRow(item);
         }
     }else {
-        for(const auto& account: iDataList){
+        for(const auto& account: *iDataList){
             QStandardItem *item = new QStandardItem(account);
-            _accountModel.appendRow(item);
+            _accountModel->appendRow(item);
         }
     }
 }
 
 void AccountTab::displayWindowAccount(const QItemSelection& iItemSelected, const QItemSelection&)
 {
-    QString accountName{_accountModel.itemData(iItemSelected.indexes().front()).value(0).toString()};
+    QString accountName{_accountModel->itemData(iItemSelected.indexes().front()).value(0).toString()};
     _accountWindow.showWindow(accountName);
     _accountWindow.setVisible(true);
-    _accountWindowWidget.setVisible(true);
+    _accountWindowWidget->setVisible(true);
     _log.LOG_INFO("Account display : "+accountName.toStdString());
 }

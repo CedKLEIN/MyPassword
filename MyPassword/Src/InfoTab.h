@@ -18,35 +18,35 @@ public:
     InfoTab(IPasswordSecurity&,SettingsTab&);
 
 private:
-    void setSecurityButt(QPushButton&);
+    void setSecurityButt(QPushButton *);
     void setIcon();
     void onEventUpdateIconTheme() override final;
 
     IPasswordSecurity& _passwordSecurity;
     SettingsTab& _settingsTab;
 
-    QWidget _scrollBarWidget;
-    QScrollArea _scrollArea;
-    QVBoxLayout _scrollBarLayout;
+    QWidget* _scrollBarWidget{new QWidget};
+    QScrollArea* _scrollArea{new QScrollArea};
+    QVBoxLayout* _scrollBarLayout{new QVBoxLayout};
 
-    QLabel _titleLabel{QStringLiteral("MyPassword")};
-    QPushButton _iconTitle{QIcon{QStringLiteral(":/security")},""};
-    QHBoxLayout _titleLayout;
+    QLabel* _titleLabel{new QLabel{QStringLiteral("MyPassword")}};
+    QPushButton* _iconTitle{new QPushButton{QIcon{QStringLiteral(":/security")},""}};
+    QHBoxLayout* _titleLayout{new QHBoxLayout};
 
-    QLabel _aboutAppLabel{tr("About MyPassword:")};
-    QLineEdit _aboutAppLineEdit{tr("MyPassword deployed the /11/2020 by Cédric KLEIN.")};
+    QLabel* _aboutAppLabel{new QLabel{tr("About MyPassword:")}};
+    QLineEdit* _aboutAppLineEdit{new QLineEdit{tr("MyPassword deployed the /11/2020 by Cédric KLEIN.")}};
 
-    QLabel _webSiteLabel{tr("Download and help:")};
-    QLineEdit _webSiteLineEdit{"https://github.com/CedKLEIN/PasswordHandler"};
+    QLabel* _webSiteLabel{new QLabel{tr("Download and help:")}};
+    QLineEdit* _webSiteLineEdit{new QLineEdit{"https://github.com/CedKLEIN/PasswordHandler"}};
 
-    QLabel _securityLabel{tr("Password Security level:")};
-    QWidget _securityWidget;
-    QPushButton _veryHighButt{tr("VERY HIGH:\nPerfect password, almost impossible to crack!")};
-    QPushButton _highButt{tr("HIGH:\nYour password is hack resistant!")};
-    QPushButton _mediumButt{tr("MEDIUM:\nThis is the minimum safety level you should use.")};
-    QPushButton _lowButt{tr("LOW:\nStill not enough, nerver use this password with sensible account.")};
-    QPushButton _veryLowButt{tr("VERY LOW:\nIt is high time to change your password, this password is too short.")};
-    QVBoxLayout _securityLayout;
+    QLabel* _securityLabel{new QLabel{tr("Password Security level:")}};
+    QWidget* _securityWidget{new QWidget};
+    QPushButton* _veryHighButt{new QPushButton{tr("VERY HIGH:\nPerfect password, almost impossible to crack!")}};
+    QPushButton* _highButt{new QPushButton{tr("HIGH:\nYour password is hack resistant!")}};
+    QPushButton* _mediumButt{new QPushButton{tr("MEDIUM:\nThis is the minimum safety level you should use.")}};
+    QPushButton* _lowButt{new QPushButton{tr("LOW:\nStill not enough, nerver use this password with sensible account.")}};
+    QPushButton* _veryLowButt{new QPushButton{tr("VERY LOW:\nIt is high time to change your password, this password is too short.")}};
+    QVBoxLayout* _securityLayout{new QVBoxLayout};
 
-    QVBoxLayout _mainLayout;
+    QVBoxLayout* _mainLayout{new QVBoxLayout};
 };

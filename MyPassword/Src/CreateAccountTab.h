@@ -53,39 +53,39 @@ private:
 
     std::vector<IUpdateAccountListener*> _listeners;
 
-    QLabel _titleLabel{tr("New account")};
+    QLabel* _titleLabel{new QLabel{tr("New account")}};
 
-    QLabel _nameLabel{tr("Name:*   ")};
-    QLabel _nameErrorLabel{tr("The name is mandatory.")};
-    QLabel _nameLengthLabel{QStringLiteral("0/50")};
-    QLineEdit _nameLineEdit;
-    QHBoxLayout _nameLayout;
+    QLabel* _nameLabel{new QLabel{tr("Name:*   ")}};
+    QLabel* _nameErrorLabel{new QLabel{tr("The name is mandatory.")}};
+    QLabel* _nameLengthLabel{new QLabel{QStringLiteral("0/50")}};
+    QLineEdit* _nameLineEdit{new QLineEdit};
+    QHBoxLayout* _nameLayout{new QHBoxLayout};
 
-    QLabel _loginLabel{tr("Login:     ")};
-    QLabel _loginLengthLabel{QStringLiteral("0/50")};
-    QLineEdit _loginLineEdit;
-    QHBoxLayout _loginLayout;
+    QLabel* _loginLabel{new QLabel{tr("Login:     ")}};
+    QLabel* _loginLengthLabel{new QLabel{QStringLiteral("0/50")}};
+    QLineEdit* _loginLineEdit{new QLineEdit};
+    QHBoxLayout* _loginLayout{new QHBoxLayout};
 
-    QLabel _passwordLabel{tr("Password:")};
-    QLabel _passwordLengthLabel{QStringLiteral("0/50")};
-    QLineEdit _passwordLineEdit;
-    QPushButton _passwordViewButt;
-    QPushButton _passwordSecurityButt;
-    QHBoxLayout _passwordLayout;
+    QLabel* _passwordLabel{new QLabel{tr("Password:")}};
+    QLabel* _passwordLengthLabel{new QLabel{QStringLiteral("0/50")}};
+    QLineEdit* _passwordLineEdit{new QLineEdit};
+    QPushButton* _passwordViewButt{new QPushButton};
+    QPushButton* _passwordSecurityButt{new QPushButton};
+    QHBoxLayout* _passwordLayout{new QHBoxLayout};
     bool isPassordView{false};
     int _pwdSecurityLvl{0};
 
-    QLabel _detailsLabel{tr("Details:    ")};
-    QVBoxLayout _detailsLabelLayout;
-    QLabel _detailsLengthLabel{QStringLiteral("0/200")};
-    QVBoxLayout _detailsLengthLabelLayout;
-    QTextEdit _detailsTextEdit;
-    QHBoxLayout _detailsLayout;
+    QLabel* _detailsLabel{new QLabel{tr("Details:    ")}};
+    QVBoxLayout* _detailsLabelLayout{new QVBoxLayout};
+    QLabel* _detailsLengthLabel{new QLabel{QStringLiteral("0/200")}};
+    QVBoxLayout* _detailsLengthLabelLayout{new QVBoxLayout};
+    QTextEdit* _detailsTextEdit{new QTextEdit};
+    QHBoxLayout* _detailsLayout{new QHBoxLayout};
 
-    QPushButton _validateButt{tr("Create account")};
-    QLabel _validationLabel{tr("New account created!")};
-    QPushButton _validationIcon;
-    QHBoxLayout _validationLayout;
+    QPushButton* _validateButt{new QPushButton{tr("Create account")}};
+    QLabel* _validationLabel{new QLabel{tr("New account created!")}};
+    QPushButton* _validationIcon{new QPushButton};
+    QHBoxLayout* _validationLayout{new QHBoxLayout};
 
-    QVBoxLayout _mainLayout;
+    QVBoxLayout* _mainLayout{new QVBoxLayout};
 };

@@ -27,8 +27,8 @@ private slots:
     void showTabInfo();
 
 private:
-    void setButtNotSelected(QPushButton&);
-    void setButtSelected(QPushButton&);
+    void setButtNotSelected(QPushButton*);
+    void setButtSelected(QPushButton*);
     void reset();
     void hideTabs();
     void makeIconGrey();
@@ -39,13 +39,13 @@ private:
     SettingsTab& _settingsTab;
     InfoTab& _infoTab;
 
-    QWidget _menu;
-    QPushButton _tabAccountButt;
-    QPushButton _tabCreateAccountButt;
-    QPushButton _tabGenerateFileButt;
-    QPushButton _tabSettingsButt;
-    QPushButton _tabInfoButt;
+    QPushButton* _tabAccountButt{new QPushButton};
+    QPushButton* _tabCreateAccountButt{new QPushButton};
+    QPushButton* _tabGenerateFileButt{new QPushButton};
+    QPushButton* _tabSettingsButt{new QPushButton};
+    QPushButton* _tabInfoButt{new QPushButton};
+    QWidget* _menu{new QWidget};
+    QVBoxLayout* _menuLayout{new QVBoxLayout{_menu}};
 
-    QVBoxLayout _menuLayout;
-    QHBoxLayout _mainLayout;
+    QHBoxLayout* _mainLayout{new QHBoxLayout};
 };

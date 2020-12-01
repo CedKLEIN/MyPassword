@@ -26,13 +26,13 @@ public slots:
 private:
     FacAccount& _facAccount;
     ILog& _log;
-    QLabel _titleLabel{tr("Generate data account in text file")};
-    QLabel _outputSaveFileLabel;
-    QStringList _textStringList;
-    QPushButton _generateTextButt{tr(" Generate text")};
-    QPushButton _saveTextButt{tr(" Save in a file")};
-    QTextEdit _textEdit;
-    QHBoxLayout _buttLayout;
-    QVBoxLayout _mainLayout;
+    QLabel* _titleLabel{new QLabel{tr("Generate data account in text file")}};
+    QLabel* _outputSaveFileLabel{new QLabel};
+    QStringList* _textStringList{new QStringList};
+    QPushButton* _generateTextButt{new QPushButton{tr(" Generate text")}};
+    QPushButton* _saveTextButt{new QPushButton{tr(" Save in a file")}};
+    QTextEdit* _textEdit{new QTextEdit};
+    QHBoxLayout* _buttLayout{new QHBoxLayout};
+    QVBoxLayout* _mainLayout{new QVBoxLayout};
 
 };

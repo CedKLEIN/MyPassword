@@ -64,42 +64,42 @@ private:
 
     std::vector<IUpdateAccountListener*> _listeners;
 
-    QPushButton _closeButt;
-    QHBoxLayout _closeLayout;
+    QPushButton* _closeButt{new QPushButton};
+    QHBoxLayout* _closeLayout{new QHBoxLayout};
 
-    QLabel _nameLabel;
+    QLabel* _nameLabel{new QLabel};
 
-    QLabel _loginLabel{tr("Login : ")};
-    QPushButton _loginSavedButt{tr(" Modification saved")};
-    QHBoxLayout _loginLabelsLayout;
-    QLineEdit _loginLineEdit;
-    QPushButton _loginButt{tr("Change login")};
+    QLabel* _loginLabel{new QLabel{tr("Login : ")}};
+    QPushButton* _loginSavedButt{new QPushButton{tr(" Modification saved")}};
+    QHBoxLayout* _loginLabelsLayout{new QHBoxLayout};
+    QLineEdit* _loginLineEdit{new QLineEdit};
+    QPushButton* _loginButt{new QPushButton{tr("Change login")}};
 
-    QLabel _detailsLabel{tr("Details : ")};
-    QPushButton _detailsSavedButt{tr(" Modification saved")};
-    QHBoxLayout _detailsLabelsLayout;
-    QTextEdit _detailsTextEdit;
-    QPushButton _detailsButt{tr("Change details")};
+    QLabel* _detailsLabel{new QLabel{tr("Details : ")}};
+    QPushButton* _detailsSavedButt{new QPushButton{tr(" Modification saved")}};
+    QHBoxLayout* _detailsLabelsLayout{new QHBoxLayout};
+    QTextEdit* _detailsTextEdit{new QTextEdit};
+    QPushButton* _detailsButt{new QPushButton{tr("Change details")}};
 
-    QLabel _testLabel{tr(" Test your password :")};
-    QLineEdit _testLineEdit;
-    QPushButton _testButt{tr("Check")};
-    QPushButton _testViewButt;
-    QHBoxLayout _testLayout;
+    QLabel* _testLabel{new QLabel{tr(" Test your password :")}};
+    QLineEdit* _testLineEdit{new QLineEdit};
+    QPushButton* _testButt{new QPushButton{tr("Check")}};
+    QPushButton* _testViewButt{new QPushButton};
+    QHBoxLayout* _testLayout{new QHBoxLayout};
     bool isTestView{false};
 
-    QLabel _pwdLabel{tr(" Change your password :")};
-    QPushButton _pwdSavedButt{tr(" Modification saved")};
-    QHBoxLayout _pwdLabelsLayout;
-    QLineEdit _pwdLineEdit;
-    QPushButton _pwdButt{tr("Change password")};
-    QPushButton _pwdViewButt;
-    QPushButton _pwdSecurityButt;
-    QHBoxLayout _pwdLayout;
+    QLabel* _pwdLabel{new QLabel{tr(" Change your password :")}};
+    QPushButton* _pwdSavedButt{new QPushButton{tr(" Modification saved")}};
+    QHBoxLayout* _pwdLabelsLayout{new QHBoxLayout};
+    QLineEdit* _pwdLineEdit{new QLineEdit};
+    QPushButton* _pwdButt{new QPushButton{tr("Change password")}};
+    QPushButton* _pwdViewButt{new QPushButton};
+    QPushButton* _pwdSecurityButt{new QPushButton};
+    QHBoxLayout* _pwdLayout{new QHBoxLayout};
     bool isPassordView{false};
     int _pwdSecurityLvl{0};
 
-    QPushButton _deleteAccountButt{tr(" Delete account")};
+    QPushButton* _deleteAccountButt{new QPushButton{tr(" Delete account")}};
 
-    QVBoxLayout _mainLayout;
+    QVBoxLayout* _mainLayout{new QVBoxLayout};
 };
