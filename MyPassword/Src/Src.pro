@@ -2,7 +2,7 @@ TEMPLATE = app
 QT += widgets
 QT += sql
 
-CONFIG += c++14
+CONFIG += c++17
 
 TRANSLATIONS = mypassword_fr.ts mypassword_es.ts
 

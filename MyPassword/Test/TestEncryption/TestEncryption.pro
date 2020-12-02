@@ -2,8 +2,6 @@ QT += widgets testlib sql
 
 CONFIG += testcase no_testcase_installs
 
-TEMPLATE = app
-
 HEADERS += \
     ../../Src/Account.h \
     ../../Src/AccountTab.h \
@@ -17,7 +15,8 @@ HEADERS += \
     ../../Src/Interface/IDatabase.h \
     ../../Src/Interface/IDateTime.h \
     ../../Src/Interface/IEncryption.h \
-    ../../Src/Interface/IListener.h \
+    ../../Src/Interface/IUpdateAccountListener.h \
+    ../../Src/Interface/IUpdateIconThemeListener.h \
     ../../Src/Interface/ILog.h \
     ../../Src/Interface/IPasswordSecurity.h \
     ../../Src/Interface/ISettings.h \

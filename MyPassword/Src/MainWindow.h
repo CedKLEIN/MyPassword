@@ -45,7 +45,7 @@ private:
     QPushButton* _tabSettingsButt{new QPushButton};
     QPushButton* _tabInfoButt{new QPushButton};
     QWidget* _menu{new QWidget};
-    QVBoxLayout* _menuLayout{new QVBoxLayout{_menu}};
+    QVBoxLayout* _menuLayout{new QVBoxLayout};
 
     QHBoxLayout* _mainLayout{new QHBoxLayout};
 };
