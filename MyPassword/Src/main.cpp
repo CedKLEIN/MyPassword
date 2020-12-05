@@ -22,7 +22,7 @@
  * In filter: when delete last one, longer
  * Clean filter when you switch tab
  * Put date on info deply app
- * don t print Name or login if empty in text generate
+ * GetData from txt file
  */
 
 int main(int argc, char *argv[])

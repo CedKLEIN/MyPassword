@@ -59,8 +59,10 @@ void GenerateFileTab::fillTextEdit(){
     _textEdit->clear();
     for(const auto& account: _facAccount.getAll()){
         _textEdit->append(account->getName()+QLatin1String(":"));
-        _textEdit->append(tr("Name: ")+account->getLogin());
-        _textEdit->append(tr("Details : ")+account->getDetails());
+        if(!account->getLogin().isEmpty())
+            _textEdit->append(tr("Login: ")+account->getLogin());
+        if(!account->getDetails().isEmpty())
+            _textEdit->append(tr("Details : ")+account->getDetails());
         _textEdit->append(QLatin1String(""));
     }
 }
