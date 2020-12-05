@@ -4,10 +4,14 @@ QT += sql
 
 CONFIG += c++17
 
+RC_FILE = myapp.rc
+
 TRANSLATIONS = mypassword_fr.ts mypassword_es.ts
 
 RESOURCES += \
     Ressources.qrc
+
+RC_ICONS = myappico.ico
 
 HEADERS += \
     Account.h \

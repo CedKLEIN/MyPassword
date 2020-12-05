@@ -16,6 +16,15 @@
 #include <QApplication>
 #include <QTranslator>
 
+/*
+ * Fix issue accent not accepted
+ * Don t return fix issue as File already existing where as it happends many issue...
+ * In filter: when delete last one, longer
+ * Clean filter when you switch tab
+ * Put date on info deply app
+ * don t print Name or login if empty in text generate
+ */
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
