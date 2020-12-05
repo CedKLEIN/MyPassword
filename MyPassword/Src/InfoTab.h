@@ -34,7 +34,7 @@ private:
     QHBoxLayout* _titleLayout{new QHBoxLayout};
 
     QLabel* _aboutAppLabel{new QLabel{tr("About MyPassword:")}};
-    QLineEdit* _aboutAppLineEdit{new QLineEdit{tr("MyPassword deployed the /11/2020 by Cédric KLEIN.")}};
+    QLineEdit* _aboutAppLineEdit{new QLineEdit{tr("MyPassword deployed the 01/12/2020 by Cédric KLEIN.")}};
 
     QLabel* _webSiteLabel{new QLabel{tr("Download and help:")}};
     QLineEdit* _webSiteLineEdit{new QLineEdit{"https://github.com/CedKLEIN/PasswordHandler"}};

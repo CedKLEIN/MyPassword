@@ -18,8 +18,6 @@
 
 /*
  * Fix issue accent not accepted
- * In filter: when delete last one, longer
- * Put date on info deply app
  * GetData from txt file
  */
 
