@@ -2,6 +2,7 @@
 
 #include "AccountWindow.h"
 #include "CreateAccountTab.h"
+#include "GenerateFileTab.h"
 #include "SettingsTab.h"
 #include "Interface/IPasswordSecurity.h"
 #include "Interface/IDatabase.h"
@@ -16,6 +17,7 @@
 AccountTab::AccountTab(FacAccount& iFacAccount,
                        AccountWindow& iAccountWindow,
                        CreateAccountTab& iCreateAccountTab,
+                       GenerateFileTab& iGenerateFileTab,
                        IPasswordSecurity& iPasswordSecurity,
                        IDatabase& iDb,
                        ILog& iLog,
@@ -24,6 +26,7 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
     _facAccount(iFacAccount),
     _accountWindow(iAccountWindow),
     _createAccountTab(iCreateAccountTab),
+    _generateFileTab(iGenerateFileTab),
     _passwordSecurity(iPasswordSecurity),
     _db(iDb),
     _log(iLog),
@@ -37,6 +40,7 @@ AccountTab::AccountTab(FacAccount& iFacAccount,
                   Utility::GET_STYLE_QLISTVIEW());
 
     _createAccountTab.addListener(this);
+    _generateFileTab.addListener(this);
     _accountWindow.addListener(this);
     _settingsTab.addUpdateAccountListener(this);
     _accountWindowLayout->addWidget(&_accountWindow);

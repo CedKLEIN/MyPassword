@@ -15,6 +15,7 @@
 class AccountWindow;
 class IPasswordSecurity;
 class CreateAccountTab;
+class GenerateFileTab;
 class IDatabase;
 class ILog;
 class SettingsTab;
@@ -27,6 +28,7 @@ public:
     AccountTab(FacAccount&,
                AccountWindow&,
                CreateAccountTab&,
+               GenerateFileTab&,
                IPasswordSecurity&,
                IDatabase&,
                ILog&,
@@ -47,6 +49,7 @@ private:
     FacAccount& _facAccount;
     AccountWindow& _accountWindow;
     CreateAccountTab& _createAccountTab;
+    GenerateFileTab& _generateFileTab;
     IPasswordSecurity& _passwordSecurity;
     IDatabase& _db;
     ILog& _log;

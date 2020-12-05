@@ -18,7 +18,10 @@
 
 /*
  * Fix issue accent not accepted
- * GetData from txt file
+ * Log rotating control
+ * Change display main window
+ * message when import file
+ * Add password encrypted + secure lvl in generate file
  */
 
 int main(int argc, char *argv[])
@@ -56,16 +59,18 @@ int main(int argc, char *argv[])
                 db,
                 log};
 
+    GenerateFileTab generateFileTab{facAccount,db,log};
+
     AccountTab accountTab{facAccount,
                 accountWindow,
                 createAccountTab,
+                generateFileTab,
                 passwordSecurity,
                 db,
                 log,
                 settingsTab,
                 settings};
 
-    GenerateFileTab generateFileTab{facAccount,log};
     InfoTab infoTab{passwordSecurity,settingsTab};
 
     MainWindow mainWindow{accountTab,createAccountTab,generateFileTab,settingsTab,infoTab};
