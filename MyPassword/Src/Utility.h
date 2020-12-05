@@ -188,7 +188,7 @@ public:
     enum ERROR{
         no_error,
         db_not_open,
-        db_unique_key_already_exist,
+        db_issue,
         db_failed_to_close,
         db_failed_to_remove,
         db_failed_to_modify,
@@ -207,8 +207,8 @@ public:
         case db_not_open:
             errorMsg="Db not open";
             break;
-        case db_unique_key_already_exist:
-            errorMsg="This name is already existing.";
+        case db_issue:
+            errorMsg="Issue with db.";
             break;
         case db_failed_to_close:
             errorMsg="Database failed to close.";

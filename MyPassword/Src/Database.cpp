@@ -61,7 +61,7 @@ int Database::create(const QStringList& iData){
                 return Utility::ERROR::db_failed_to_close;
 
         if (query.lastError().isValid())
-            return Utility::ERROR::db_unique_key_already_exist;
+            return Utility::ERROR::db_issue;
 
         return Utility::ERROR::no_error ;
     }
