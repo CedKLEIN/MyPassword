@@ -74,6 +74,11 @@ void AccountTab::onEventUpdateAccount(){
 void AccountTab::filterChanged(const QString& iText){
     _accountsDataFilter->clear();
 
+    if(iText.isEmpty()){
+        setModelFromDataList(_accountsData);
+        return;
+    }
+
     bool opti{false};
 
     QString textLower{iText.toLower()};

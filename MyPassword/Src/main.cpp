@@ -19,7 +19,6 @@
 /*
  * Fix issue accent not accepted
  * In filter: when delete last one, longer
- * Clean filter when you switch tab
  * Put date on info deply app
  * GetData from txt file
  */
