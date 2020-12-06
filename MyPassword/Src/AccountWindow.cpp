@@ -21,7 +21,7 @@ AccountWindow::AccountWindow(FacAccount &iFacAccount,
     _db(iDb),
     _log(iLog)
 {
-    setFixedWidth(SIZE_WINDOW_HORIZONTAL/2);
+    setMinimumWidth(SIZE_WINDOW_HORIZONTAL/2);
 
     setStyleSheet(Utility::GET_STYLE_QLINEEDIT()+
                   Utility::GET_STYLE_QTOOLTYPE()+
