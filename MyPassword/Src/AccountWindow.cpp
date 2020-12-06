@@ -206,8 +206,13 @@ bool AccountWindow::saveModifLogin()
                          <<QString::number(_facAccount.get(_nameLabel->text())->getSeverityLvl()))};
 
     if(error != Utility::ERROR::no_error){
-        QMessageBox::warning(this,tr("Warning"),
-                             tr(Utility::getMsgError(error).c_str()));
+        if (error == Utility::ERROR::db_character_forbidden){
+            QMessageBox::warning(this,tr("Warning"),
+                                 tr("Character forbidden (as apostrophe)"));
+        } else {
+            QMessageBox::warning(this,tr("Warning"),
+                                 tr("Issue while changing the login"));
+        }
         return false;
     }
 
@@ -231,8 +236,13 @@ bool AccountWindow::saveModifDetails()
                          <<QString::number(_facAccount.get(_nameLabel->text())->getSeverityLvl()))};
 
     if(error != Utility::ERROR::no_error){
-        QMessageBox::warning(this,tr("Warning"),
-                             tr(Utility::getMsgError(error).c_str()));
+        if (error == Utility::ERROR::db_character_forbidden){
+            QMessageBox::warning(this,tr("Warning"),
+                                 tr("Character forbidden (as apostrophe)"));
+        } else {
+            QMessageBox::warning(this,tr("Warning"),
+                                 tr("Issue while changing the details"));
+        }
         return false;
     }
 

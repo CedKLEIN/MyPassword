@@ -27,7 +27,7 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
 
     _titleLabel->setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
     _titleLabel->setStyleSheet(Utility::SET_TEXT_SIZE(40)+
-                              Utility::SET_TEXT_COLOR(COLOR_LIGHT));
+                               Utility::SET_TEXT_COLOR(COLOR_LIGHT));
 
     _nameErrorLabel->setVisible(false);
     _nameErrorLabel->setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_RED));
@@ -67,9 +67,9 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
     _detailsLayout->addLayout(_detailsLengthLabelLayout);
 
     _validateButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
-                                Utility::SET_HEIGHT(50));
+                                 Utility::SET_HEIGHT(50));
     _validationLabel->setStyleSheet(Utility::SET_TEXT_COLOR(COLOR_GREEN)+
-                                   Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC));
+                                    Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC));
     _validationLabel->setVisible(false);
     _validationIcon->setVisible(false);
     _validationIcon->setIcon(QIcon(QStringLiteral(":/checked")));
@@ -83,7 +83,6 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
     _mainLayout->addWidget(_titleLabel);
     _mainLayout->addSpacing(20);
     _mainLayout->addLayout(_nameLayout);
-    _mainLayout->addWidget(_nameErrorLabel);
     _mainLayout->addSpacing(10);
     _mainLayout->addLayout(_loginLayout);
     _mainLayout->addSpacing(10);
@@ -93,6 +92,7 @@ CreateAccountTab::CreateAccountTab(IEncryption& iEncryption,
     _mainLayout->addSpacing(20);
     _mainLayout->addWidget(_validateButt);
     _mainLayout->addLayout(_validationLayout);
+    _mainLayout->addWidget(_nameErrorLabel);
     _mainLayout->addSpacing(200);
 
     setLayout(_mainLayout);
@@ -112,19 +112,19 @@ void CreateAccountTab::textChangedName(const QString&){
     _validationIcon->setVisible(false);
     _nameLineEdit->setStyleSheet(QStringLiteral(""));
     _nameLengthLabel->setText(QString::number(_nameLineEdit->text().length())+"/"+
-                             QString::number(TEXT_LOGIN_LENGTH));
+                              QString::number(TEXT_LOGIN_LENGTH));
 }
 
 void CreateAccountTab::textChangedLogin(const QString&){
     _loginLineEdit->setStyleSheet(QStringLiteral(""));
     _loginLengthLabel->setText(QString::number(_loginLineEdit->text().length())+"/"+
-                              QString::number(TEXT_LOGIN_LENGTH));
+                               QString::number(TEXT_LOGIN_LENGTH));
 }
 
 void CreateAccountTab::textChangedPassword(const QString&){
     _passwordLineEdit->setStyleSheet(QStringLiteral(""));
     _passwordLengthLabel->setText(QString::number(_passwordLineEdit->text().length())+"/"+
-                                 QString::number(TEXT_LOGIN_LENGTH));
+                                  QString::number(TEXT_LOGIN_LENGTH));
 }
 
 void CreateAccountTab::textChangedDetails(){
@@ -133,7 +133,7 @@ void CreateAccountTab::textChangedDetails(){
     }
     _detailsTextEdit->setStyleSheet(QStringLiteral(""));
     _detailsLengthLabel->setText(QString::number(_detailsTextEdit->toPlainText().length())+"/"+
-                                QString::number(TEXT_DETAILS_LENGTH));
+                                 QString::number(TEXT_DETAILS_LENGTH));
 }
 
 
@@ -143,7 +143,7 @@ void CreateAccountTab::clearWindow(){
     _passwordLineEdit->clear();
     _detailsTextEdit->clear();
     _nameLineEdit->setStyleSheet(Utility::SET_BORDER_SIZE(0)+
-                                Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
+                                 Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,BOLD));
 }
 
 void CreateAccountTab::checkPasswordSecurity(const QString& iPwd){
@@ -194,9 +194,10 @@ void CreateAccountTab::viewPassword(){
 
 void CreateAccountTab::validateForm() {
     if (_nameLineEdit->text().isEmpty()){
+        _nameErrorLabel->setText(tr("The name is mandatory."));
         _nameErrorLabel->setVisible(true);
         _nameLineEdit->setStyleSheet(Utility::SET_BORDER_SIZE(1)+
-                                    Utility::SET_BACKGROUND_COLOR(COLOR_RED));
+                                     Utility::SET_BACKGROUND_COLOR(COLOR_RED));
         return;
     }
 
@@ -208,8 +209,17 @@ void CreateAccountTab::validateForm() {
                          << QString::number(_pwdSecurityLvl))};
 
     if(error != Utility::ERROR::no_error){
-        QMessageBox::warning(this,tr("Warning"),
-                             tr(Utility::getMsgError(error).c_str()));
+        if (error == Utility::ERROR::db_name_already_exist){
+            _nameErrorLabel->setText(tr("This name already exist"));
+            _nameErrorLabel->setVisible(true);
+            _nameLineEdit->setStyleSheet(Utility::SET_BORDER_SIZE(1)+
+                                         Utility::SET_BACKGROUND_COLOR(COLOR_RED));
+        } else if (error == Utility::ERROR::db_character_forbidden){
+            _nameErrorLabel->setText(tr("Character forbidden (as apostrophe)"));
+            _nameErrorLabel->setVisible(true);
+        } else {
+            _nameErrorLabel->setText(tr("Issue while creating the account"));
+        }
         return;
     }
 

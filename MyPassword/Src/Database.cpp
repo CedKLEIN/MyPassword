@@ -9,6 +9,8 @@
 #include <QString>
 #include <QVariant>
 
+#include <QDebug>
+
 Database::Database(FacAccount& iFacAccount):
     _facAccount(iFacAccount)
 {
@@ -49,19 +51,27 @@ int Database::create(const QStringList& iData){
         QString queryStr(QLatin1String("INSERT INTO ACCOUNT \
                                        ( NAME, LOGIN, PASSWORD, DETAILS, SECURITY_LVL) \
                                        VALUES \
-                                       ('") + iData[0].toLocal8Bit() +QLatin1String("',\
-                                        '") + iData[1].toLocal8Bit() +QLatin1String("',\
-                                        '") + iData[2].toLocal8Bit() +QLatin1String("',\
-                                        '") + iData[3].toLocal8Bit() +QLatin1String("',\
+                                       ('") + iData[0] +QLatin1String("',\
+                                        '") + iData[1] +QLatin1String("',\
+                                        '") + iData[2] +QLatin1String("',\
+                                        '") + iData[3] +QLatin1String("',\
                                         '") + iData[4] +QLatin1String("');"));
 
                          QSqlQuery query(queryStr, _db);
 
-                if(!dbClose())
-                return Utility::ERROR::db_failed_to_close;
+                qDebug() << query.lastError().text();
+        qDebug() << query.lastError().type();
 
-        if (query.lastError().isValid())
-            return Utility::ERROR::db_issue;
+        if(!dbClose())
+            return Utility::ERROR::db_failed_to_close;
+
+        if (query.lastError().isValid()){
+            if(query.lastError().type()==1)
+                return Utility::ERROR::db_name_already_exist;
+            else if(query.lastError().type()==2)
+                return Utility::ERROR::db_character_forbidden;
+            return Utility::ERROR::db_failed_to_modify;
+        }
 
         return Utility::ERROR::no_error ;
     }
@@ -130,8 +140,13 @@ int Database::modify(const QStringList& iData)
         if(!dbClose())
             return Utility::ERROR::db_failed_to_close;
 
-        if (query.lastError().isValid())
+        if (query.lastError().isValid()){
+            if(query.lastError().type()==1)
+                return Utility::ERROR::db_name_already_exist;
+            else if(query.lastError().type()==2)
+                return Utility::ERROR::db_character_forbidden;
             return Utility::ERROR::db_failed_to_modify;
+        }
 
         return  Utility::ERROR::no_error;
     }

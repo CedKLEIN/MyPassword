@@ -56,7 +56,7 @@ private:
     QLabel* _titleLabel{new QLabel{tr("New account")}};
 
     QLabel* _nameLabel{new QLabel{tr("Name:*   ")}};
-    QLabel* _nameErrorLabel{new QLabel{tr("The name is mandatory.")}};
+    QLabel* _nameErrorLabel{new QLabel};
     QLabel* _nameLengthLabel{new QLabel{QStringLiteral("0/50")}};
     QLineEdit* _nameLineEdit{new QLineEdit};
     QHBoxLayout* _nameLayout{new QHBoxLayout};

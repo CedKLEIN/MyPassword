@@ -3,6 +3,7 @@
 #include <string>
 #include <QString>
 #include <QSize>
+#include <QObject>
 
 static const QString COLOR_WHITE{QStringLiteral("#FFFFFF")};
 static const QString COLOR_RED{QStringLiteral("#D32F2F")};
@@ -193,6 +194,8 @@ public:
         db_failed_to_remove,
         db_failed_to_modify,
         db_failed_to_get_data,
+        db_name_already_exist,
+        db_character_forbidden,
         password_empty,
         password_confimation_not_the_same,
         file_not_generated
@@ -221,6 +224,12 @@ public:
             break;
         case db_failed_to_get_data:
             errorMsg="Couldn't get data from database.";
+            break;
+        case db_name_already_exist:
+            errorMsg="This name already exist";
+            break;
+        case db_character_forbidden:
+            errorMsg="Some character are forbidden (as ')";
             break;
         case password_empty:
             errorMsg="The password should not be empty.";

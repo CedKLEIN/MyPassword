@@ -17,8 +17,6 @@
 #include <QTranslator>
 
 /*
- * Fix issue accent not accepted
- * Log rotating control
  * Add a text file to generate a file from extern before import data
  * Make new translation
  */
