@@ -19,7 +19,6 @@
 /*
  * Fix issue accent not accepted
  * Log rotating control
- * Change display main window
  * Add a text file to generate a file from extern before import data
  * Make new translation
  */
