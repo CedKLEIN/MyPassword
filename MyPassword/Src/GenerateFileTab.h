@@ -47,9 +47,10 @@ private:
     std::vector<IUpdateAccountListener*> _listeners;
 
     QLabel* _titleLabel{new QLabel{tr("Generate data account in text file")}};
+    QLabel* _outputDataGenerateFromFileLabel{new QLabel};
     QLabel* _outputSaveFileLabel{new QLabel};
     QStringList* _textStringList{new QStringList};
-    QPushButton* _importDataFromTextButt{new QPushButton{tr(" Import datat from text file")}};
+    QPushButton* _importDataFromTextButt{new QPushButton{tr(" Import data from text file")}};
     QPushButton* _generateTextButt{new QPushButton{tr(" Generate text")}};
     QPushButton* _saveTextButt{new QPushButton{tr(" Save in a file")}};
     QTextEdit* _textEdit{new QTextEdit};

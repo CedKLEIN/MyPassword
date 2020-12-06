@@ -14,6 +14,11 @@
 
 #include <fstream>
 
+const QString GFT_LOGIN{QObject::tr("Login:")};
+const QString GFT_PASSWORD{QObject::tr("Password:")};
+const QString GFT_DETAILS{QObject::tr("Details:")};
+const QString GFT_SEVERITY{QObject::tr("Severity:")};
+
 GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
                                  IDatabase& iDatabase,
                                  ILog& iLog):
@@ -32,6 +37,7 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
     _importDataFromTextButt->setIcon(QIcon(QStringLiteral(":/import")));
     _importDataFromTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                            Utility::SET_HEIGHT(45));
+    _outputDataGenerateFromFileLabel->setVisible(false);
 
     _textEdit->setPlaceholderText(tr("1- Generate the text\n2- Copy text or click on save button"));
     _textEdit->verticalScrollBar()->setStyleSheet(QStringLiteral("QScrollBar:vertical {width: 2px;}"));
@@ -54,6 +60,7 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
     _mainLayout->addWidget(_titleLabel);
     _mainLayout->addSpacing(20);
     _mainLayout->addWidget(_importDataFromTextButt);
+    _mainLayout->addWidget(_outputDataGenerateFromFileLabel);
     _mainLayout->addSpacing(10);
     _mainLayout->addWidget(_textEdit);
     _mainLayout->addSpacing(10);
@@ -68,6 +75,7 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
 
 void GenerateFileTab::onTabSelected(){
     _outputSaveFileLabel->setVisible(false);
+    _outputDataGenerateFromFileLabel->setVisible(false);
 }
 
 void GenerateFileTab::generateTextEdit(){
@@ -75,14 +83,22 @@ void GenerateFileTab::generateTextEdit(){
     for(const auto& account: _facAccount.getAll()){
         _textEdit->append("@"+account->getName()+QLatin1String(":"));
         if(!account->getLogin().isEmpty())
-            _textEdit->append(tr("Login: ")+account->getLogin());
+            _textEdit->append(GFT_LOGIN+" "+account->getLogin());
+        if(!account->getPassword().isEmpty())
+            _textEdit->append(GFT_PASSWORD+" "+account->getPassword());
+        if(account->getSeverityLvl()!=0)
+            _textEdit->append(GFT_SEVERITY+" "+QString::number(account->getSeverityLvl()));
         if(!account->getDetails().isEmpty())
-            _textEdit->append(tr("Details: ")+account->getDetails());
+            _textEdit->append(GFT_DETAILS+" "+account->getDetails());
         _textEdit->append(QLatin1String(""));
     }
 }
 
 void GenerateFileTab::importDatafromFile(){
+    _outputDataGenerateFromFileLabel->setText(tr("Data from file imported"));
+    _outputDataGenerateFromFileLabel->setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
+                                                    Utility::SET_TEXT_COLOR(COLOR_GREEN));
+
     QString fileName{QFileDialog::getOpenFileName(this, tr("Open File"),
                                                   "./",
                                                   tr("Text (*.txt)"))};
@@ -92,7 +108,9 @@ void GenerateFileTab::importDatafromFile(){
     {
         QString _name;
         QString _Login;
+        QString _password;
         QString _details;
+        QString _saverity;
         bool hasName{false};
         bool detailsOngoing{false};
 
@@ -106,13 +124,16 @@ void GenerateFileTab::importDatafromFile(){
                     if(hasName){
                         addNewAccount(QStringList()<< _name
                                       <<_Login
-                                      <<""
+                                      <<_password
                                       <<_details
-                                      <<"");
+                                      <<_saverity);
 
                         _name.clear();
                         _Login.clear();
                         _details.clear();
+                        _password.clear();
+                        _saverity.clear();
+                        hasName=false;
                         hasName=false;
                         detailsOngoing=false;
                     }
@@ -122,9 +143,13 @@ void GenerateFileTab::importDatafromFile(){
                     _name=line;
                     hasName=true;
                 }else if(hasName){
-                    if(QStringRef(&line,0,6)=="Login:"){
+                    if(QStringRef(&line,0,6)==GFT_LOGIN){
                         _Login=QStringRef(&line,7,line.size()-7).toString();
-                    }else if(QStringRef(&line,0,8)=="Details:"){
+                    }else if(QStringRef(&line,0,9)==GFT_PASSWORD){
+                        _password=QStringRef(&line,10,line.size()-10).toString();
+                    }else if(QStringRef(&line,0,9)==GFT_SEVERITY){
+                        _saverity=QStringRef(&line,10,line.size()-10).toString();
+                    }else if(QStringRef(&line,0,8)==GFT_DETAILS){
                         _details=QStringRef(&line,9,line.size()-9).toString();
                         detailsOngoing=true;
                     }else if(detailsOngoing){
@@ -137,11 +162,12 @@ void GenerateFileTab::importDatafromFile(){
         if(hasName){
             addNewAccount(QStringList()<< _name
                           <<_Login
-                          <<""
+                          <<_password
                           <<_details
-                          <<"");
+                          <<_saverity);
         }
         fireEventUpdate();
+        _outputDataGenerateFromFileLabel->setVisible(true);
         inputFile.close();
     }
 }
@@ -149,8 +175,12 @@ void GenerateFileTab::importDatafromFile(){
 void GenerateFileTab::addNewAccount(const QStringList& iAccount){
     if(_database.create(iAccount)==Utility::ERROR::no_error)
         _log.LOG_INFO("Account added from file: "+iAccount[0].toStdString());
-    else
+    else{
+        _outputDataGenerateFromFileLabel->setText(tr("Some accounts weren't imported"));
+        _outputDataGenerateFromFileLabel->setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
+                                                        Utility::SET_TEXT_COLOR(COLOR_RED));
         _log.LOG_CRITICAL("Account failed to add from file: "+iAccount[0].toStdString());
+    }
 }
 
 void GenerateFileTab::saveTextInFile(){

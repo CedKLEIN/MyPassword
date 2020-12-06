@@ -20,8 +20,8 @@
  * Fix issue accent not accepted
  * Log rotating control
  * Change display main window
- * message when import file
- * Add password encrypted + secure lvl in generate file
+ * Add a text file to generate a file from extern before import data
+ * Make new translation
  */
 
 int main(int argc, char *argv[])
