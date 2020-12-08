@@ -48,5 +48,10 @@ private:
     QPushButton* _veryLowButt{new QPushButton{tr("VERY LOW:\nIt is high time to change your password, this password is too short.")}};
     QVBoxLayout* _securityLayout{new QVBoxLayout};
 
+    QLabel* _attributionLabel{new QLabel{tr("Attribution:")}};
+    QWidget* _attributionWidget{new QWidget};
+    QLabel* _attributionContentLabel{new QLabel};
+    QVBoxLayout* _attributionLayout{new QVBoxLayout};
+
     QVBoxLayout* _mainLayout{new QVBoxLayout};
 };

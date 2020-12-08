@@ -16,11 +16,6 @@
 #include <QApplication>
 #include <QTranslator>
 
-/*
- * Add a text file to generate a file from extern before import data
- * Make new translation
- */
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
