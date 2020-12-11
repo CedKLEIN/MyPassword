@@ -9,8 +9,6 @@
 #include <QString>
 #include <QVariant>
 
-#include <QDebug>
-
 Database::Database(FacAccount& iFacAccount):
     _facAccount(iFacAccount)
 {
@@ -58,9 +56,6 @@ int Database::create(const QStringList& iData){
                                         '") + iData[4] +QLatin1String("');"));
 
                          QSqlQuery query(queryStr, _db);
-
-                qDebug() << query.lastError().text();
-        qDebug() << query.lastError().type();
 
         if(!dbClose())
             return Utility::ERROR::db_failed_to_close;

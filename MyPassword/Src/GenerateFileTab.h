@@ -28,6 +28,8 @@ public:
 
 public slots:
     void importDatafromFile();
+    void clearTextEdit();
+    void textChangeEdit();
     void generateTextEdit();
     void saveTextInFile();
 
@@ -51,9 +53,10 @@ private:
     QLabel* _outputSaveFileLabel{new QLabel};
     QStringList* _textStringList{new QStringList};
     QPushButton* _importDataFromTextButt{new QPushButton{tr(" Import data from text file")}};
+    QTextEdit* _textEdit{new QTextEdit};
+    QPushButton* _clearTextButt{new QPushButton{tr(" Clear text")}};
     QPushButton* _generateTextButt{new QPushButton{tr(" Generate text")}};
     QPushButton* _saveTextButt{new QPushButton{tr(" Save in a file")}};
-    QTextEdit* _textEdit{new QTextEdit};
     QHBoxLayout* _buttLayout{new QHBoxLayout};
     QVBoxLayout* _mainLayout{new QVBoxLayout};
 

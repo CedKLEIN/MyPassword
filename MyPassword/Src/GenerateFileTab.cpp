@@ -47,12 +47,18 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
     _generateTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                      Utility::SET_HEIGHT(45));
 
+    _clearTextButt->setIcon(QIcon(QStringLiteral(":/clear")));
+    _clearTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_GREY)+
+                                     Utility::SET_HEIGHT(45));
+
     _saveTextButt->setIcon(QIcon(QStringLiteral(":/save")));
-    _saveTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+    _saveTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_GREY)+
                                  Utility::SET_HEIGHT(45));
 
-    _buttLayout->addWidget(_generateTextButt);
+    _buttLayout->addWidget(_clearTextButt);
     _buttLayout->addWidget(_saveTextButt);
+    _clearTextButt->setEnabled(false);
+    _saveTextButt->setEnabled(false);
 
     _outputSaveFileLabel->setVisible(false);
 
@@ -64,12 +70,15 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
     _mainLayout->addSpacing(10);
     _mainLayout->addWidget(_textEdit);
     _mainLayout->addSpacing(10);
+    _mainLayout->addWidget(_generateTextButt);
     _mainLayout->addLayout(_buttLayout);
     _mainLayout->addWidget(_outputSaveFileLabel);
     setLayout(_mainLayout);
 
     QObject::connect(_importDataFromTextButt,&QPushButton::clicked,this,&GenerateFileTab::importDatafromFile);
+    QObject::connect(_textEdit,&QTextEdit::textChanged,this,&GenerateFileTab::textChangeEdit);
     QObject::connect(_generateTextButt,&QPushButton::clicked,this,&GenerateFileTab::generateTextEdit);
+    QObject::connect(_clearTextButt,&QPushButton::clicked,this,&GenerateFileTab::clearTextEdit);
     QObject::connect(_saveTextButt,&QPushButton::clicked,this,&GenerateFileTab::saveTextInFile);
 }
 
@@ -169,6 +178,28 @@ void GenerateFileTab::importDatafromFile(){
         fireEventUpdate();
         _outputDataGenerateFromFileLabel->setVisible(true);
         inputFile.close();
+    }
+}
+
+void GenerateFileTab::clearTextEdit(){
+    _textEdit->clear();
+}
+
+void GenerateFileTab::textChangeEdit(){
+    if(_textEdit->toPlainText().isEmpty()){
+        _clearTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_GREY)+
+                                         Utility::SET_HEIGHT(45));
+        _saveTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_GREY)+
+                                     Utility::SET_HEIGHT(45));
+        _clearTextButt->setEnabled(false);
+        _saveTextButt->setEnabled(false);
+    }else {
+        _clearTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+                                         Utility::SET_HEIGHT(45));
+        _saveTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
+                                     Utility::SET_HEIGHT(45));
+        _clearTextButt->setEnabled(true);
+        _saveTextButt->setEnabled(true);
     }
 }
 

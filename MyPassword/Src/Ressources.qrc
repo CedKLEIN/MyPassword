@@ -40,5 +40,6 @@
         <file alias="very_high_theme3">Icon/very_high_theme3.png</file>
         <file alias="very_low_theme3">Icon/very_low_theme3.png</file>
         <file alias="import">Icon/importer.png</file>
+        <file alias="clear">Icon/clear.png</file>
     </qresource>
 </RCC>
