@@ -15,10 +15,29 @@ No possibility to get the password back but MyPassword provide a feature to try 
 - Checker of security level of password (VERY HIGH, HIGH, MEDIUM, LOW, VERY_LOW)
 
 ## Technically:
-- QT version: 
-- Compiler: 
+- QT version: 5.15.2
+- Qt Creator: 4.13.1
+- Compiler: MinGW
 - Language: C++
 - Encryption: MD5
+
+### How to handle translation
+#### Create/Update .ts files
+- add in Src.pro "TRANSLATIONS = mypassword_fr.ts mypassword_es.ts"
+- In prompt : cd $HOME\MyPassword\PasswordHandler\MyPassword\Src
+- run: D:\Qt\5.15.2\mingw81_64\bin\lupdate.exe Src.pro
+
+#### Make translation
+- translate with Qt Linguist
+
+#### Generate .qm files
+- run: D:\Qt\5.15.2\mingw81_64\bin\lrelease.exe Src.pro
+
+### How to deploy
+- isolate Src.exe in a folder
+- run (for 64bits): D:\Qt\5.15.2\mingw81_64\bin\windeployqt.exe Src.exe
+- run (for 32bits): D:\Qt\5.15.2\mingw81_32\bin\windeployqt.exe Src.exe
+- copy mypassword_fr.qm mypassword_es.qm in folder
 
 ## Version:
 ### 1.1 - 10/12/2020 - New features:
@@ -26,6 +45,11 @@ No possibility to get the password back but MyPassword provide a feature to try 
 - Fix issue with filter
 - Add attribution in info tab
 - Generate password and severity in text file
+
+### 1.2 - 12/12/2020 - New features:
+- New button to clean text edit
+- Add progress bar when import account from file
+- Add app version in info tab
 
 ### Guide:
 
