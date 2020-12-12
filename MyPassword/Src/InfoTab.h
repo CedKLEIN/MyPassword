@@ -34,10 +34,12 @@ private:
     QHBoxLayout* _titleLayout{new QHBoxLayout};
 
     QLabel* _aboutAppLabel{new QLabel{tr("About MyPassword:")}};
-    QLineEdit* _aboutAppLineEdit{new QLineEdit{tr("MyPassword deployed the 01/12/2020 by Cédric KLEIN.")}};
+    QLineEdit* _aboutAppLineEdit{new QLineEdit{tr(" MyPassword deployed the 01/12/2020 by Cédric KLEIN.")}};
+    QLineEdit* _versionLineEdit{new QLineEdit{tr(" Version: 1.2")}};
+    QHBoxLayout* _aboutLayout{new QHBoxLayout};
 
     QLabel* _webSiteLabel{new QLabel{tr("Download and help:")}};
-    QLineEdit* _webSiteLineEdit{new QLineEdit{"https://github.com/CedKLEIN/PasswordHandler"}};
+    QLineEdit* _webSiteLineEdit{new QLineEdit{" https://github.com/CedKLEIN/MyPassword-dowload.git"}};
 
     QLabel* _securityLabel{new QLabel{tr("Password Security level:")}};
     QWidget* _securityWidget{new QWidget};

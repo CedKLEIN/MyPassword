@@ -27,6 +27,11 @@ InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity,
 
     _aboutAppLineEdit->setStyleSheet(Utility::SET_TEXT_SIZE(19)+
                                      Utility::SET_HEIGHT(40));
+    _versionLineEdit->setStyleSheet(Utility::SET_TEXT_SIZE(19)+
+                                    Utility::SET_HEIGHT(40));
+    _aboutLayout->addWidget(_aboutAppLineEdit);
+    _aboutLayout->addWidget(_versionLineEdit);
+
     _webSiteLineEdit->setStyleSheet(Utility::SET_TEXT_SIZE(19)+
                                     Utility::SET_HEIGHT(40));
 
@@ -62,7 +67,7 @@ InfoTab::InfoTab(IPasswordSecurity& iPasswordSecurity,
 
     _scrollBarLayout->setAlignment(Qt::AlignTop);
     _scrollBarLayout->addWidget(_aboutAppLabel);
-    _scrollBarLayout->addWidget(_aboutAppLineEdit);
+    _scrollBarLayout->addLayout(_aboutLayout);
     _scrollBarLayout->addSpacing(20);
     _scrollBarLayout->addWidget(_webSiteLabel);
     _scrollBarLayout->addWidget(_webSiteLineEdit);
