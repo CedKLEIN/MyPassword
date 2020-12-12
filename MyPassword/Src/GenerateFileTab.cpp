@@ -37,6 +37,12 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
     _importDataFromTextButt->setIcon(QIcon(QStringLiteral(":/import")));
     _importDataFromTextButt->setStyleSheet(Utility::SET_BACKGROUND_COLOR(COLOR_BLUE)+
                                            Utility::SET_HEIGHT(45));
+    _progressBar->setMinimum(0);
+    _progressBar->setMaximum(100);
+    _progressBar->setTextVisible(false);
+    _progressBar->setFixedHeight(5);
+    resetProgressBar();
+
     _outputDataGenerateFromFileLabel->setVisible(false);
 
     _textEdit->setPlaceholderText(tr("1- Generate the text\n2- Copy text or click on save button"));
@@ -66,6 +72,7 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
     _mainLayout->addWidget(_titleLabel);
     _mainLayout->addSpacing(20);
     _mainLayout->addWidget(_importDataFromTextButt);
+    _mainLayout->addWidget(_progressBar);
     _mainLayout->addWidget(_outputDataGenerateFromFileLabel);
     _mainLayout->addSpacing(10);
     _mainLayout->addWidget(_textEdit);
@@ -82,9 +89,16 @@ GenerateFileTab::GenerateFileTab(FacAccount& iFacAccount,
     QObject::connect(_saveTextButt,&QPushButton::clicked,this,&GenerateFileTab::saveTextInFile);
 }
 
+void GenerateFileTab::resetProgressBar(){
+    _progressBar->setVisible(false);
+    _progressBar->reset();
+    _progressBar->setStyleSheet("QProgressBar{"+Utility::SET_BORDER_SIZE(0)+"}"+
+                                "QProgressBar::chunk {"+Utility::SET_BACKGROUND_COLOR(COLOR_GREEN)+"}");
+}
 void GenerateFileTab::onTabSelected(){
     _outputSaveFileLabel->setVisible(false);
     _outputDataGenerateFromFileLabel->setVisible(false);
+    resetProgressBar();
 }
 
 void GenerateFileTab::generateTextEdit(){
@@ -104,6 +118,9 @@ void GenerateFileTab::generateTextEdit(){
 }
 
 void GenerateFileTab::importDatafromFile(){
+    _progressBar->setVisible(true);
+    _progressBar->setStyleSheet("QProgressBar{"+Utility::SET_BORDER_SIZE(0)+"}"+
+                                "QProgressBar::chunk {"+Utility::SET_BACKGROUND_COLOR(COLOR_GREEN)+"}");
     _outputDataGenerateFromFileLabel->setText(tr("Data from file imported"));
     _outputDataGenerateFromFileLabel->setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                                     Utility::SET_TEXT_COLOR(COLOR_GREEN));
@@ -111,6 +128,9 @@ void GenerateFileTab::importDatafromFile(){
     QString fileName{QFileDialog::getOpenFileName(this, tr("Open File"),
                                                   "./",
                                                   tr("Text (*.txt)"))};
+
+    int nbrAccounts{getNumberAccountToImport(fileName)};
+    int nbrAccountImported{0};
 
     QFile inputFile(fileName);
     if (inputFile.open(QIODevice::ReadOnly))
@@ -130,6 +150,9 @@ void GenerateFileTab::importDatafromFile(){
 
             if(!line.isEmpty()){
                 if(line[0]=='@'){
+                    ++nbrAccountImported;
+                    _progressBar->setValue(nbrAccountImported*100/nbrAccounts);
+
                     if(hasName){
                         addNewAccount(QStringList()<< _name
                                       <<_Login
@@ -175,10 +198,34 @@ void GenerateFileTab::importDatafromFile(){
                           <<_details
                           <<_saverity);
         }
+        _progressBar->setValue(100);
         fireEventUpdate();
         _outputDataGenerateFromFileLabel->setVisible(true);
         inputFile.close();
     }
+    resetProgressBar();
+}
+
+int GenerateFileTab::getNumberAccountToImport(const QString& iFileName){
+    QFile inputFile(iFileName);
+    int nbrAccount{0};
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+
+        QTextStream in(&inputFile);
+        while (!in.atEnd())
+        {
+            QString line{in.readLine()};
+
+            if(!line.isEmpty()){
+                if(line[0]=='@'){
+                    ++nbrAccount;
+                }
+            }
+        }
+        inputFile.close();
+    }
+    return nbrAccount;
 }
 
 void GenerateFileTab::clearTextEdit(){
@@ -207,6 +254,8 @@ void GenerateFileTab::addNewAccount(const QStringList& iAccount){
     if(_database.create(iAccount)==Utility::ERROR::no_error)
         _log.LOG_INFO("Account added from file: "+iAccount[0].toStdString());
     else{
+        _progressBar->setStyleSheet("QProgressBar{"+Utility::SET_BORDER_SIZE(0)+"}"+
+                                    "QProgressBar::chunk {"+Utility::SET_BACKGROUND_COLOR(COLOR_RED)+"}");
         _outputDataGenerateFromFileLabel->setText(tr("Some accounts weren't imported"));
         _outputDataGenerateFromFileLabel->setStyleSheet(Utility::SET_TEXT_SIZE(TEXT_STANDARD_SIZE,ITALIC)+
                                                         Utility::SET_TEXT_COLOR(COLOR_RED));

@@ -8,6 +8,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QProgressBar>
 
 class FacAccount;
 class IDatabase;
@@ -20,7 +21,9 @@ public:
     GenerateFileTab(FacAccount &iFacAccount,IDatabase&,ILog&);
     GenerateFileTab(GenerateFileTab const&)=delete;
     GenerateFileTab& operator=(GenerateFileTab const&)=delete;
+    void resetProgressBar();
     void onTabSelected();
+    int getNumberAccountToImport(const QString&);
 
     void addListener(IUpdateAccountListener* iListener){
         _listeners.push_back(iListener);
@@ -53,6 +56,7 @@ private:
     QLabel* _outputSaveFileLabel{new QLabel};
     QStringList* _textStringList{new QStringList};
     QPushButton* _importDataFromTextButt{new QPushButton{tr(" Import data from text file")}};
+    QProgressBar* _progressBar{new QProgressBar};
     QTextEdit* _textEdit{new QTextEdit};
     QPushButton* _clearTextButt{new QPushButton{tr(" Clear text")}};
     QPushButton* _generateTextButt{new QPushButton{tr(" Generate text")}};
